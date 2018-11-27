@@ -22,7 +22,15 @@ components:
       scheme: bearer
       bearerFormat: JWT
   schemas:
-    Login:
+    Error:
+      description: 错误信息
+      properties:
+        code: 
+          type: integer
+        message: 
+          type: string    
+    TokenStatus:
+      description: Token信息
       properties:
         token:
           type: string
@@ -30,31 +38,144 @@ components:
           type: string
         refreshed:
           type: boolean
-    User:
+    LoginRequest:
+      description: 登陆请求
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+    Learner:
+      description: 学习者
+      properties:
+        id:
+          description: ID
+          type: integer
+        name:
+          description: 全名
+          type: string
+        nickname:
+          description: 昵称
+          type: string
+        isMentor:
+          description: 是否导师
+          type: boolean
+        status:
+          description: 目前状态，包括在读、在读（游学）、在读（试读）、毕业、导师等；考虑是否需要更换成integer
+          type: string
+        birthday:
+          description: 生日
+          type: string
+        personalId:
+          description: 身份证号
+          type: string
+        age:
+          description: 年龄（应当是计算字段）
+          type: number
+        ethnicity:
+          description: 民族
+          type: string
+        phoneNumber:
+          description: 电话号码
+          type: string
+        dateOfRegistration:
+          description: 加入时间
+          type: string
+        reasonOfRegistration:
+          description: 加入原因
+          type: string
+        previousStatus:
+          description: 加入前状态
+          type: string
+        dateOfLeave:
+          description: 离开时间
+          type: string
+        reasonOfLeave:
+          description: 离开原因
+          type: string
+        destinationOfLeave:
+          description: 下阶段目的地
+          type: string
+        notes:
+          description: 备注
+          type: array
+        mentorship:
+          description: 导师关系 (object类型 - 导师类型 - learnerID)， 分有负责导师mentorResponsible,协同导师mentorSupportive, 家校沟通导师mentorCommunicative)
+          type: object
+      required:
+        - name
+        - isMentor
+    Project:
+      description: 项目
       properties:
         id:
           type: integer
-        name:
+        name: 
           type: string
+        createdTime:
+          type: string
+        createdBy:
+          type: integer
+        isCreatedByMentor:
+          type: boolean
       required:
-        - id
         - name
+        - createdTime
+        - createdBy
+        - isCreatedByMentor
 paths:
   /login:
     get:
       summary: 获取当前Token信息
-      description: 待定
       responses:
         '200':
           description: 获取当前Token信息成功
           content:
-            application/json: 
+            application/json:
               schema:
-
-    
-  /users:
+                $ref: '#/components/schemas/TokenStatus'
+        '401':
+          description: 无法获取当前Token信息
+    post:
+      summary: 尝试登陆
+      requestBody:
+        description: 尝试登陆
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        '200':
+          description: 登陆成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenStatus'
+        '401':
+          description: 登陆失败
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /learner:
+    head:
+      summary: 返回所有Learner的关键信息
+      responses:
+        '200':
+          description: Hey
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Learner'
+        '401':
+          description: 登陆失败
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
     get:
-      summary: Returns a list of users.
+      summary: 返回所有的Leaner详细信息
       description: Optional extended description in CommonMark or HTML.
       responses:
         '200':
@@ -62,28 +183,25 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  type: string
+                $ref: '#/components/schemas/Learner'
+        '401':
+          description: 没有权限
     post:
-      summary: Creates a user.
+      summary: 创建一个Learner
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                username:
-                  type: string
+              $ref: '#/components/schemas/Learner'
       responses:
         '201':
-          description: Created
-  '/user/{userId}':
+          description: 创建成功
+  '/learner/{learnerId}':
     get:
-      summary: Returns a user by ID.
+      summary: 返回一个Learner的详细信息
       parameters:
-        - name: userId
+        - name: learnerId
           in: path
           required: true
           description: Parameter description in CommonMark or HTML.
@@ -94,3 +212,8 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+               $ref: '#/components/schemas/Learner'
+            
