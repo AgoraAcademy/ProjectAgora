@@ -1,221 +1,224 @@
-openapi: 3.0.0
+swagger: "2.0"
 info:
   title: ProjectAgora
   description: >-
     Optional multiline or single-line description in
     [CommonMark](http://commonmark.org/help/) or HTML.
   version: 0.0.1
-servers:
-  - url: 'http://api.example.com/v1'
-    description: 'Optional server description, e.g. Main (production) server'
-  - url: 'http://127.0.0.1:5000/v1'
-    description: '本地测试'
+host: 127.0.0.1:5000
+basePath: /v1
+schemes: 
+  - https
+consumes: 
+  - application/json
+produces: 
+  - application/json
+securityDefinitions:
+  APIKeyHeader: 
+    type: apiKey
+    in: header
+    name: api_key
 security:
-  - bearerAuth: []
-components:
-  responses:
-    UnauthorizedError:
-      description: Access token is missing or invalid
-  securitySchemes:
-    bearerAuth:
-      type: http
-      scheme: bearer
-      bearerFormat: JWT
-  schemas:
-    Error:
-      description: 错误信息
-      properties:
-        code: 
-          type: integer
-        message: 
-          type: string    
-    TokenStatus:
-      description: Token信息
-      properties:
-        token:
+  - APIKeyHeader: []
+
+definitions:
+  Error:
+    description: 错误信息
+    properties:
+      code: 
+        type: integer
+        example: 401
+      message: 
+        type: string    
+  TokenStatus:
+    description: Token信息
+    properties:
+      token:
+        type: string
+      expireBy:
+        type: string
+      refreshed:
+        type: boolean
+  LoginRequest:
+    description: 登陆请求
+    properties:
+      username:
+        type: string
+      password:
+        type: string
+  Learner:
+    description: 学习者
+    properties:
+      id:
+        description: ID
+        type: integer
+      name:
+        description: 全名
+        type: string
+      nickname:
+        description: 昵称
+        type: string
+      isMentor:
+        description: 是否导师
+        type: boolean
+      status:
+        description: 目前状态，包括在读、在读（游学）、在读（试读）、毕业、导师等；考虑是否需要更换成integer
+        type: string
+      birthday:
+        description: 生日
+        type: string
+      personalId:
+        description: 身份证号
+        type: string
+      age:
+        description: 年龄（应当是计算字段）
+        type: number
+      ethnicity:
+        description: 民族
+        type: string
+      phoneNumber:
+        description: 电话号码
+        type: string
+      dateOfRegistration:
+        description: 加入时间
+        type: string
+      reasonOfRegistration:
+        description: 加入原因
+        type: string
+      previousStatus:
+        description: 加入前状态
+        type: string
+      dateOfLeave:
+        description: 离开时间
+        type: string
+      reasonOfLeave:
+        description: 离开原因
+        type: string
+      destinationOfLeave:
+        description: 下阶段目的地
+        type: string
+      notes:
+        description: 备注
+        type: array
+        items: 
           type: string
-        expireBy:
-          type: string
-        refreshed:
-          type: boolean
-    LoginRequest:
-      description: 登陆请求
-      properties:
-        username:
-          type: string
-        password:
-          type: string
-    Learner:
-      description: 学习者
-      properties:
-        id:
-          description: ID
-          type: integer
-        name:
-          description: 全名
-          type: string
-        nickname:
-          description: 昵称
-          type: string
-        isMentor:
-          description: 是否导师
-          type: boolean
-        status:
-          description: 目前状态，包括在读、在读（游学）、在读（试读）、毕业、导师等；考虑是否需要更换成integer
-          type: string
-        birthday:
-          description: 生日
-          type: string
-        personalId:
-          description: 身份证号
-          type: string
-        age:
-          description: 年龄（应当是计算字段）
-          type: number
-        ethnicity:
-          description: 民族
-          type: string
-        phoneNumber:
-          description: 电话号码
-          type: string
-        dateOfRegistration:
-          description: 加入时间
-          type: string
-        reasonOfRegistration:
-          description: 加入原因
-          type: string
-        previousStatus:
-          description: 加入前状态
-          type: string
-        dateOfLeave:
-          description: 离开时间
-          type: string
-        reasonOfLeave:
-          description: 离开原因
-          type: string
-        destinationOfLeave:
-          description: 下阶段目的地
-          type: string
-        notes:
-          description: 备注
-          type: array
-          items: 
-            type: string
-        mentorship:
-          description: 导师关系 (object类型 - 导师类型 - learnerID)， 分有负责导师mentorResponsible,协同导师mentorSupportive, 家校沟通导师mentorCommunicative)
-          type: object
-      required:
-        - name
-        - isMentor
-    Project:
-      description: 项目
-      properties:
-        id:
-          type: integer
-        name: 
-          type: string
-        createdTime:
-          type: string
-        createdBy:
-          type: integer
-        isCreatedByMentor:
-          type: boolean
-      required:
-        - name
-        - createdTime
-        - createdBy
-        - isCreatedByMentor
+      mentorship:
+        description: 导师关系 (object类型 - 导师类型 - learnerID)， 分有负责导师mentorResponsible,协同导师mentorSupportive, 家校沟通导师mentorCommunicative)
+        type: object
+    required:
+      - name
+      - isMentor
+  Project:
+    description: 项目
+    properties:
+      id:
+        type: integer
+      name: 
+        type: string
+      createdTime:
+        type: string
+      createdBy:
+        type: integer
+      isCreatedByMentor:
+        type: boolean
+    required:
+      - name
+      - createdTime
+      - createdBy
+      - isCreatedByMentor
 paths:
   /login:
     get:
       summary: 获取当前Token信息
+      tags: 
+        - Authentication
       responses:
         '200':
           description: 获取当前Token信息成功
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TokenStatus'
+          schema:
+            $ref: '#/definitions/TokenStatus'
         '401':
           description: 无法获取当前Token信息
     post:
       summary: 尝试登陆
-      requestBody:
-        description: 尝试登陆
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/LoginRequest'
+      tags: 
+        - Authentication
+      parameters:
+        - in: body
+          name: login
+          required: true
+          schema:
+            $ref: '#/definitions/LoginRequest'
       responses:
         '200':
           description: 登陆成功
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TokenStatus'
+          schema:
+              $ref: '#/definitions/TokenStatus'
         '401':
           description: 登陆失败
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+          schema:
+                $ref: '#/definitions/Error'
   /learner:
     head:
       summary: 返回所有Learner的关键信息
+      tags: 
+        - Learner
       responses:
         '200':
-          description: Hey
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Learner'
+          description: 成功
+          schema:
+              type: object
+              properties:
+                id:
+                  type: integer
+                  example: 1
+                name:
+                  type: string
+                  example: John Appleseed
         '401':
           description: 登陆失败
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+          schema:
+            $ref: '#/definitions/Error'
     get:
       summary: 返回所有的Leaner详细信息
-      description: Optional extended description in CommonMark or HTML.
+      tags: 
+        - Authentication
+      description: 返回所有的Leaner详细信息
       responses:
         '200':
           description: A JSON array of user names
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Learner'
+          schema:
+              $ref: '#/definitions/Learner'
         '401':
           description: 没有权限
     post:
       summary: 创建一个Learner
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Learner'
+      tags: 
+        - Learner
+      parameters:
+        - in: body
+          name: login
+          required: true
+          schema:
+              $ref: '#/definitions/Learner'
       responses:
         '201':
           description: 创建成功
   '/learner/{learnerId}':
     get:
       summary: 返回一个Learner的详细信息
+      tags: 
+        - Learner
       parameters:
-        - name: learnerId
-          in: path
+        - in: path
+          name: learnerId
           required: true
-          description: Parameter description in CommonMark or HTML.
-          schema:
-            type: integer
-            format: int64
-            minimum: 1
+          type: integer
+          format: int64
+          minimum: 1
       responses:
         '200':
           description: OK
-          content:
-            application/json:
-              schema:
-               $ref: '#/components/schemas/Learner'
+          schema:
+            $ref: '#/definitions/Learner'
             
