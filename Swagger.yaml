@@ -61,6 +61,9 @@ definitions:
       isMentor:
         description: 是否导师
         type: boolean
+      gender:
+        description: 性别
+        type: string
       status:
         description: 目前状态，包括在读、在读（游学）、在读（试读）、毕业、导师等；考虑是否需要更换成integer
         type: string
@@ -105,6 +108,9 @@ definitions:
       mentorship:
         description: 导师关系 (object类型 - 导师类型 - learnerID)， 分有负责导师mentorResponsible,协同导师mentorSupportive, 家校沟通导师mentorCommunicative)
         type: object
+      salaryCard:
+        description: 工资卡号
+        type: string
     required:
       - name
       - isMentor
@@ -112,20 +118,40 @@ definitions:
     description: 项目
     properties:
       id:
+        description: 项目ID
         type: integer
       name: 
+        description: 项目名称
         type: string
       createdTime:
+        description: 创建时间
         type: string
       createdBy:
+        description: 创建人ID
         type: integer
-      isCreatedByMentor:
-        type: boolean
+      relatedCourseId:
+        description: 关联的课程ID；自由项目的课程ID为0
+        type: integer
     required:
       - name
       - createdTime
       - createdBy
-      - isCreatedByMentor
+      - relatedCourseId
+  Course:
+    description: 课程
+    properties:
+      id:
+        description: 课程ID
+        type: integer
+      name:
+        description: 课程名称
+        type: string
+      createdTime: 
+        description: 创建时间 
+        type: string
+      createdBy:
+        description: 创建人ID
+        type: integer
 paths:
   /login:
     get:
