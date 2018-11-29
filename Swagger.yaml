@@ -8,8 +8,8 @@ info:
 servers:
   - url: 'http://api.example.com/v1'
     description: 'Optional server description, e.g. Main (production) server'
-  - url: 'http://staging-api.example.com'
-    description: 'Optional server description, e.g. Internal staging server for testing'
+  - url: 'http://127.0.0.1:5000/v1'
+    description: '本地测试'
 security:
   - bearerAuth: []
 components:
@@ -99,6 +99,8 @@ components:
         notes:
           description: 备注
           type: array
+          items: 
+            type: string
         mentorship:
           description: 导师关系 (object类型 - 导师类型 - learnerID)， 分有负责导师mentorResponsible,协同导师mentorSupportive, 家校沟通导师mentorCommunicative)
           type: object
