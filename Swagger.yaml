@@ -20,10 +20,10 @@ securityDefinitions:
     name: api_key
 security:
   - APIKeyHeader: []
-
+  
 definitions:
   Error:
-    description: 错误信息
+    description: 错误
     properties:
       code: 
         type: integer
@@ -70,8 +70,11 @@ definitions:
       birthday:
         description: 生日
         type: string
-      personalId:
-        description: 身份证号
+      mainPersonalIdType:
+        description: 证件类型
+        type: string
+      mainPersonalId:
+        description: 证件号码
         type: string
       age:
         description: 年龄（应当是计算字段）
@@ -111,6 +114,135 @@ definitions:
       salaryCard:
         description: 工资卡号
         type: string
+      custodianInfo:
+        description: 监护人信息
+        type: object
+        properties: 
+          name:
+            description: 姓名
+            type: string
+          relationship:
+            description: 关系 
+            type: string
+      emergentContact:
+        description: 紧急联系人
+        type: array
+        items:
+          type: object
+          properties:
+            name: 
+              description: 紧急联系人姓名
+              type: string
+            number:
+              description: 紧急联系人电话
+              type: string
+      weChatContact:
+        description: 微信
+        type: string
+      QQ:
+        description: QQ
+        type: string
+      mailAddress:
+        description: 收件地址（用以寄送书面文件）
+        type: string
+      email:
+        description: 电子邮箱
+        type: string
+      medicalNotes:
+        description: 医疗记录
+        type: object
+        properties:
+          generalHealthStatus:
+            description: 整体健康状况；0 - 很好（基本不生病，从不住院）； 1 - 一般（偶尔生病住院）； 2 - 欠佳（每个季度都曾生病住院）
+            type: integer
+            enum: [0, 1, 2]
+          bloodType:
+            description: 血型
+            type: string
+          lastPhysicalExam:
+            description: 最近一次体检时间(以年为单位)
+            type: number
+          previousDiagnosis:
+            description: 既往疾病
+            type: array
+            items:
+              type: object
+              properties: 
+                nameOfDiagnosis:
+                  description: 疾病名称
+                  type: string
+                hospitalOfDiagnosis:
+                  description: 诊断医院
+                  type: string
+          regularMedication:
+            description: 长期用药
+            type: array
+            items:
+              type: object
+              properties:
+                nameOfMedication:
+                  description: 药品名
+                  type: string
+                instructionOfMedication:
+                  description: 用药医嘱
+                  type: string
+          foodAlergy:
+            description: 食物过敏
+            type: object
+            properties:
+              lactoseIntolerance: 
+                description: 奶类过敏（乳糖不耐受）
+                type: boolean
+              eggAllergy:
+                description: 禽蛋类过敏
+                type: boolean
+              fishAllergy:
+                description: 鱼类过敏
+                type: boolean
+              shellAllergy:
+                description: 甲壳类（虾蟹、贝类水产等）
+                type: boolean
+              peanutAllergy:
+                description: 花生过敏
+                type: boolean
+              soyBeanAllergy:
+                description: 大豆过敏
+                type: boolean
+              nutAllergy:
+                description: 坚果类过敏
+                type: boolean
+              wheatAllergy:
+                description: 小麦过敏
+                type: boolean
+              otherFoodAllergy:
+                description: 其他食物过敏
+                type: array
+                items:
+                  type: string
+          medicationAllergy:
+            description: 药物过敏
+            type: object
+            properties:
+              antibioticsAllergy:
+                description: 抗生素过敏（青霉素、氨基苄青霉素、链霉素、卡那霉素）
+                type: boolean
+              sulfonamidesAllergy:
+                description: 磺胺类药物过敏（磺胺噻唑、磺胺嘧啶、长效磺胺、复方新诺明等）
+                type: boolean
+              painkillerAllergy:
+                description: 解热镇痛药（阿司匹林、去痛片）
+                type: boolean
+              anestheticAllergy:
+                description: 麻醉用药（普鲁卡因）
+                type: boolean
+              vaccineAllergy:
+                description: 疫苗类药物
+                type: boolean
+              otherMedicationAllergy:
+                description: 其他药物过敏
+                type: array
+                items:
+                  type: string
     required:
       - name
       - isMentor
@@ -132,6 +264,21 @@ definitions:
       relatedCourseId:
         description: 关联的课程ID；自由项目的课程ID为0
         type: integer
+      content: 
+        description: 项目记录的条目
+        type: array
+        items: 
+          type: object
+          properties:
+            timestamp:
+              description: 条目时间戳
+              type: string
+            instruction:
+              description: 课程项目中教师为各条目定义的内容(暂定使用Markdown编码)
+              type: string
+            record:
+              description: 学生记录(暂定使用Markdown编码)
+              type: string
     required:
       - name
       - createdTime
@@ -165,6 +312,9 @@ paths:
             $ref: '#/definitions/TokenStatus'
         '401':
           description: 无法获取当前Token信息
+          headers:
+            WWW_Authenticate:
+              type: string
     post:
       summary: 尝试登陆
       tags: 
@@ -183,7 +333,7 @@ paths:
         '401':
           description: 登陆失败
           schema:
-                $ref: '#/definitions/Error'
+                $ref: "#/responses/UnauthorizedError"
   /learner:
     head:
       summary: 返回所有Learner的关键信息
@@ -204,11 +354,11 @@ paths:
         '401':
           description: 登陆失败
           schema:
-            $ref: '#/definitions/Error'
+            $ref: "#/responses/UnauthorizedError"
     get:
       summary: 返回所有的Leaner详细信息
       tags: 
-        - Authentication
+        - Learner
       description: 返回所有的Leaner详细信息
       responses:
         '200':
@@ -216,7 +366,7 @@ paths:
           schema:
               $ref: '#/definitions/Learner'
         '401':
-          description: 没有权限
+          $ref: "#/responses/UnauthorizedError"
     post:
       summary: 创建一个Learner
       tags: 
@@ -230,6 +380,14 @@ paths:
       responses:
         '201':
           description: 创建成功
+          schema:
+            description: 成功创建的Learner的ID
+            type: object
+            properties:
+              id:
+                type: integer
+        '401':
+          $ref: "#/responses/UnauthorizedError"  
   '/learner/{learnerId}':
     get:
       summary: 返回一个Learner的详细信息
@@ -247,4 +405,14 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/Learner'
+        '401':
+          $ref: "#/responses/UnauthorizedError"
+
+
+responses:
+  UnauthorizedError:
+    description: API key is missing or invalid
+    headers:
+      WWW_Authenticate:
+        type: string
             
