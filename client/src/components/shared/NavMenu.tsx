@@ -3,6 +3,7 @@ import * as PropTypes from "prop-types";
 import NavigationView from "react-uwp/NavigationView";
 import SplitViewCommand from "react-uwp/SplitViewCommand";
 import { connect } from 'dva'
+import './NavMenu.less'
 
 export interface INavMenuProps {
     dispatch: any
@@ -22,6 +23,7 @@ class NavMenu extends React.Component<INavMenuProps> {
             padding: 0,
         };
         const navigationTopNodes = [
+            <SplitViewCommand label="主页" key={Math.random()} icon="Home" />,
             <SplitViewCommand label="项目式学习" icon={"\uE716"} key={Math.random()}/>,
             <SplitViewCommand label="未开放" key={Math.random()} icon="PrintLegacy" />
         ];

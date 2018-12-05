@@ -4,6 +4,9 @@ import NavMenu from '../components/shared/NavMenu';
 import { Route, Switch } from 'dva/router';
 import AdminMenu from '../components/Menu/AdminMenu'
 import './Main.less'
+import LearnerProfile from '../components/Content/LearnerProfile';
+import LearnerMenu from '../components/Menu/LearnerMenu';
+import NoMatch from '../components/shared/Nomatch'
 const { Header, Footer, Sider, Content } = Layout;
 
 export interface IMainProps {
@@ -15,15 +18,20 @@ class Main extends React.Component<IMainProps> {
         return (
             <Layout>
                 <NavMenu/>
-                <Sider className="globalNavMenu">
+                <Sider width={360} className="globalNavMenu">
                     <Switch>
-                        <Route path="/admin" exact component={AdminMenu} />
+                        <Route path="/admin" component={AdminMenu} />
+                        <Route path="/learner" component={LearnerMenu} />
+                        <Route component={NoMatch}/>
                     </Switch>
                 </Sider>
                 <Layout>
-                    <Header>Header</Header>
-                    <Content>Content</Content>
-                    <Footer>Footer</Footer>
+                    <Content>
+                        <Switch>
+                            <Route path="/learner" component={LearnerProfile} />
+                            <Route component={NoMatch}/>
+                        </Switch>
+                    </Content>
                 </Layout>
             </Layout>
         );

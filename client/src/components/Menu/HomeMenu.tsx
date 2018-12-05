@@ -13,22 +13,18 @@ const baseStyle: React.CSSProperties = {
 };
 
 const listSource: TreeItem[]=[{
-    title: "人员管理",
+    title: "个人信息",
     children: [{
-        title: "添加人员",
-        children: [{
-            title: "A-Child1-Hidden",
-            hidden: true
+        title: "基础信息",
         }, {
-            title: "A-Child1-Child2"
+        title: "联系信息",
+        }, {
+        title: "医疗信息"
         }]
     }]
-},{
-    title: "D",
-    disabled: true
-}]
 
-export default class AdminMenu extends React.Component<{}> {
+
+export default class HomerMenu extends React.Component<{}> {
     public static contextTypes = { theme: PropTypes.object };
     public context: { theme: ReactUWP.ThemeType };
 

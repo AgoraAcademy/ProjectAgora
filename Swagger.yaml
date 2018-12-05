@@ -116,14 +116,15 @@ definitions:
         type: string
       custodianInfo:
         description: 监护人信息
-        type: object
-        properties: 
-          name:
-            description: 姓名
-            type: string
-          relationship:
-            description: 关系 
-            type: string
+        type: array
+        items:
+          properties: 
+            name:
+              description: 姓名
+              type: string
+            relationship:
+              description: 关系 
+              type: string
       emergentContact:
         description: 紧急联系人
         type: array
@@ -148,7 +149,7 @@ definitions:
       email:
         description: 电子邮箱
         type: string
-      medicalNotes:
+      medicalInfo:
         description: 医疗记录
         type: object
         properties:
