@@ -32,7 +32,6 @@ class LearnerProfile extends React.Component<ILearnerProfileProps> {
         let displayedContent
         let content
         const { theme } = this.context;
-        console.log(theme)
         const {data} = this.props.learnerProfile
         if (!activeTab) {
             return 

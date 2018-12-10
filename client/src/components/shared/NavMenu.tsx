@@ -23,9 +23,29 @@ class NavMenu extends React.Component<INavMenuProps> {
             padding: 0,
         };
         const navigationTopNodes = [
-            <SplitViewCommand label="主页" key={Math.random()} icon="Home" />,
-            <SplitViewCommand label="项目式学习" icon={"\uE716"} key={Math.random()}/>,
-            <SplitViewCommand label="未开放" key={Math.random()} icon="PrintLegacy" />
+            (
+                <SplitViewCommand 
+                    label="主页" 
+                    key={Math.random()} 
+                    icon="Home" 
+                    onClick={()=> {this.props.dispatch({type:'main/redirect', path:'/'})}}
+                />
+            ),
+            (
+                <SplitViewCommand 
+                    label="项目式学习" 
+                    icon={"\uE716"} 
+                    key={Math.random()} 
+                    onClick={()=> {this.props.dispatch({type:'main/redirect', path:'/project'})}}
+                />
+            ),
+            (
+                <SplitViewCommand 
+                    label="未开放" 
+                    key={Math.random()} 
+                    icon="PrintLegacy"
+                />
+            )
         ];
 
         const navigationBottomNode = [

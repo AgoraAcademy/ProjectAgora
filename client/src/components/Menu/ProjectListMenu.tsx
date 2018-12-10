@@ -10,20 +10,20 @@ const baseStyle: React.CSSProperties = {
     margin: "10px 10px 10px 0"
 };
 
-export interface IHomeMenuProps {
+export interface IProjectListMenuProps {
     dispatch: any
     learnerProfile: any
 };
-class HomeMenu extends React.Component<IHomeMenuProps> {
+class ProjectListMenu extends React.Component<IProjectListMenuProps> {
     public static contextTypes = { theme: PropTypes.object };
     public context: { theme: ReactUWP.ThemeType };
 
     public listSource: TreeItem[]=[{
-        title: "主页菜单",
+        title: "项目列表菜单",
         children: [{
-            title: "基础信息",
+            title: "测试项目",
             onClick: ()=> this.props.dispatch(
-                {type: "learnerProfile/setField", name: "activeTab", value: "basicInfo"}
+                {type:'main/redirect', path:'/project/1'}
             )}, {
             title: "联系信息",
             onClick: ()=> this.props.dispatch(
@@ -35,7 +35,6 @@ class HomeMenu extends React.Component<IHomeMenuProps> {
             )}]
         }]
     public render(): JSX.Element {
-        console.log("目前的learner.profile", this.props.learnerProfile)
         const { theme } = this.context;
         return (
             <div>
@@ -60,4 +59,4 @@ function mapStateToProps({main, learnerProfile}) {
     return { main, learnerProfile }
 }
 
-export default connect(mapStateToProps)(HomeMenu)
+export default connect(mapStateToProps)(ProjectListMenu)

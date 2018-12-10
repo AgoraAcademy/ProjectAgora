@@ -6,12 +6,12 @@ const { Header, Footer, Sider, Content } = Layout;
 
 import { connect } from 'dva'
 
-export interface IHomeProps {
+export interface IProjectListProps {
     dispatch: any,
     learnerProfile: object,
 }
 
-class Home extends React.Component<IHomeProps> {
+class ProjectList extends React.Component<IProjectListProps> {
     public static contextTypes = { theme: PropTypes.object };
     public context: { theme: ReactUWP.ThemeType };
 
@@ -25,7 +25,7 @@ class Home extends React.Component<IHomeProps> {
                 </Header>
                 <Content>
                     <h5 style={{color: 'white', ...theme.typographyStyles.header}}>
-                        Home
+                        ProjectList
                     </h5>
                 </Content>
                 <Footer>
@@ -40,4 +40,4 @@ function mapStateToProps({main, learnerProfile}) {
     return { main, learnerProfile }
 }
 
-export default connect(mapStateToProps)(Home)
+export default connect(mapStateToProps)(ProjectList)
