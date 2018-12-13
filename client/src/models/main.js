@@ -11,6 +11,7 @@ export default {
     effects: {
         * redirect (action, { put }) {
             const { path, reload } = action;
+            console.log("redirecting", path, reload )
             yield put(routerRedux.push(path || '/'));
             if(reload) {
                 window.location.reload();

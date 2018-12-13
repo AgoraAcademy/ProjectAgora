@@ -4,6 +4,7 @@ import Login from './routes/Login';
 import Main from './routes/Main'; 
 import NoMatch from './components/shared/Nomatch'
 import { Theme as UWPThemeProvider, getTheme } from "react-uwp/Theme";
+import Test from './routes/Test';
 
 interface ITheme {
     themeName: any, // 
@@ -22,6 +23,7 @@ export default function RouterConfig({ history }) {
         <UWPThemeProvider theme={getTheme(theme)}>
             <Router history={history}>
                 <Switch>
+                    <Route exact path="/test" component={Test} />
                     <Route exact path="/login" component={Login} />
                     <Route path="/" component={Main} />
                 </Switch>

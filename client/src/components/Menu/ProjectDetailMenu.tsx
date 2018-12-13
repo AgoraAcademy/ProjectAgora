@@ -19,19 +19,23 @@ class ProjectDetailMenu extends React.Component<IProjectDetailMenuProps> {
     public context: { theme: ReactUWP.ThemeType };
 
     public listSource: TreeItem[]=[{
-        title: "项目信息菜单",
+        title: "项目导航",
         children: [{
-            title: "基础信息",
+            title: "Item_0",
             onClick: ()=> this.props.dispatch(
-                {type: "learnerProfile/setField", name: "activeTab", value: "basicInfo"}
+                {type: "main/redirect", path: "/project/1#item_0"}
             )}, {
-            title: "联系信息",
+            title: "Item_1",
             onClick: ()=> this.props.dispatch(
-                {type: "learnerProfile/setField", name: "activeTab", value: "contactInfo"}
+                {type: "main/redirect", path: "/project/1#item_1"}
             )}, {
-            title: "医疗信息",
+            title: "Item_2",
             onClick: ()=> this.props.dispatch(
-                {type: "learnerProfile/setField", name: "activeTab", value: "medicalInfo"}
+                {type: "main/redirect", path: "/project/1#item_2"}
+            )}, {
+            title: "Item_3",
+            onClick: ()=> this.props.dispatch(
+                {type: "main/redirect", path: "/project/1#item_3"}
             )}]
         }]
     public render(): JSX.Element {

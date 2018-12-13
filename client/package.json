@@ -9,10 +9,10 @@
   "dependencies": {
     "antd": "^3.10.9",
     "babel-plugin-import": "^1.11.0",
-    "braft-editor": "^2.1.34",
     "dva": "^2.4.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
+    "react-simplemde-editor": "^3.6.22",
     "react-uwp": "^1.2.2"
   },
   "devDependencies": {

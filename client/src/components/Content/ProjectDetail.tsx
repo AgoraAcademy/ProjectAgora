@@ -1,17 +1,18 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
-import ReactUWP from 'react-uwp'
+import ReactUWP, { Toggle, Button } from 'react-uwp'
 import { Layout, Row, Col } from 'antd'
-import BraftEditor from 'braft-editor'
 import RichEditor from '../Widget/RichEditor'
-import 'braft-editor/dist/index.css'
 import { connect } from 'dva'
+import { deepCopy } from '../../util'
 const { Header, Footer, Sider, Content } = Layout;
+
 
 export interface IProjectDetailProps {
     dispatch: any,
     learnerProfile: object,
     projectDetail: { 
+        editMode: boolean,
         projectInfo: object,
         projectItems: IProjectItem[]
     }
@@ -30,25 +31,50 @@ interface IProjectItem {
     itemComment: object
 }
 
+interface IProjectDetailState {
+    dirty: boolean
+}
 /**
  * 项目详情
  *
  * @class ProjectDetail
  * @extends {React.Component<IProjectDetailProps>}
  */
+
+
 class ProjectDetail extends React.Component<IProjectDetailProps> {
     public static contextTypes = { theme: PropTypes.object };
     public context: { theme: ReactUWP.ThemeType };
-    
+    public state: IProjectDetailState = {
+        dirty: false
+    }  
     public render(): JSX.Element {
         const { theme } = this.context;
-        const { learnerProfile } = this.props;
+        const { learnerProfile, projectDetail, dispatch } = this.props;
+        const { editMode } = projectDetail
         return (
             <Layout>
-                <Header>
-                    <h5 style={{ color: 'white', ...theme.typographyStyles.header }}>
-                        ProjectDetail
-                    </h5>
+                <Header style={{height:"48px", marginBottom:"20px"}}>
+                    <Row type="flex" justify="center" align="middle">
+                        <Col span={20}>
+                            <span style={{color: 'white', ...theme.typographyStyles.header }}>
+                                ProjectDetail
+                            </span>
+                        </Col>
+                        <Col span={2}>
+                            <Toggle
+                                label="编辑模式"
+                                size={18}
+                                defaultToggled={editMode}
+                                onToggle={(toggleValue)=> dispatch({type:"projectDetail/setField", name: "editMode", value: toggleValue })}
+                            />
+                        </Col>
+                        <Col span={2}>
+                            <Button>
+                                保存
+                            </Button>
+                        </Col>
+                    </Row>
                 </Header>
                 <Content>
                     {this.generateItem(this.props.projectDetail.projectItems)}
@@ -60,60 +86,28 @@ class ProjectDetail extends React.Component<IProjectDetailProps> {
         );
     }
 
-    public async componentDidMount() {
-        // 假设此处从服务端获取html格式的编辑器内容
-        const htmlContent = await this.fetchContentJSON()
-        // 使用BraftEditor.createEditorState将html字符串转换为编辑器需要的editorStat
-        // this.props.dispatch({ type: "projectDetail/setField", name: "", value: htmlContent })
-    }
-
-    private handleEditorChange = (editorState) => {
-        // this.props.dispatch({ type: "projectDetail/setField", name: "", value: editorState })
-    }
-
-    private fetchContentJSON = () => {
-        console.log("fetch")
-    }
-
-    private submitContent = async () => {
-        // 在编辑器获得焦点时按下ctrl+s会执行此方法
-        // 编辑器内容提交到服务端之前，可直接调用editorState.toHTML()来获取HTML格式的内容
-        // const htmlContent = this.state.editorState.toHTML()
-        // const result = await saveEditorContent(htmlContent)
-    }
-
     private generateItem = (projectItems: IProjectItem[]) => {
         return (
             projectItems.map((item: IProjectItem, index: number) => {
                 return (
-                    <Row key={Math.random()} gutter={16}>
-                        <Col className="gutter-row" span={8}>
+                    <div key={Math.random()}>
+                        <Col span={2}>
+                            <span id={`item_${index}`}>Number {index}</span>
+                        </Col>
+                        <Col span={22}>
                             <RichEditor
-                                type="Content"
-                                field={item.itemContent}
+                                key={Math.random()}
                                 index={index}
+                                options={{
+                                    spellChecker: false
+                                }}
                             />
                         </Col>
-                        <Col className="gutter-row" span={8}>
-                            <RichEditor
-                                type="Record"
-                                field={item.itemRecord}
-                                index={index}
-                            />
-                        </Col>
-                        <Col className="gutter-row" span={8}>
-                            <RichEditor
-                                type="Comment"
-                                field={item.itemComment}
-                                index={index}
-                            />
-                        </Col>
-                    </Row>
+                    </div>
                 )
             })
         )
     }
-
 }
 
 function mapStateToProps({ main, learnerProfile, projectDetail }) {

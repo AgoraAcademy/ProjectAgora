@@ -26,7 +26,7 @@ class Login extends React.Component<ILoginProps, ILoginState> {
     public context: { theme: ReactUWP.ThemeType };
     public defaultBtnStyle: React.CSSProperties = {
         margin: 4
-      };
+    };
     public render(): JSX.Element {
         return (
             <Layout>

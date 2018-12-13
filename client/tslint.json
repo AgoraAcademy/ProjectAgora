@@ -32,6 +32,7 @@
         "no-namespace": true,
         "no-internal-module": true,
         "no-console": false,
-        "jsx-no-multiline-js": false
+        "jsx-no-multiline-js": false,
+        "max-line-length": [true, 400]
     }
 }

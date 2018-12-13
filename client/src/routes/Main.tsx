@@ -37,7 +37,7 @@ class Main extends React.Component<IMainProps> {
                     </Switch>
                 </Sider>
                 <Layout>
-                    <Content>
+                    <Content id='global_content'>
                         <Switch>
                             <Route exact path="/" component={Home}/>
                             <Route path="/learner" component={LearnerProfile} />

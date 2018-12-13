@@ -35,7 +35,6 @@ class HomeMenu extends React.Component<IHomeMenuProps> {
             )}]
         }]
     public render(): JSX.Element {
-        console.log("目前的learner.profile", this.props.learnerProfile)
         const { theme } = this.context;
         return (
             <div>
