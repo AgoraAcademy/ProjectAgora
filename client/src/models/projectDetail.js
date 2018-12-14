@@ -7,32 +7,32 @@ export default {
         projectItems: [
             {
                 itemTitle: "Item1",
-                itemStartDate: "",
-                itemEndDate: "",
+                itemStartDate: new Date(),
+                itemEndDate: new Date(),
                 itemContent: "" ,
                 itemRecord: "",
                 itemComment: ""
             },
             {
                 itemTitle: "Item2",
-                itemStartDate: "",
-                itemEndDate: "",
+                itemStartDate: new Date(),
+                itemEndDate: new Date(),
                 itemContent: "",
                 itemRecord: "",
                 itemComment: ""
             },
             {
                 itemTitle: "Item3",
-                itemStartDate: "",
-                itemEndDate: "",
+                itemStartDate: new Date(),
+                itemEndDate: new Date(),
                 itemContent: "",
                 itemRecord: "",
                 itemComment: ""
             },
             {
                 itemTitle: "Item4",
-                itemStartDate: "",
-                itemEndDate: "",
+                itemStartDate: new Date(),
+                itemEndDate: new Date(),
                 itemContent: "",
                 itemRecord: "",
                 itemComment: ""
@@ -75,7 +75,32 @@ export default {
         // reset(state, action) {
         //     let newState = Object.assign({}, state, state.)
         // }
-
+        addProjectItem(state, action) {
+            let newState = {...state, dirty: true}
+            newState.projectItems.push(
+                {
+                    itemTitle: "New Item",
+                    itemStartDate: new Date(),
+                    itemEndDate: new Date(),
+                    itemContent: "",
+                    itemRecord: "",
+                    itemComment: ""
+                }
+            )
+            return newState
+        },
+        setItemStartDate(state, action){
+            const { index, value } = action
+            let newState = {...state, dirty: true}
+            newState.projectItems[index].itemStartDate = value
+            return newState
+        },
+        setItemEndDate(state, action){
+            const { index, value } = action
+            let newState = {...state, dirty: true}
+            newState.projectItems[index].itemStartDate = value
+            return newState
+        }
     },
     effects: {
     }
