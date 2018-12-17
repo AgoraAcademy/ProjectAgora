@@ -39,7 +39,7 @@ class AdminMenu extends React.Component<IAdminMenuProps> {
         return (
             <div>
                 <TreeView
-                    style={{ height: 640 }}
+                    style={{ height: 640, width:"100%" }}
                     iconDirection="left"
                     itemHeight={36}
                     headerIcon={false && <Icon style={{ fontSize: 36 / 3 }}>FolderLegacy</Icon>}

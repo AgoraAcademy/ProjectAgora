@@ -26,7 +26,7 @@ class Main extends React.Component<IMainProps> {
         return (
             <Layout>
                 <NavMenu/>
-                <Sider width={360} className="globalNavMenu">
+                <Sider width={240}>
                     <Switch>
                         <Route exact path="/" component={HomeMenu} />
                         <Route path="/admin" component={AdminMenu} />

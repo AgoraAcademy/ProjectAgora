@@ -5,7 +5,7 @@ info:
     Optional multiline or single-line description in
     [CommonMark](http://commonmark.org/help/) or HTML.
   version: 0.0.1
-host: 127.0.0.1:5000
+host: 127.0.0.1:8080
 basePath: /v1
 schemes: 
   - https
@@ -332,9 +332,7 @@ paths:
           schema:
               $ref: '#/definitions/TokenStatus'
         '401':
-          description: 登陆失败
-          schema:
-                $ref: "#/responses/UnauthorizedError"
+          $ref: "#/responses/UnauthorizedError"
   /learner:
     head:
       summary: 返回所有Learner的关键信息
@@ -353,9 +351,7 @@ paths:
                   type: string
                   example: John Appleseed
         '401':
-          description: 登陆失败
-          schema:
-            $ref: "#/responses/UnauthorizedError"
+          $ref: "#/responses/UnauthorizedError"
     get:
       summary: 返回所有的Leaner详细信息
       tags: 
