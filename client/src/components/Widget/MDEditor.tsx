@@ -38,6 +38,7 @@ class MDEditor extends Component<IMDEditor> {
                     spellChecker: false,
                     indentWithTabs: false,
                     tabSize: 4,
+                    hideIcons: ["side-by-side", "fullscreen"],
                     ...options
                 }}
             />
