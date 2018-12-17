@@ -18,6 +18,19 @@
 ## Client部分
 
 必需环境： `Node`
+框架组成： `React` + `TypeScript` + `Dva` + `React-UWP`
+    - React提供模块工程化框架
+    - TypeScript实现强类型
+    - Dva实现全局异步数据流
+    - React-UWP提供UWP Fluent风格的组件
+
+### 环境配置
+配置环境: 
+    - `cd client` 
+    - `npm install -g typescript` 全局安装typescript
+    - `npm install --save-dev @types/react @types/react-dom ts-loader ts-lint` 安装Typescript的各类工具包
+    - `npm install`
+启动环境： `npm start`
 
 ## 第一期模块计划
 - 用户模块
