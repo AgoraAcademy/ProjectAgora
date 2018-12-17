@@ -14,6 +14,15 @@ export interface ILearnerMenuProps {
     dispatch: any
     learnerProfile: any
 };
+
+
+/**
+ *
+ * 学习者页面菜单
+ * @class LearnerMenu
+ * @extends {React.Component<ILearnerMenuProps>}
+ */
+
 class LearnerMenu extends React.Component<ILearnerMenuProps> {
     public static contextTypes = { theme: PropTypes.object };
     public context: { theme: ReactUWP.ThemeType };

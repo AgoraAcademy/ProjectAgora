@@ -20,13 +20,19 @@ const { Header, Footer, Sider, Content } = Layout;
 export interface IMainProps {
     newslist?: Array<{ title: string, content: 'string' }>;
 };
+/**
+ * 主体View
+ * 分为NavMenu（全局导航条），侧栏Sider（二级导航条），内容Content部分
+ * @class Main
+ * @extends {React.Component<IMainProps>}
+ */
 
 class Main extends React.Component<IMainProps> {
     public render(): JSX.Element {
         return (
             <Layout>
                 <NavMenu/>
-                <Sider width={240}>
+                <Sider width={240} className={"global-sider"}>
                     <Switch>
                         <Route exact path="/" component={HomeMenu} />
                         <Route path="/admin" component={AdminMenu} />

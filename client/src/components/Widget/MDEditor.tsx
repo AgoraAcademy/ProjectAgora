@@ -8,7 +8,13 @@ interface IMDEditor {
     options: any,
     id: string
 }
-
+/**
+ * 基于Markdown和SimpleMDEReact的富文本编辑器，用于记录项目式学习项目。
+ * 其中使用了localstorage作为缓存实现了自动保存功能，但反馈保存成功信息的部分在多instance的情况下没有办法正确显示
+ *
+ * @class MDEditor
+ * @extends {Component<IMDEditor>}
+ */
 class MDEditor extends Component<IMDEditor> {
 
     public state = {

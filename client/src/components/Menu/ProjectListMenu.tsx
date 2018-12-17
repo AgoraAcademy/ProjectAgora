@@ -14,6 +14,15 @@ export interface IProjectListMenuProps {
     dispatch: any
     learnerProfile: any
 };
+
+/**
+ * 项目列表菜单
+ *
+ * @class ProjectListMenu
+ * @extends {React.Component<IProjectListMenuProps>}
+ */
+
+
 class ProjectListMenu extends React.Component<IProjectListMenuProps> {
     public static contextTypes = { theme: PropTypes.object };
     public context: { theme: ReactUWP.ThemeType };

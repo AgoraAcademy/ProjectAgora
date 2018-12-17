@@ -10,7 +10,13 @@ export interface IHomeProps {
     dispatch: any,
     learnerProfile: object,
 }
-
+/**
+ *
+ * 主页面，大致计划用于放置一些公告和参考信息等
+ * 
+ * @class Home
+ * @extends {React.Component<IHomeProps>}
+ */
 class Home extends React.Component<IHomeProps> {
     public static contextTypes = { theme: PropTypes.object };
     public context: { theme: ReactUWP.ThemeType };

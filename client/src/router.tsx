@@ -11,7 +11,14 @@ interface ITheme {
     accent: any, //
     useFluentDesign: boolean,
 }
-
+/**
+ * 顶级路由配置文件
+ * 包括React-UWP的ThemeProvider
+ *
+ * @export
+ * @param {*} { history }
+ * @returns
+ */
 export default function RouterConfig({ history }) {
     const theme: ITheme = {
         themeName: "dark",

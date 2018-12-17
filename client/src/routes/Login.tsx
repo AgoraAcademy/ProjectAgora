@@ -20,6 +20,12 @@ export interface ILoginProps {
 export interface ILoginState {
     placeholder: string
 };
+/**
+ * 登录页面
+ *
+ * @class Login
+ * @extends {React.Component<ILoginProps, ILoginState>}
+ */
 
 class Login extends React.Component<ILoginProps, ILoginState> {
     public contextTypes = { theme: PropTypes.object };

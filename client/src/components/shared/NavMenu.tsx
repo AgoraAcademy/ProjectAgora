@@ -9,6 +9,13 @@ export interface INavMenuProps {
     dispatch: any
 };
 
+/**
+ * 全局显示的NavigationMenu
+ *
+ * @class NavMenu
+ * @extends {React.Component<INavMenuProps>}
+ */
+
 class NavMenu extends React.Component<INavMenuProps> {
     public static contextTypes = { theme: PropTypes.object };
     public paneStyle = {

@@ -14,6 +14,13 @@ export interface IHomeMenuProps {
     dispatch: any
     learnerProfile: any
 };
+
+/**
+ * 主页菜单
+ *
+ * @class HomeMenu
+ * @extends {React.Component<IHomeMenuProps>}
+ */
 class HomeMenu extends React.Component<IHomeMenuProps> {
     public static contextTypes = { theme: PropTypes.object };
     public context: { theme: ReactUWP.ThemeType };

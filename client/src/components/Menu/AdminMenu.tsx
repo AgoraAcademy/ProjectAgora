@@ -14,6 +14,15 @@ export interface IAdminMenuProps {
     dispatch: any
     learnerProfile: any
 };
+
+/**
+ * 管理员界面菜单
+ *
+ * @class AdminMenu
+ * @extends {React.Component<IAdminMenuProps>}
+ */
+
+
 class AdminMenu extends React.Component<IAdminMenuProps> {
     public static contextTypes = { theme: PropTypes.object };
     public context: { theme: ReactUWP.ThemeType };

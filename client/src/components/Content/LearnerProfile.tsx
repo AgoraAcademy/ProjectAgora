@@ -10,6 +10,12 @@ export interface ILearnerProfileProps {
     dispatch: any,
     learnerProfile: any,
 }
+/**
+ * 学习者档案页面，用于展示学习者的各类信息。目前只有展示的页面，尚未决定是否使用同一个组件开发输入的部分
+ *
+ * @class LearnerProfile
+ * @extends {React.Component<ILearnerProfileProps>}
+ */
 
 class LearnerProfile extends React.Component<ILearnerProfileProps> {
     public static contextTypes = { theme: PropTypes.object };

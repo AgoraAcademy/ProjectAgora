@@ -8,7 +8,12 @@ export interface INoMatchProps {
     learnerProfile: object,
     main: object
 }
-
+/**
+ * 临时用于显示路由无匹配的页面
+ *
+ * @class NoMatch
+ * @extends {React.Component<INoMatchProps>}
+ */
 class NoMatch extends React.Component<INoMatchProps> {
     public static contextTypes = { theme: PropTypes.object };
     public context: { theme: ReactUWP.ThemeType };
