@@ -50,10 +50,19 @@ class ProjectDetail extends React.Component<IProjectDetailProps> {
     public state: IProjectDetailState = {
         dirty: false
     }  
+    public toolbarIcons = [
+        "bold", "italic", "strikethrough", "heading", "|", 
+        "quote", "unordered-list", "ordered-list", "|",
+        "link", "image", "table", "horizontal-rule", "|",
+        "preview", "guide"
+    ]
+
     public render(): JSX.Element {
         const { theme } = this.context;
         const { learnerProfile, projectDetail, dispatch } = this.props;
         const { editMode } = projectDetail
+        
+
         return (
             <Layout>
                 <Header style={{height:"48px", marginBottom:"20px", padding:"0px"}}>
@@ -73,7 +82,10 @@ class ProjectDetail extends React.Component<IProjectDetailProps> {
                                 label="编辑模式"
                                 size={20}
                                 defaultToggled={editMode}
-                                onToggle={(toggleValue)=> dispatch({type:"projectDetail/setField", name: "editMode", value: toggleValue })}
+                                onToggle={(toggleValue)=> {
+                                    dispatch({type:"projectDetail/setField", name: "editMode", value: toggleValue})
+                                
+                                }}
                             />
                         </Col>
                         <Col span={1} >
@@ -132,13 +144,28 @@ class ProjectDetail extends React.Component<IProjectDetailProps> {
                             </Row>
                         </Col>
                         <Col span={7}>
-                            <MDEditor id={`item_${index}_content`} value="Initial Content" delay={1000} options={{}}/>
+                            <MDEditor 
+                                id={`item_${index}_content`} 
+                                value="Initial Content"
+                                delay={1000} 
+                                options={{toolbar: this.props.projectDetail.editMode? this.toolbarIcons: false}}
+                            />
                         </Col>
                         <Col span={7}>
-                            <MDEditor id={`item_${index}_record`} value="Initial Record" delay={1000} options={{}}/>
+                            <MDEditor
+                                id={`item_${index}_record`} 
+                                value="Initial Record" 
+                                delay={1000} 
+                                options={{toolbar: this.props.projectDetail.editMode? this.toolbarIcons: false}}
+                            />
                         </Col>
                         <Col span={7}>
-                            <MDEditor id={`item_${index}_comment`} value="Initial Comment" delay={1000} options={{}}/>
+                            <MDEditor 
+                                id={`item_${index}_comment`} 
+                                value="Initial Comment" 
+                                delay={1000} 
+                                options={{toolbar: this.props.projectDetail.editMode? this.toolbarIcons: false}}
+                            />
                         </Col>
                     </Row>
                 )

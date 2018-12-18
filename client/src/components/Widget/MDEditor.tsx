@@ -2,11 +2,11 @@ import React, { Component } from "react";
 import SimpleMDEReact from "react-simplemde-editor";
 import './MDEditor.less'
 
-interface IMDEditor {
+interface IMDEditorProps {
     delay: number,
     value: string,
     options: any,
-    id: string
+    id: string,
 }
 /**
  * 基于Markdown和SimpleMDEReact的富文本编辑器，用于记录项目式学习项目。
@@ -15,7 +15,7 @@ interface IMDEditor {
  * @class MDEditor
  * @extends {Component<IMDEditor>}
  */
-class MDEditor extends Component<IMDEditor> {
+class MDEditor extends Component<IMDEditorProps> {
 
     public state = {
         value: localStorage.getItem(`smde_${this.props.id}`) || this.props.value
@@ -38,7 +38,12 @@ class MDEditor extends Component<IMDEditor> {
                     spellChecker: false,
                     indentWithTabs: false,
                     tabSize: 4,
-                    hideIcons: ["side-by-side", "fullscreen"],
+                    status: ["lines", "words", "cursor"],
+                    renderingConfig: {
+                        singleLineBreaks: false,
+                        codeSyntaxHighlighting: true,
+                    },
+
                     ...options
                 }}
             />

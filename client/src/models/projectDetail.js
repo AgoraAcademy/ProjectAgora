@@ -2,7 +2,7 @@ export default {
     namespace: 'projectDetail',
     state:
     {
-        editMode: true,
+        editMode: false,
         projectInfo: {},
         projectItems: [
             {
