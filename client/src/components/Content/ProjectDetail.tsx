@@ -1,12 +1,14 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
 import ReactUWP, { Toggle, Button } from 'react-uwp'
+import { Drawer } from 'antd';
 import { Layout, Row, Col } from 'antd'
 import { connect } from 'dva'
 import { deepCopy } from '../../util'
 import MDEditor from "../Widget/MDEditor";
 import CalendarDatePicker from "react-uwp/CalendarDatePicker";
 import "simplemde/dist/simplemde.min.css";
+import "./ProjectDetail.less"
 const { Header, Footer, Sider, Content } = Layout;
 
 
@@ -34,7 +36,9 @@ interface IProjectItem {
 }
 
 interface IProjectDetailState {
-    dirty: boolean
+    dirty: boolean,
+    showDrawer: boolean,
+    showChildDrawer: boolean
 }
 /**
  * 项目详情
@@ -48,7 +52,9 @@ class ProjectDetail extends React.Component<IProjectDetailProps> {
     public static contextTypes = { theme: PropTypes.object };
     public context: { theme: ReactUWP.ThemeType };
     public state: IProjectDetailState = {
-        dirty: false
+        dirty: false,
+        showDrawer: false,
+        showChildDrawer: false
     }  
     public toolbarIcons = [
         "bold", "italic", "strikethrough", "heading", "|", 
@@ -73,7 +79,7 @@ class ProjectDetail extends React.Component<IProjectDetailProps> {
                             </span>
                         </Col>
                         <Col span={2} >
-                            <Button style={{width:"100%", height:"32px", lineHeight: "normal"}}>
+                            <Button style={{width:"100%", height:"32px", lineHeight: "normal"}} onClick={() => this.setState({showDrawer: true})}>
                                 编辑项目信息
                             </Button>
                         </Col>
@@ -100,14 +106,65 @@ class ProjectDetail extends React.Component<IProjectDetailProps> {
                     <Row>
                         <Col span={8} />
                         <Col span={8} style={{marginBottom: "20px", marginTop:"20px"}}>
-                            <Button 
-                                style={{width:"100%", height:"300px", marginLeft:"auto", marginRight:"auto"}} 
+                            <Button
+                                style={{ width: "100%", height: "300px", marginLeft: "auto", marginRight: "auto" }}
                                 icon="Add"
-                                onClick={() => dispatch({type:"projectDetail/addProjectItem"})}
+                                onClick={() => dispatch({ type: "projectDetail/addProjectItem" })}
                             />
                         </Col>
-                        <Col span={8}/>
+                        <Col span={8} />
                     </Row>
+                    <Drawer
+                        title="Multi-level drawer"
+                        width={520}
+                        closable={false}
+                        onClose={() => this.setState({showDrawer: false})}
+                        visible={this.state.showDrawer}
+                        style={{borderRadius: '0'}}
+                    >
+                        <Button 
+                            style={{width:"100%", height:"32px", lineHeight: "normal"}}
+                            onClick={() => this.setState({showChildDrawer: true})}
+                        >
+                            Two-level drawer
+                        </Button>
+                        <Drawer
+                            title="Two-level Drawer"
+                            width={320}
+                            closable={false}
+                            onClose={() => this.setState({showChildDrawer: false})}
+                            visible={this.state.showChildDrawer}
+                        >
+                            This is two-level drawer
+                        </Drawer>
+                        <div
+                            style={{
+                                position: 'absolute',
+                                bottom: 0,
+                                width: '100%',
+                                borderTop: '1px solid #e8e8e8',
+                                padding: '10px 16px',
+                                display: 'flex',
+                                justifyContent:'space-around',
+                                left: 0,
+                                background: '#000',
+                                borderRadius: '0',
+                            }}
+                        >
+                            <Button 
+                                style={{width:"30%", height:"32px", lineHeight: "normal"}}
+                                onClick={() => this.setState({showDrawer: false})}
+                            >
+                                Cancel
+                            </Button>
+                            <Button 
+                                style={{width:"30%", height:"32px", lineHeight: "normal"}}
+                                onClick={() => this.setState({showDrawer: false})}
+                            >
+                                Submit
+                            </Button>
+                        </div>
+                    </Drawer>
                 </Content>
                 <Footer>
                     <p>footer</p>
