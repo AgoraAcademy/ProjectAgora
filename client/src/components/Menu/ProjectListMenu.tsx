@@ -32,7 +32,7 @@ class ProjectListMenu extends React.Component<IProjectListMenuProps> {
         children: [{
             title: "测试项目",
             onClick: ()=> this.props.dispatch(
-                {type:'main/redirect', path:'/project/1'}
+                {type:'main/redirect', path:'#/project/1'}
             )}, {
             title: "联系信息",
             onClick: ()=> this.props.dispatch(

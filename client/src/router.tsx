@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Router, Route, Switch } from 'dva/router';
+import { HashRouter, Route, Switch } from 'dva/router';
 import Login from './routes/Login';  
 import Main from './routes/Main'; 
 import NoMatch from './components/shared/Nomatch'
@@ -28,13 +28,13 @@ export default function RouterConfig({ history }) {
     }
     return (
         <UWPThemeProvider theme={getTheme(theme)}>
-            <Router history={history}>
+            <HashRouter>
                 <Switch>
                     <Route exact path="/test" component={Test} />
                     <Route exact path="/login" component={Login} />
                     <Route path="/" component={Main} />
                 </Switch>
-            </Router>
+            </HashRouter>
         </UWPThemeProvider>
     );
 }

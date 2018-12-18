@@ -35,7 +35,7 @@ class NavMenu extends React.Component<INavMenuProps> {
                     label="主页" 
                     key={Math.random()} 
                     icon="Home" 
-                    onClick={()=> {this.props.dispatch({type:'main/redirect', path:'/'})}}
+                    onClick={()=> {this.props.dispatch({type:'main/redirect', path:'#/'})}}
                 />
             ),
             (
@@ -43,7 +43,7 @@ class NavMenu extends React.Component<INavMenuProps> {
                     label="项目式学习" 
                     icon={"\uE716"} 
                     key={Math.random()} 
-                    onClick={()=> {this.props.dispatch({type:'main/redirect', path:'/project'})}}
+                    onClick={()=> {this.props.dispatch({type:'main/redirect', path:'#/project'})}}
                 />
             ),
             (
@@ -61,7 +61,7 @@ class NavMenu extends React.Component<INavMenuProps> {
                     label="管理员入口" 
                     icon="Admin" 
                     key={Math.random()} 
-                    onClick={()=> {this.props.dispatch({type:'main/redirect', path:'/admin'})}}
+                    onClick={()=> {this.props.dispatch({type:'main/redirect', path:'#/admin'})}}
                 />
             ),
             <SplitViewCommand label="用户中心" icon="Contact" key={Math.random()}/>,
