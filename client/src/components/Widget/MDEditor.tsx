@@ -7,6 +7,7 @@ interface IMDEditorProps {
     value: string,
     options: any,
     id: string,
+    editmode: string
 }
 /**
  * 基于Markdown和SimpleMDEReact的富文本编辑器，用于记录项目式学习项目。
@@ -21,10 +22,17 @@ class MDEditor extends Component<IMDEditorProps> {
         value: localStorage.getItem(`smde_${this.props.id}`) || this.props.value
     };
 
+    public controllInstance = (instance) => {
+        // You can now store and manipulate the simplemde instance. 
+        if (this.props.editmode !== "true") {
+        instance.togglePreview()}
+    }
+
     public render() {
         const { options, delay, id, ...rest } = this.props;
         return (
             <SimpleMDEReact
+                getMdeInstance={this.controllInstance}
                 className={'CodeMirror'}
                 {...rest}
                 id={id}

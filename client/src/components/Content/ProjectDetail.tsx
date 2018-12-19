@@ -201,7 +201,8 @@ class ProjectDetail extends React.Component<IProjectDetailProps> {
                             </Row>
                         </Col>
                         <Col span={7}>
-                            <MDEditor 
+                            <MDEditor
+                                editmode={this.props.projectDetail.editMode.toString()}
                                 id={`item_${index}_content`} 
                                 value="Initial Content"
                                 delay={1000} 
@@ -210,6 +211,7 @@ class ProjectDetail extends React.Component<IProjectDetailProps> {
                         </Col>
                         <Col span={7}>
                             <MDEditor
+                                editmode={this.props.projectDetail.editMode.toString()}
                                 id={`item_${index}_record`} 
                                 value="Initial Record" 
                                 delay={1000} 
@@ -218,6 +220,7 @@ class ProjectDetail extends React.Component<IProjectDetailProps> {
                         </Col>
                         <Col span={7}>
                             <MDEditor 
+                                editmode={this.props.projectDetail.editMode.toString()}
                                 id={`item_${index}_comment`} 
                                 value="Initial Comment" 
                                 delay={1000} 
