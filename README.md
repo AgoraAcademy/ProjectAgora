@@ -28,7 +28,7 @@
 - 配置环境: 
     - `cd client` 
     - `npm install -g typescript` 全局安装typescript
-    - `npm install --save-dev @types/react @types/react-dom ts-loader ts-lint` 安装Typescript的各类工具包
+    - `npm install --save-dev @types/react @types/react-dom ts-loader tslint` 安装Typescript的各类工具包
     - `npm install`
 - 启动环境： `npm start`
 
