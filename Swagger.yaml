@@ -271,14 +271,23 @@ definitions:
         items: 
           type: object
           properties:
-            timestamp:
-              description: 条目时间戳
+            itemTitle:
+              description: 条目标题
               type: string
-            instruction:
-              description: 课程项目中教师为各条目定义的内容(暂定使用Markdown编码)
+            itemStartDate:
+              description: 条目开始时间; 若存在关联课程，该条为空
+              type: string  
+            itemEndDate:
+              description: 条目结束时间; 若存在关联课程，该条为空
               type: string
-            record:
-              description: 学生记录(暂定使用Markdown编码)
+            itemContent:
+              description: 条目内容；若存在关联课程，该条为空
+              type: string
+            itemRecord:
+              description: 条目记录
+              type: string
+            itemComment:
+              description: 条目评语
               type: string
     required:
       - name
@@ -300,6 +309,24 @@ definitions:
       createdBy:
         description: 创建人ID
         type: integer
+      instruction:
+        description: 课程引导内容
+        type: array
+        items:
+            type: object
+            properties:
+              instructionTitle:
+                description: 引导条目标题
+                type: string
+              instructionStartDate:
+                description: 引导条目开始时间
+                type: string  
+              instructionEndDate:
+                description: 引导条目结束时间
+                type: string
+              instructionContent:
+                description: 引导条目内容
+                type: string
 paths:
   /login:
     get:

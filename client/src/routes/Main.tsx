@@ -1,9 +1,8 @@
-import * as React from 'react';
+import React from 'react';
 import { Layout } from 'antd'
 import NavMenu from '../components/shared/NavMenu';
 import { Route, Switch } from 'dva/router';
 import AdminMenu from '../components/Menu/AdminMenu'
-import './Main.less'
 import LearnerProfile from '../components/Content/LearnerProfile';
 import LearnerMenu from '../components/Menu/LearnerMenu';
 import NoMatch from '../components/shared/Nomatch'
@@ -13,6 +12,7 @@ import ProjectList from '../components/Content/ProjectList'
 import ProjectListMenu from '../components/Menu/ProjectListMenu'
 import ProjectDetail from '../components/Content/ProjectDetail'
 import ProjectDetailMenu from '../components/Menu/ProjectDetailMenu'
+import './Main.less'
 
 
 const { Header, Footer, Sider, Content } = Layout;
