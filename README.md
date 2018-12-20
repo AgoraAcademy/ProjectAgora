@@ -1,18 +1,6 @@
 # ProjectAgora
 
-## Server部分
-
-- 必需环境：`Anaconda 3`
-
-- 建议配置：
-    - `Anaconda Scripts`: 适用于VS Code (Windows版) + PowerShell的Anaconda虚拟环境切换脚本
-        - 将文件夹中文件放入本机的`Anaconda\Scripts`目录中
-
-### 环境配置
-
-- 创建环境：`conda create -n ProjectAgora python=3.6`
-- 启动环境：`activate ProjectAgora`
-- 配置环境：`pip install -r .\server\requirements.txt`
+ProjectAgora计划用于为先锋教育 - 安格学院提供电子化项目式学习系统和教务系统功能，并计划以开源的形式组织开发（尚未确定使用的开源协议）和开放使用。
 
 
 ## Client部分
@@ -31,6 +19,22 @@
     - `npm install --save-dev @types/react @types/react-dom ts-loader tslint` 安装Typescript的各类工具包
     - `npm install`
 - 启动环境： `npm start`
+
+
+## Server部分
+
+- 必需环境：`Anaconda 3`
+
+- 建议配置：
+    - `Anaconda Scripts`: 适用于VS Code (Windows版) + PowerShell的Anaconda虚拟环境切换脚本
+        - 将文件夹中文件放入本机的`Anaconda\Scripts`目录中
+
+### 环境配置
+
+- 创建环境：`conda create -n ProjectAgora python=3.6`
+- 启动环境：`activate ProjectAgora`
+- 配置环境：`pip install -r .\server\requirements.txt`
+
 
 ## 第一期模块计划
 - 用户模块
