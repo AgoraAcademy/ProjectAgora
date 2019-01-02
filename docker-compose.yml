@@ -1,0 +1,13 @@
+version: '3'
+services:
+    client:
+        build:
+            content: ./client
+        ports:
+            - "80:80"
+    server:
+        build:
+            context: ./server
+        ports: "81:8000"
+    # database to be set up
+    
