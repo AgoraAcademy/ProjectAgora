@@ -3,7 +3,39 @@ export default {
     state:
     {
         editMode: false,
-        projectInfo: {},
+        projectInfo: {
+            id: 1,
+            name: "摄影",
+            createdTime: "8102年1月1日", //时间处理
+            createdByID: 1,
+            createdBy: "肖春腾",
+            relatedCourseID: 0,
+            relatedCourse: "自由项目",
+            projectTerm: "2018年冬",
+            projectTermLength: "3学期",
+            projectStartDate: "8102年1月1日", //时间处理 
+            averageIntendedCreditHourPerWeek: 1,
+            totalIntendedCreditHour: 1,
+            projectMentorID: 1,
+            projectMentor: "罗善文",
+            averageGuidingHourPerWeek: 1,
+            projectMeta: {
+                projectIntro: "这是项目介绍！",
+                projectGoal: "这是项目目标！",
+                evaluationSchema: "这是项目评价标准！",
+                projectPlan: "这是项目计划！"
+            },
+            projectApprovalInfo: {
+                ApprovalCommitteeOfAcademics: {
+                    result: "通过",
+                    advice: "这是学术委员会审核建议！"
+                },
+                ApprovalMentor: {
+                    result: "通过",
+                    advice: "这是导师审核建议！"
+                }
+            }
+        },
         projectItems: [
             {
                 itemTitle: "Item1",

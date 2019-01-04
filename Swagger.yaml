@@ -259,37 +259,46 @@ definitions:
       createdTime:
         description: 创建时间
         type: string
-      createdBy:
+      createdByID:
         description: 创建人ID
         type: integer
+      createdBy:
+        description: 创建人（姓名）
+        type: string
       relatedCourseId:
         description: 关联的课程ID；自由项目的课程ID为0
+        type: integer
+      relatedCourse:
+        description: 关联的课程
+        type: string
+      projectTerm:
+          description: 项目开始学期
+          type: string
+      projectTermLength:
+        description: 持续时间（以学期为单位）
+        type: integer
+      projectStartDate:
+        description: 项目开始时间
+        type: string
+      averageIntendedCreditHourPerWeek:
+        description: 预期周均学时
+        type: integer
+      totalIntendedCreditHour:
+        description: 预期总学时
+        type: integer
+      projectMentorID:
+        description: 项目导师ID
+        type: integer
+      projectMentor:
+        description: 项目导师
+        type: string
+      averageGuidingHourPerWeek:
+        description: 导师周均指导时间
         type: integer
       projectMeta: 
         description: 项目元信息
         type: object
         proerties:
-          projectTerm:
-            description: 项目开始学期
-            type: string
-          projectTermLength:
-            description: 持续时间（以学期为单位）
-            type: integer
-          projectStartDate:
-            description: 项目开始时间
-            type: string
-          averageIntendedCreditHourPerWeek:
-            description: 预期周均学时
-            type: int
-          totalIntendedCreditHour:
-            description: 预期总学时
-            type: int
-          projectMentorID:
-            description: 项目导师ID
-            type: int
-          averageGuidingHourPerWeek:
-            description: 导师周均指导时间
-            type: int
           projectIntro:
             description: 项目简介
             type: string
@@ -301,6 +310,9 @@ definitions:
             type: string
           projectPlan:
             description: 项目计划
+            type: string
+          instructionPlan: 
+            description: 项目指导规划
             type: string
       projectApprovalInfo:
         description: 项目审核信息

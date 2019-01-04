@@ -13,6 +13,9 @@ import ProjectListMenu from '../components/Menu/ProjectListMenu'
 import ProjectDetail from '../components/Content/ProjectDetail'
 import ProjectDetailMenu from '../components/Menu/ProjectDetailMenu'
 import './Main.less'
+import NewProject from '../components/Content/NewProject';
+import NewFreeStyleProject from '../components/Content/NewFreeStyleProject';
+import NewGuidedProject from '../components/Content/NewGuidedProject';
 
 
 const { Header, Footer, Sider, Content } = Layout;
@@ -48,6 +51,9 @@ class Main extends React.Component<IMainProps> {
                             <Route exact path="/" component={Home}/>
                             <Route path="/learner" component={LearnerProfile} />
                             <Route exact path="/project" component={ProjectList}/>
+                            <Route exact path="/project/create" component={NewProject} />
+                            <Route exact path="/project/create/freestyle" component={NewFreeStyleProject} />
+                            <Route exact path="/project/create/guided" component={NewGuidedProject} />
                             <Route exact path="/project/:id" component={ProjectDetail} />
                             <Route component={NoMatch}/>
                         </Switch>
