@@ -10,6 +10,7 @@ import { connect } from 'dva'
 export interface INewGuidedProjectProps {
     dispatch: any,
     learnerProfile: object,
+    editMode: boolean
 }
 /**
  *

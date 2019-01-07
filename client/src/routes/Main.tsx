@@ -16,6 +16,7 @@ import './Main.less'
 import NewProject from '../components/Content/NewProject';
 import NewFreeStyleProject from '../components/Content/NewFreeStyleProject';
 import NewGuidedProject from '../components/Content/NewGuidedProject';
+import NewCourse from '../components/Content/NewCourse';
 
 
 const { Header, Footer, Sider, Content } = Layout;
@@ -55,6 +56,7 @@ class Main extends React.Component<IMainProps> {
                             <Route exact path="/project/create/freestyle" component={NewFreeStyleProject} />
                             <Route exact path="/project/create/guided" component={NewGuidedProject} />
                             <Route exact path="/project/:id" component={ProjectDetail} />
+                            <Route exact path="/course/create" component={NewCourse} />
                             <Route component={NoMatch}/>
                         </Switch>
                     </Content>

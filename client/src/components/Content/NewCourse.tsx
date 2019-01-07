@@ -7,19 +7,19 @@ const { Meta } = Card;
 
 import { connect } from 'dva'
 
-export interface INewFreeStyleProjectProps {
+export interface INewCourseProps {
     dispatch: any,
     learnerProfile: object,
     editMode: boolean
 }
 /**
  *
- * 创建新的自由项目
+ * 创建新的课程
  * 
- * @class NewFreeStyleProject
- * @extends {React.Component<INewFreeStyleProjectProps>}
+ * @class NewCourse
+ * @extends {React.Component<INewCourseProps>}
  */
-class NewFreeStyleProject extends React.Component<INewFreeStyleProjectProps> {
+class NewCourse extends React.Component<INewCourseProps> {
     public static contextTypes = { theme: PropTypes.object };
     public context: { theme: ReactUWP.ThemeType };
 
@@ -47,7 +47,7 @@ class NewFreeStyleProject extends React.Component<INewFreeStyleProjectProps> {
                 <Row type="flex" justify="space-around" align="middle">
                         <Col span={18}>
                             <span style={{color: 'white', ...theme.typographyStyles.header }}>
-                                创建新的自由项目
+                                创建新的课程
                             </span>
                         </Col>
                         <Col span={2} >
@@ -65,172 +65,114 @@ class NewFreeStyleProject extends React.Component<INewFreeStyleProjectProps> {
                     <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
                         {/* 此处的width可能有兼容性问题 */}
                         <Col span={2} style={this.labelStyle}>
-                            <span>项目名称</span>
+                            <span>课程名称</span>
                         </Col>
                         <Col span={6}>
                             <TextBox
                                 style={this.formRowStyle}
-                                placeholder="项目名称"
+                                placeholder="课程名称"
                             />
                         </Col>
                         <Col span={2}/>
                         <Col span={2} style={this.labelStyle}>
-                            <span>开始时间</span>
+                            <span>上课时间</span>
                         </Col>
                         <Col span={6}>
                             <TextBox
                                 style={this.formRowStyle}
-                                placeholder="开始时间"
+                                placeholder="上课时间"
                             />
                         </Col>
                     </Row>
                     <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
                         {/* 此处的width可能有兼容性问题 */}
                         <Col span={2} style={this.labelStyle}>
-                            <span>项目开始学期</span>
+                            <span>学分设置</span>
                         </Col>
                         <Col span={6}>
                             <TextBox
                                 style={this.formRowStyle}
-                                placeholder="项目开始学期"
+                                placeholder="学分设置"
                             />
                         </Col>
                         <Col span={2}/>
                         <Col span={2} style={this.labelStyle}>
-                            <span>持续学期数</span>
+                            <span>上课周数</span>
                         </Col>
                         <Col span={6}>
                             <TextBox
                                 style={this.formRowStyle}
-                                placeholder="持续学期数"
+                                placeholder="上课周数"
                             />
                         </Col>
                     </Row>
                     <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
                         {/* 此处的width可能有兼容性问题 */}
                         <Col span={2} style={this.labelStyle}>
-                            <span>预期周均学时</span>
-                        </Col>
-                        <Col span={6}>
-                            <TextBox
-                                style={this.formRowStyle}
-                                placeholder="预期周均学时"
-                            />
-                        </Col>
-                        <Col span={2}/>
-                        <Col span={2} style={this.labelStyle}>
-                            <span>预期总学时</span>
-                        </Col>
-                        <Col span={6}>
-                            <TextBox
-                                style={this.formRowStyle}
-                                placeholder="预期总学时"
-                            />
-                        </Col>
-                    </Row>
-                    <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
-                        {/* 此处的width可能有兼容性问题 */}
-                        <Col span={2} style={this.labelStyle}>
-                            <span>项目导师</span>
-                        </Col>
-                        <Col span={6}>
-                            <TextBox
-                                style={this.formRowStyle}
-                                placeholder="项目导师"
-                            />
-                        </Col>
-                        <Col span={2}/>
-                        <Col span={2} style={this.labelStyle}>
-                            <span>导师周均指导时间</span>
-                        </Col>
-                        <Col span={6}>
-                            <TextBox
-                                style={this.formRowStyle}
-                                placeholder="导师周均指导时间"
-                            />
-                        </Col>
-                    </Row>
-                    <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
-                        {/* 此处的width可能有兼容性问题 */}
-                        <Col span={2} style={this.labelStyle}>
-                            <span>项目简介</span>
+                            <span>课程形式与评价方式</span>
                         </Col>
                         <Col span={16}>
                             <TextBox
                                 style={this.formRowStyle}
                                 type="textarea"
                                 textBoxStyle={this.textAreaStyle}
-                                placeholder="项目简介"
+                                placeholder="课程形式与评价方式"
                             />
                         </Col>
                     </Row>
                     <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
                         {/* 此处的width可能有兼容性问题 */}
                         <Col span={2} style={this.labelStyle}>
-                            <span>项目目标</span>
+                            <span>课程目的</span>
                         </Col>
                         <Col span={16}>
                             <TextBox
                                 style={this.formRowStyle}
                                 type="textarea"
                                 textBoxStyle={this.textAreaStyle}
-                                placeholder="项目目标"
+                                placeholder="课程目的"
                             />
                         </Col>
                     </Row>
                     <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
                         {/* 此处的width可能有兼容性问题 */}
                         <Col span={2} style={this.labelStyle}>
-                            <span>评价标准</span>
+                            <span>教学目标</span>
                         </Col>
                         <Col span={16}>
                             <TextBox
                                 style={this.formRowStyle}
                                 type="textarea"
                                 textBoxStyle={this.textAreaStyle}
-                                placeholder="评价标准"
+                                placeholder="教学目标"
                             />
                         </Col>
                     </Row>
                     <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
                         {/* 此处的width可能有兼容性问题 */}
                         <Col span={2} style={this.labelStyle}>
-                            <span>评价标准</span>
+                            <span>教学安排</span>
                         </Col>
                         <Col span={16}>
                             <TextBox
                                 style={this.formRowStyle}
                                 type="textarea"
                                 textBoxStyle={this.textAreaStyle}
-                                placeholder="评价标准"
+                                placeholder="教学安排"
                             />
                         </Col>
                     </Row>
                     <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
                         {/* 此处的width可能有兼容性问题 */}
                         <Col span={2} style={this.labelStyle}>
-                            <span>评价标准</span>
+                            <span>其他注意事项</span>
                         </Col>
                         <Col span={16}>
                             <TextBox
                                 style={this.formRowStyle}
                                 type="textarea"
                                 textBoxStyle={this.textAreaStyle}
-                                placeholder="评价标准"
-                            />
-                        </Col>
-                    </Row>
-                    <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
-                        {/* 此处的width可能有兼容性问题 */}
-                        <Col span={2} style={this.labelStyle}>
-                            <span>评价标准</span>
-                        </Col>
-                        <Col span={16}>
-                            <TextBox
-                                style={this.formRowStyle}
-                                type="textarea"
-                                textBoxStyle={this.textAreaStyle}
-                                placeholder="评价标准"
+                                placeholder="其他注意事项"
                             />
                         </Col>
                     </Row>
@@ -247,4 +189,4 @@ function mapStateToProps({main, learnerProfile}) {
     return { main, learnerProfile }
 }
 
-export default connect(mapStateToProps)(NewFreeStyleProject)
+export default connect(mapStateToProps)(NewCourse)

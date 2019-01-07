@@ -10,6 +10,7 @@ ADD package.json .
 ADD ./src ./src
 ADD ./public ./public
 ADD .webpackrc .webpackrc
+ADD default /etc/nginx/sites-available
 RUN npm install
 RUN npm run build
 CMD ["nginx", "-g", "daemon off"]
