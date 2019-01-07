@@ -15,7 +15,7 @@ pipeline {
                     args '-d -p 80:80 --security-opt apparmor=unconfined'
                 }
             }
-            step {
+            steps {
                 sh 'npm install'
             }
         }
@@ -25,7 +25,7 @@ pipeline {
                     label 'client-container'
                 }
             }
-            step {
+            steps {
                 sh 'npm run build'
             }
         }
@@ -35,7 +35,7 @@ pipeline {
                     label 'client-container'
                 }
             }
-            step {
+            steps {
                 sh 'nginx -g daemon off'
             }
         }
