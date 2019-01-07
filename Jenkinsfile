@@ -1,11 +1,6 @@
 pipeline {
     agent none 
     stages {
-        stage('SonarQube Analysis') {
-            steps {
-                sh 'echo "skipped"'
-            }
-        }
         stage('Client - npm install') {
             agent {
                 dockerfile {
