@@ -2,10 +2,11 @@ import * as React from "react";
 import * as PropTypes from "prop-types";
 import ReactUWP , { Toggle, Button, TextBox } from 'react-uwp'
 import { Layout, Row, Col, Card } from 'antd'
+import { connect } from 'dva'
+import TextArea from '../Widget/TextArea'
 const { Header, Footer, Sider, Content } = Layout;
 const { Meta } = Card;
 
-import { connect } from 'dva'
 
 export interface INewFreeStyleProjectProps {
     dispatch: any,
@@ -24,18 +25,18 @@ class NewFreeStyleProject extends React.Component<INewFreeStyleProjectProps> {
     public context: { theme: ReactUWP.ThemeType };
 
     public formRowStyle: React.CSSProperties = {
-        margin: "10px 0",
+        margin: "10px 0px 10px 0px",
         width: "100%"
     };
 
     public labelStyle: React.CSSProperties = {
         textAlign: "left",
-        margin: "0 5px"
+        margin: "0px"
     };
 
     public textAreaStyle: React.CSSProperties = {
         height: "200px",
-        margin: "0px"
+        margin: "10px 0px 10px 0px"
     };
 
     public render():JSX.Element {
@@ -156,9 +157,8 @@ class NewFreeStyleProject extends React.Component<INewFreeStyleProjectProps> {
                             <span>项目简介</span>
                         </Col>
                         <Col span={16}>
-                            <TextBox
+                            <TextArea
                                 style={this.formRowStyle}
-                                type="textarea"
                                 textBoxStyle={this.textAreaStyle}
                                 placeholder="项目简介"
                             />
@@ -170,9 +170,8 @@ class NewFreeStyleProject extends React.Component<INewFreeStyleProjectProps> {
                             <span>项目目标</span>
                         </Col>
                         <Col span={16}>
-                            <TextBox
+                            <TextArea
                                 style={this.formRowStyle}
-                                type="textarea"
                                 textBoxStyle={this.textAreaStyle}
                                 placeholder="项目目标"
                             />
@@ -184,7 +183,7 @@ class NewFreeStyleProject extends React.Component<INewFreeStyleProjectProps> {
                             <span>评价标准</span>
                         </Col>
                         <Col span={16}>
-                            <TextBox
+                            <TextArea
                                 style={this.formRowStyle}
                                 type="textarea"
                                 textBoxStyle={this.textAreaStyle}
@@ -195,38 +194,10 @@ class NewFreeStyleProject extends React.Component<INewFreeStyleProjectProps> {
                     <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
                         {/* 此处的width可能有兼容性问题 */}
                         <Col span={2} style={this.labelStyle}>
-                            <span>评价标准</span>
+                            <span>项目计划</span>
                         </Col>
                         <Col span={16}>
-                            <TextBox
-                                style={this.formRowStyle}
-                                type="textarea"
-                                textBoxStyle={this.textAreaStyle}
-                                placeholder="评价标准"
-                            />
-                        </Col>
-                    </Row>
-                    <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
-                        {/* 此处的width可能有兼容性问题 */}
-                        <Col span={2} style={this.labelStyle}>
-                            <span>评价标准</span>
-                        </Col>
-                        <Col span={16}>
-                            <TextBox
-                                style={this.formRowStyle}
-                                type="textarea"
-                                textBoxStyle={this.textAreaStyle}
-                                placeholder="评价标准"
-                            />
-                        </Col>
-                    </Row>
-                    <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
-                        {/* 此处的width可能有兼容性问题 */}
-                        <Col span={2} style={this.labelStyle}>
-                            <span>评价标准</span>
-                        </Col>
-                        <Col span={16}>
-                            <TextBox
+                            <TextArea
                                 style={this.formRowStyle}
                                 type="textarea"
                                 textBoxStyle={this.textAreaStyle}

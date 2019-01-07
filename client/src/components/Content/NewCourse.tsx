@@ -24,18 +24,18 @@ class NewCourse extends React.Component<INewCourseProps> {
     public context: { theme: ReactUWP.ThemeType };
 
     public formRowStyle: React.CSSProperties = {
-        margin: "10px 0",
+        margin: "10px 0px 10px 0px",
         width: "100%"
     };
 
     public labelStyle: React.CSSProperties = {
         textAlign: "left",
-        margin: "0 5px"
+        margin: "0px"
     };
 
     public textAreaStyle: React.CSSProperties = {
         height: "200px",
-        margin: "0px"
+        margin: "10px 0px 10px 0px"
     };
 
     public render():JSX.Element {
