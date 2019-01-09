@@ -56,12 +56,6 @@ class ProjectDetail extends React.Component<IProjectDetailProps> {
         showDrawer: false,
         
     }  
-    public toolbarIcons = [
-        "bold", "italic", "strikethrough", "heading", "|", 
-        "quote", "unordered-list", "ordered-list", "|",
-        "link", "image", "table", "horizontal-rule", "|",
-        "preview", "guide"
-    ]
 
     public render(): JSX.Element {
         const { theme } = this.context;
@@ -156,28 +150,19 @@ class ProjectDetail extends React.Component<IProjectDetailProps> {
                         <Col span={7}>
                             <MDEditor
                                 editmode={this.props.projectDetail.editMode.toString()}
-                                id={`item_${index}_content`} 
-                                value="Initial Content"
-                                delay={1000} 
-                                options={{toolbar: this.props.projectDetail.editMode? this.toolbarIcons: false}}
+                                value={this.props.projectDetail.projectItems[index].itemContent.toString()}
                             />
                         </Col>
                         <Col span={7}>
                             <MDEditor
                                 editmode={this.props.projectDetail.editMode.toString()}
-                                id={`item_${index}_record`} 
-                                value="Initial Record" 
-                                delay={1000} 
-                                options={{toolbar: this.props.projectDetail.editMode? this.toolbarIcons: false}}
+                                value={this.props.projectDetail.projectItems[index].itemRecord.toString()}
                             />
                         </Col>
                         <Col span={7}>
                             <MDEditor 
                                 editmode={this.props.projectDetail.editMode.toString()}
-                                id={`item_${index}_comment`} 
-                                value="Initial Comment" 
-                                delay={1000} 
-                                options={{toolbar: this.props.projectDetail.editMode? this.toolbarIcons: false}}
+                                value={this.props.projectDetail.projectItems[index].itemComment.toString()} 
                             />
                         </Col>
                     </Row>

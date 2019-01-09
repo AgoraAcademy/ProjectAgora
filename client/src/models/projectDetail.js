@@ -41,17 +41,17 @@ export default {
                 itemTitle: "Item1",
                 itemStartDate: new Date(),
                 itemEndDate: new Date(),
-                itemContent: "" ,
-                itemRecord: "",
-                itemComment: ""
+                itemContent: "item1 content" ,
+                itemRecord: "item1 record",
+                itemComment: "item1 comment"
             },
             {
                 itemTitle: "Item2",
                 itemStartDate: new Date(),
                 itemEndDate: new Date(),
-                itemContent: "",
-                itemRecord: "",
-                itemComment: ""
+                itemContent: "item2 content",
+                itemRecord: "item2 content",
+                itemComment: "item2 comment"
             },
             {
                 itemTitle: "Item3",
