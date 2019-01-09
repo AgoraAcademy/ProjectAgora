@@ -149,20 +149,20 @@ class ProjectDetail extends React.Component<IProjectDetailProps> {
                         </Col>
                         <Col span={7}>
                             <MDEditor
-                                editmode={this.props.projectDetail.editMode.toString()}
-                                value={this.props.projectDetail.projectItems[index].itemContent.toString()}
+                                itemType="itemContent"
+                                itemIndex={index}
                             />
                         </Col>
                         <Col span={7}>
                             <MDEditor
-                                editmode={this.props.projectDetail.editMode.toString()}
-                                value={this.props.projectDetail.projectItems[index].itemRecord.toString()}
+                                itemType="itemRecord"
+                                itemIndex={index}
                             />
                         </Col>
                         <Col span={7}>
                             <MDEditor 
-                                editmode={this.props.projectDetail.editMode.toString()}
-                                value={this.props.projectDetail.projectItems[index].itemComment.toString()} 
+                                itemType="itemComment"
+                                itemIndex={index}
                             />
                         </Col>
                     </Row>

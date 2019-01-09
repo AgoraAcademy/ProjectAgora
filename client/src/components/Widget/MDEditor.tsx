@@ -1,15 +1,16 @@
 import React, { Component } from "react";
 import SimpleMDEReact from "react-simplemde-editor";
 import './MDEditor.less'
+import { connect } from "dva";
 
 interface IMDEditorProps {
-    value:string,
-    editmode: string
+    itemType: string,
+    itemIndex: number,
+    projectDetail: any,
 }
 
 interface IMDEditorState {
     value: string,
-    editmode: string
 }
 /**
  * 基于Markdown和SimpleMDEReact的富文本编辑器，用于记录项目式学习项目。
@@ -21,16 +22,14 @@ interface IMDEditorState {
  */
 class MDEditor extends Component<IMDEditorProps> {
     public state: IMDEditorState = { 
-        value: this.props.value,
-        editmode: this.props.editmode
+        value: this.props.itemType==="itemContent"? this.props.projectDetail.projectItems[this.props.itemIndex].itemContent:this.props.itemType==="itemRecord"?this.props.projectDetail.projectItems[this.props.itemIndex].itemRecord:this.props.itemType==="itemComment"?this.props.projectDetail.projectItems[this.props.itemIndex].itemComment: "",
     };
     
 
-    public controllInstance = (instance) => {
-        // You can now store and manipulate the simplemde instance. 
-        if (this.state.editmode !== "true") {
-        instance.togglePreview()}
+    public getMdeInstance = (instance:any) => {
+        return instance
     }
+    
 
     public toolbarIcons = [
         "bold", "italic", "strikethrough", "heading", "|", 
@@ -39,11 +38,15 @@ class MDEditor extends Component<IMDEditorProps> {
         "preview", "guide"
     ]
 
+    public shouldComponentUpdate(nextProps, nextState) {
+        return false
+    }
+
     public render() {
-        
+        console.log("rendering!")
         return (
             <SimpleMDEReact
-                getMdeInstance={this.controllInstance}
+                getMdeInstance={this.getMdeInstance}
                 className={'CodeMirror'}
                 onChange={(e)=> this.setState({value: e})}
                 value={this.state.value}
@@ -56,13 +59,17 @@ class MDEditor extends Component<IMDEditorProps> {
                         singleLineBreaks: false,
                         codeSyntaxHighlighting: true,
                     },
-                    toolbar: this.state.editmode? this.toolbarIcons:false 
+                    toolbar: this.toolbarIcons
                 }}
             />
         );
     }
 }
 
-export default MDEditor;
+
+function mapStateToProps({ projectDetail }) {
+    return { projectDetail }
+}
+export default connect(mapStateToProps)(MDEditor);
 
 
