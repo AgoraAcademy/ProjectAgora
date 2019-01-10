@@ -10,35 +10,38 @@ import CalendarDatePicker from "react-uwp/CalendarDatePicker";
 import "simplemde/dist/simplemde.min.css";
 import "./ProjectDetail.less"
 import ProjectInfoDrawer from "../Widget/ProjectInfoDrawer";
+import { togglePreview } from "simplemde";
 const { Header, Footer, Sider, Content } = Layout;
 
 
 export interface IProjectDetailProps {
     dispatch: any,
-    learnerProfile: object,
-    projectDetail: { 
-        editMode: boolean,
-        projectInfo: object,
-        projectItems: IProjectItem[]
-    }
+    learnerProfile: any,
+    projectDetail: any
 }
 /**
  * 项目条目
  *
  * @interface IProjectItem
  */
-interface IProjectItem {
+type IProjectItem = {
     itemTitle: string,
     itemStartDate: Date,
     itemEndDate: Date,
-    itemContent: object,
-    itemRecord: object,
-    itemComment: object
+    itemContent: string,
+    itemRecord: string,
+    itemComment: string
 }
 
 interface IProjectDetailState {
+    itemContents: string[],
+    itemRecords: string[],
+    itemComments: string[],
+    itemStartDate: string[],
+    itemEndDate: string[],
     dirty: boolean,
     showDrawer: boolean,
+    editMode: boolean
 }
 /**
  * 项目详情
@@ -52,15 +55,71 @@ class ProjectDetail extends React.Component<IProjectDetailProps> {
     public static contextTypes = { theme: PropTypes.object };
     public context: { theme: ReactUWP.ThemeType };
     public state: IProjectDetailState = {
+        itemContents: [],
+        itemRecords: [],
+        itemComments: [],
+        itemStartDate: [],
+        itemEndDate:[],
         dirty: false,
         showDrawer: false,
-        
-    }  
+        editMode: false
+    }
+    
+    public setProjectItem = (itemIndex:number, itemType:string, value:string) => {
+        if (itemType === "itemContent") {
+            let newItemContents = [...this.state.itemContents]
+            newItemContents[itemIndex] = value
+            this.setState({itemContents: newItemContents})
+        }
+        if (itemType === "itemRecord") {
+            let newItemRecords = [...this.state.itemRecords]
+            newItemRecords[itemIndex] = value
+            this.setState({itemRecords: newItemRecords})
+        }
+        if (itemType === "itemComment") {
+            let newItemComments = [...this.state.itemComments]
+            newItemComments[itemIndex] = value
+            this.setState({itemComments: newItemComments})
+        }
+    }
+
+    public componentDidMount = () => {
+        const { projectItems } = this.props.projectDetail
+        const itemContents = projectItems.map((item:IProjectItem) => {
+            return item.itemContent
+        })
+        const itemRecords = projectItems.map((item:IProjectItem) => {
+            return item.itemRecord
+        })
+        const itemComments = projectItems.map((item:IProjectItem) => {
+            return item.itemComment
+        })
+        const itemStartDates = projectItems.map((item:IProjectItem) => {
+            return item.itemStartDate
+        })
+        const itemEndDates = projectItems.map((item:IProjectItem) => {
+            return item.itemEndDate
+        })
+        this.setState({ itemContents: itemContents})
+        this.setState({ itemRecords: itemRecords})
+        this.setState({ itemComments: itemComments})
+        this.setState({ itemStartDates: itemStartDates})
+        this.setState({ itemEndDates: itemEndDates})
+    }
+
+    public SimpleMDEInstances:SimpleMDE[] = []
+
+    public getSimpleMDEInstancesFromChild = (instance:SimpleMDE) => {
+        this.SimpleMDEInstances.push(instance)
+    }
+
+    public toggleEditMode = (toggleValue:boolean) => {
+        this.setState({editMode: toggleValue})
+    }
 
     public render(): JSX.Element {
         const { theme } = this.context;
-        const { learnerProfile, projectDetail, dispatch } = this.props;
-        const { editMode } = projectDetail
+        const { dispatch } = this.props;
         
 
         return (
@@ -81,11 +140,8 @@ class ProjectDetail extends React.Component<IProjectDetailProps> {
                             <Toggle
                                 label="编辑模式"
                                 size={20}
-                                defaultToggled={editMode}
-                                onToggle={(toggleValue)=> {
-                                    dispatch({type:"projectDetail/setField", name: "editMode", value: toggleValue})
-                                
-                                }}
+                                defaultToggled={this.state.editMode}
+                                onToggle={this.toggleEditMode}
                             />
                         </Col>
                         <Col span={1} >
@@ -96,7 +152,7 @@ class ProjectDetail extends React.Component<IProjectDetailProps> {
                     </Row>
                 </Header>
                 <Content>
-                    {this.generateItem(this.props.projectDetail.projectItems)}
+                    {this.generateItem()}
                     <Row>
                         <Col span={8} />
                         <Col span={8} style={{marginBottom: "20px", marginTop:"20px"}}>
@@ -120,12 +176,14 @@ class ProjectDetail extends React.Component<IProjectDetailProps> {
         );
     }
 
-    private generateItem = (projectItems: IProjectItem[]) => {
-        const {dispatch} = this.props
+
+    private generateItem = () => {
+        const { dispatch } = this.props
+        const { itemComments, itemContents, itemRecords} = this.state
         return (
-            projectItems.map((item: IProjectItem, index: number) => {
+            this.state.itemContents.map((item: string, index: number) => {
                 return (
-                    <Row type={"flex"} justify={"space-around"} key={Math.random()} style={{marginBottom: "20px", marginTop:"20px"}}>
+                    <Row type={"flex"} justify={"space-around"} key={`rowItem_${index}`} style={{marginBottom: "20px", marginTop:"20px"}}>
                         <Col span={2}>
                             <Row>
                                 <p id={`item_${index}`}>Number {index}</p>
@@ -151,18 +209,27 @@ class ProjectDetail extends React.Component<IProjectDetailProps> {
                             <MDEditor
                                 itemType="itemContent"
                                 itemIndex={index}
+                                value={item}
+                                setProjectItem = {this.setProjectItem}
+                                getSimpleMDEInstancesFromChild={this.getSimpleMDEInstancesFromChild}
                             />
                         </Col>
                         <Col span={7}>
                             <MDEditor
                                 itemType="itemRecord"
                                 itemIndex={index}
+                                value={itemRecords[index]}
+                                setProjectItem = {this.setProjectItem}
+                                getSimpleMDEInstancesFromChild={this.getSimpleMDEInstancesFromChild}
                             />
                         </Col>
                         <Col span={7}>
                             <MDEditor 
                                 itemType="itemComment"
                                 itemIndex={index}
+                                value={itemComments[index]}
+                                setProjectItem = {this.setProjectItem}
+                                getSimpleMDEInstancesFromChild={this.getSimpleMDEInstancesFromChild}
                             />
                         </Col>
                     </Row>

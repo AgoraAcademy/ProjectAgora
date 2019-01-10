@@ -2,16 +2,16 @@ import React, { Component } from "react";
 import SimpleMDEReact from "react-simplemde-editor";
 import './MDEditor.less'
 import { connect } from "dva";
+import { toggleSideBySide } from "simplemde";
 
 interface IMDEditorProps {
     itemType: string,
     itemIndex: number,
-    projectDetail: any,
+    value: string,
+    setProjectItem: (itemIndex:number, itemType: string, value: string) => void,
+    getSimpleMDEInstancesFromChild: (instance: SimpleMDE) => void
 }
 
-interface IMDEditorState {
-    value: string,
-}
 /**
  * 基于Markdown和SimpleMDEReact的富文本编辑器，用于记录项目式学习项目。
  * 当存在多个SimpleMDE实例时，autosave功能无法正常工作，因此启用
@@ -21,15 +21,14 @@ interface IMDEditorState {
  * @extends {Component<IMDEditor>}
  */
 class MDEditor extends Component<IMDEditorProps> {
-    public state: IMDEditorState = { 
-        value: this.props.itemType==="itemContent"? this.props.projectDetail.projectItems[this.props.itemIndex].itemContent:this.props.itemType==="itemRecord"?this.props.projectDetail.projectItems[this.props.itemIndex].itemRecord:this.props.itemType==="itemComment"?this.props.projectDetail.projectItems[this.props.itemIndex].itemComment: "",
-    };
-    
-
     public getMdeInstance = (instance:any) => {
         return instance
     }
     
+    public handleChange = (value) => {
+        const { setProjectItem, itemIndex, itemType } = this.props
+        setProjectItem(itemIndex, itemType, value)
+    }
 
     public toolbarIcons = [
         "bold", "italic", "strikethrough", "heading", "|", 
@@ -38,18 +37,15 @@ class MDEditor extends Component<IMDEditorProps> {
         "preview", "guide"
     ]
 
-    public shouldComponentUpdate(nextProps, nextState) {
-        return false
-    }
-
     public render() {
         console.log("rendering!")
+        const { value } = this.props
         return (
             <SimpleMDEReact
                 getMdeInstance={this.getMdeInstance}
                 className={'CodeMirror'}
-                onChange={(e)=> this.setState({value: e})}
-                value={this.state.value}
+                onChange={this.handleChange}
+                value={value}
                 options={{
                     spellChecker: false,
                     indentWithTabs: false,
@@ -67,9 +63,6 @@ class MDEditor extends Component<IMDEditorProps> {
 }
 
 
-function mapStateToProps({ projectDetail }) {
-    return { projectDetail }
-}
-export default connect(mapStateToProps)(MDEditor);
+export default MDEditor;
 
 
