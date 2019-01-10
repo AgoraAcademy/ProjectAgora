@@ -2,14 +2,14 @@ import React, { Component } from "react";
 import SimpleMDEReact from "react-simplemde-editor";
 import './MDEditor.less'
 import { connect } from "dva";
-import { toggleSideBySide } from "simplemde";
+import { toggleSideBySide, togglePreview } from "simplemde";
 
 interface IMDEditorProps {
     itemType: string,
     itemIndex: number,
     value: string,
     setProjectItem: (itemIndex:number, itemType: string, value: string) => void,
-    getSimpleMDEInstancesFromChild: (instance: SimpleMDE) => void
+    pushToInstanceList: (instance: any) => void
 }
 
 /**
@@ -21,8 +21,10 @@ interface IMDEditorProps {
  * @extends {Component<IMDEditor>}
  */
 class MDEditor extends Component<IMDEditorProps> {
-    public getMdeInstance = (instance:any) => {
-        return instance
+    public getMdeInstance = (instance) =>{
+        const { pushToInstanceList } = this.props
+        instance.togglePreview()
+        pushToInstanceList(instance)
     }
     
     public handleChange = (value) => {
@@ -38,7 +40,6 @@ class MDEditor extends Component<IMDEditorProps> {
     ]
 
     public render() {
-        console.log("rendering!")
         const { value } = this.props
         return (
             <SimpleMDEReact

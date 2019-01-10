@@ -37,8 +37,8 @@ interface IProjectDetailState {
     itemContents: string[],
     itemRecords: string[],
     itemComments: string[],
-    itemStartDate: string[],
-    itemEndDate: string[],
+    itemStartDates: string[],
+    itemEndDates: string[],
     dirty: boolean,
     showDrawer: boolean,
     editMode: boolean
@@ -58,8 +58,8 @@ class ProjectDetail extends React.Component<IProjectDetailProps> {
         itemContents: [],
         itemRecords: [],
         itemComments: [],
-        itemStartDate: [],
-        itemEndDate:[],
+        itemStartDates: [],
+        itemEndDates:[],
         dirty: false,
         showDrawer: false,
         editMode: false
@@ -81,6 +81,12 @@ class ProjectDetail extends React.Component<IProjectDetailProps> {
             newItemComments[itemIndex] = value
             this.setState({itemComments: newItemComments})
         }
+    }
+
+    public instanceList: any[] = []
+
+    public pushToInstanceList = (instance: SimpleMDE) => {
+        this.instanceList.push(instance)
     }
 
     public componentDidMount = () => {
@@ -107,14 +113,11 @@ class ProjectDetail extends React.Component<IProjectDetailProps> {
         this.setState({ itemEndDates: itemEndDates})
     }
 
-    public SimpleMDEInstances:SimpleMDE[] = []
-
-    public getSimpleMDEInstancesFromChild = (instance:SimpleMDE) => {
-        this.SimpleMDEInstances.push(instance)
-    }
-
     public toggleEditMode = (toggleValue:boolean) => {
         this.setState({editMode: toggleValue})
+        for (let i of this.instanceList) {
+            i.togglePreview()
+        }
     }
 
     public render(): JSX.Element {
@@ -179,7 +182,7 @@ class ProjectDetail extends React.Component<IProjectDetailProps> {
 
     private generateItem = () => {
         const { dispatch } = this.props
-        const { itemComments, itemContents, itemRecords} = this.state
+        const { itemComments, itemContents, itemRecords, itemStartDates, itemEndDates} = this.state
         return (
             this.state.itemContents.map((item: string, index: number) => {
                 return (
@@ -192,7 +195,7 @@ class ProjectDetail extends React.Component<IProjectDetailProps> {
                                 <p>开始日期</p>
                                 <CalendarDatePicker 
                                     width={"100%"} 
-                                    placeholder={this.props.projectDetail.projectItems[index].itemStartDate.toDateString()}
+                                    placeholder={itemStartDates[index]}
                                     onChangeDate={(value)=> dispatch({type:"projectDetail/setItemStartDate", index, value})}
                                 />
                             </Row>
@@ -200,7 +203,7 @@ class ProjectDetail extends React.Component<IProjectDetailProps> {
                                 <p>结束日期</p>
                                 <CalendarDatePicker 
                                     width={"100%"}
-                                    placeholder={this.props.projectDetail.projectItems[index].itemEndDate.toDateString()}
+                                    placeholder={itemEndDates[index]}
                                     onChangeDate={(value)=> dispatch({type:"projectDetail/setItemEndDate", index, value})}
                                 />
                             </Row>
@@ -211,7 +214,7 @@ class ProjectDetail extends React.Component<IProjectDetailProps> {
                                 itemIndex={index}
                                 value={item}
                                 setProjectItem = {this.setProjectItem}
-                                getSimpleMDEInstancesFromChild={this.getSimpleMDEInstancesFromChild}
+                                pushToInstanceList= {this.pushToInstanceList}
                             />
                         </Col>
                         <Col span={7}>
@@ -220,7 +223,7 @@ class ProjectDetail extends React.Component<IProjectDetailProps> {
                                 itemIndex={index}
                                 value={itemRecords[index]}
                                 setProjectItem = {this.setProjectItem}
-                                getSimpleMDEInstancesFromChild={this.getSimpleMDEInstancesFromChild}
+                                pushToInstanceList= {this.pushToInstanceList}
                             />
                         </Col>
                         <Col span={7}>
@@ -229,7 +232,7 @@ class ProjectDetail extends React.Component<IProjectDetailProps> {
                                 itemIndex={index}
                                 value={itemComments[index]}
                                 setProjectItem = {this.setProjectItem}
-                                getSimpleMDEInstancesFromChild={this.getSimpleMDEInstancesFromChild}
+                                pushToInstanceList= {this.pushToInstanceList}
                             />
                         </Col>
                     </Row>
