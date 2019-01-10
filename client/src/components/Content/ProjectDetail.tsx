@@ -120,6 +120,18 @@ class ProjectDetail extends React.Component<IProjectDetailProps> {
         }
     }
 
+    public addProjectItem = () => {
+        let newItemContents = [...this.state.itemContents]
+        let newItemRecords = [...this.state.itemRecords]
+        let newItemComments = [...this.state.itemComments]
+        newItemContents.push("")
+        newItemRecords.push("")
+        newItemComments.push("")
+        this.setState({itemContents: newItemContents})
+        this.setState({itemRecords: newItemRecords})
+        this.setState({itemComments: newItemComments})
+        }
+
     public render(): JSX.Element {
         const { theme } = this.context;
         const { dispatch } = this.props;
@@ -162,7 +174,7 @@ class ProjectDetail extends React.Component<IProjectDetailProps> {
                             <Button
                                 style={{ width: "100%", height: "300px", marginLeft: "auto", marginRight: "auto" }}
                                 icon="Add"
-                                onClick={() => dispatch({ type: "projectDetail/addProjectItem" })}
+                                onClick={this.addProjectItem}
                             />
                         </Col>
                         <Col span={8} />
