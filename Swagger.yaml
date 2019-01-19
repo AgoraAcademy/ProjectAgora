@@ -298,7 +298,7 @@ definitions:
       projectMeta: 
         description: 项目元信息
         type: object
-        proerties:
+        properties:
           projectIntro:
             description: 项目简介
             type: string
@@ -409,6 +409,21 @@ definitions:
               instructionContent:
                 description: 引导条目内容
                 type: string
+  CreditHour:
+    description: 学时
+    properties:
+      grantTo: 
+        description: 学时获得者ID
+        type: integer
+      grantBy: 
+        description: 学时授予者ID
+        type: integer
+      grantFor:
+        description: 学时相关项目ID
+        type: integer
+      grantNote:
+        description: 学时授予备注
+        type: string
 paths:
   /login:
     get:
@@ -513,6 +528,12 @@ paths:
             $ref: '#/definitions/Learner'
         '401':
           $ref: "#/responses/UnauthorizedError"
+  '/learner/{learnerId}/project':
+    get:
+      summary: 返回一个Learner相关的课程
+      tags:
+        - Learner
+        - Projects
 
 
 responses:
