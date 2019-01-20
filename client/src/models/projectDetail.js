@@ -41,15 +41,15 @@ export default {
                 itemTitle: "Item1",
                 itemStartDate: new Date(),
                 itemEndDate: new Date(),
-                itemContent: "" ,
-                itemRecord: "",
-                itemComment: ""
+                itemContent: "chushi 1 content" ,
+                itemRecord: "chushi 1 record",
+                itemComment: "chushi 1 comment"
             },
             {
                 itemTitle: "Item2",
                 itemStartDate: new Date(),
                 itemEndDate: new Date(),
-                itemContent: "",
+                itemContent: "chushi 2 content",
                 itemRecord: "",
                 itemComment: ""
             },
@@ -57,7 +57,7 @@ export default {
                 itemTitle: "Item3",
                 itemStartDate: new Date(),
                 itemEndDate: new Date(),
-                itemContent: "",
+                itemContent: "chushi 3 content",
                 itemRecord: "",
                 itemComment: ""
             },
@@ -65,7 +65,7 @@ export default {
                 itemTitle: "Item4",
                 itemStartDate: new Date(),
                 itemEndDate: new Date(),
-                itemContent: "",
+                itemContent: "chushi 4 content",
                 itemRecord: "",
                 itemComment: ""
             }
@@ -86,7 +86,6 @@ export default {
             return Object.assign({}, newState, {dirty:true});
         },
         setItemContent(state, action) {
-            // 此处Typescript传入的数据要求必须装成对象，因此需要解开成index.index, 以下同样情况
             const {index, value} = action;
             let newState = {...state, dirty: true}
             newState.projectItems[index].itemContent = value;
