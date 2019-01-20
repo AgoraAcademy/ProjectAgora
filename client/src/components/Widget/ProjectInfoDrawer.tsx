@@ -145,26 +145,39 @@ class ProjectInfoDrawer extends React.Component<IProjectInfoDrawerProps> {
                     </Tab>
                     <Tab title="项目详情">
                         {this.generateProjectMeta()}
+                        <Button
+                            style={{ width: "100%", height: "32px", lineHeight: "normal" }}
+                            onClick={() => this.setState({ showChildDrawer: true })}
+                        >
+                            Two-level drawer
+                        </Button>
                     </Tab>
                 </Tabs>
-                <Button 
-                    style={{width:"100%", height:"32px", lineHeight: "normal"}}
-                    onClick={() => this.setState({showChildDrawer: true})}
+                <div
+                    style={{
+                        position: 'absolute',
+                        left: 0,
+                        bottom: 0,
+                        width: '100%',
+                        borderTop: '1px solid #e9e9e9',
+                        padding: '10px 16px',
+                        background: 'black',
+                        textAlign: 'right',
+                    }}
                 >
-                    Two-level drawer
-                </Button>
-                <Button 
-                    style={{width:"30%", height:"32px", lineHeight: "normal"}}
-                    onClick={() => this.setState({showDrawer: false})}
-                >
-                    Cancel
-                </Button>
-                <Button 
-                    style={{width:"30%", height:"32px", lineHeight: "normal"}}
-                    onClick={() => this.setState({showDrawer: false})}
-                >
-                    Submit
-                </Button>
+                    <Button 
+                        style={{width:"30%", height:"32px", lineHeight: "normal"}}
+                        onClick={() => this.setState({showDrawer: false})}
+                    >
+                        Cancel
+                    </Button>
+                    <Button 
+                        style={{width:"30%", height:"32px", lineHeight: "normal"}}
+                        onClick={() => this.setState({showDrawer: false})}
+                    >
+                        Submit
+                    </Button>
+                </div>
                 <Drawer
                     title={<span style={theme.typographyStyles.title}>二级抽屉</span>}
                     width={320}

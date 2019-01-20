@@ -1,14 +1,17 @@
 import React, { Component } from "react";
 import SimpleMDEReact from "react-simplemde-editor";
 import './MDEditor.less'
+import { connect } from "dva";
+import { toggleSideBySide, togglePreview } from "simplemde";
 
 interface IMDEditorProps {
-    delay: number,
+    itemType: string,
+    itemIndex: number,
     value: string,
-    options: any,
-    id: string,
-    editmode: string
+    setProjectItem: (itemIndex:number, itemType: string, value: string) => void,
+    pushToInstanceList: (instance: any) => void
 }
+
 /**
  * 基于Markdown和SimpleMDEReact的富文本编辑器，用于记录项目式学习项目。
  * 原本配有基于localstorage的自动保存功能，但目前暂时无法使用。
@@ -17,26 +20,32 @@ interface IMDEditorProps {
  * @extends {Component<IMDEditor>}
  */
 class MDEditor extends Component<IMDEditorProps> {
-
-    public state = {
-        value: localStorage.getItem(`smde_${this.props.id}`) || this.props.value
-    };
-
-    public controllInstance = (instance) => {
-        // You can now store and manipulate the simplemde instance. 
-        if (this.props.editmode !== "true") {
-        instance.togglePreview()}
+    public getMdeInstance = (instance) =>{
+        const { pushToInstanceList } = this.props
+        instance.togglePreview()
+        pushToInstanceList(instance)
+    }
+    
+    public handleChange = (value) => {
+        const { setProjectItem, itemIndex, itemType } = this.props
+        setProjectItem(itemIndex, itemType, value)
     }
 
+    public toolbarIcons = [
+        "bold", "italic", "strikethrough", "heading", "|", 
+        "quote", "unordered-list", "ordered-list", "|",
+        "link", "image", "table", "horizontal-rule", "|",
+        "preview", "guide"
+    ]
+
     public render() {
-        const { options, delay, id, ...rest } = this.props;
+        const { value } = this.props
         return (
             <SimpleMDEReact
-                getMdeInstance={this.controllInstance}
+                getMdeInstance={this.getMdeInstance}
                 className={'CodeMirror'}
-                {...rest}
-                id={id}
-                value={this.state.value}
+                onChange={this.handleChange}
+                value={value}
                 options={{
                     spellChecker: false,
                     indentWithTabs: false,
@@ -46,13 +55,13 @@ class MDEditor extends Component<IMDEditorProps> {
                         singleLineBreaks: false,
                         codeSyntaxHighlighting: true,
                     },
-
-                    ...options
+                    toolbar: this.toolbarIcons
                 }}
             />
         );
     }
 }
+
 
 export default MDEditor;
 
