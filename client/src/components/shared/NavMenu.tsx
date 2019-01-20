@@ -73,6 +73,7 @@ class NavMenu extends React.Component<INavMenuProps> {
                 style={{height: '100vh'}}
             >
                 <NavigationView
+                    className="NavMenu"
                     style={{ ...baseStyle}}
                     pageTitle="安格学院"
                     displayMode="compact"

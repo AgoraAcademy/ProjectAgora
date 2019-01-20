@@ -1,7 +1,12 @@
 import { TextBox } from 'react-uwp'
 import React from 'react'
 
-
+/**
+ * 继承并改写原有的TextBox组件，使其渲染成TextArea而不是Input
+ *
+ * @class TextArea
+ * @extends {TextBox}
+ */
 class TextArea extends TextBox {
     render() {
         const {
