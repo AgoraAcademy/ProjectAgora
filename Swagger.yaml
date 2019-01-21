@@ -409,21 +409,46 @@ definitions:
               instructionContent:
                 description: 引导条目内容
                 type: string
-  CreditHour:
-    description: 学时
+  CreditHourEntry:
+    description: 学时授予记录
     properties:
+      value: 
+        description: 学时授予值(按分钟记)
+        type: number
       grantTo: 
         description: 学时获得者ID
         type: integer
       grantBy: 
-        description: 学时授予者ID
+        description: 学时申请者ID(若是课程学时则为课程导师申请)
         type: integer
       grantFor:
-        description: 学时相关项目ID
+        description: 学时相关项目ID(若无相关项目，则为0)
         type: integer
       grantNote:
         description: 学时授予备注
         type: string
+      grade:
+        description: 学时相关绩点（若不属于绩点学时，则为-1）
+        type: integer
+      applicationId:
+        description: 学时相关申请(若不存在申请环节，则为0)
+  CreditHourApplication:
+    description: 由学生发起的学时认证申请
+    properties:
+      value: 
+        description: 所申请的学时值（按分钟记）
+        type: number
+      applicantId: 
+        description: 申请人ID
+        type: integer
+      applicaitonDescription:
+        description: 申请内容详述
+        type: string
+      status: 
+        description: 申请结果状态
+        type: string
+      entryId: 
+        description: 关联的学时授予记录（在审核批准前为0）
 paths:
   /login:
     get:
@@ -534,7 +559,20 @@ paths:
       tags:
         - Learner
         - Projects
-
+      parameters:
+        - in: path
+          name: learnerId
+          required: true
+          type: integer
+          format: int64
+          minimum: 1
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items: 
+              $ref: '#/definitions/Project'
 
 responses:
   UnauthorizedError:
