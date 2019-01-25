@@ -28,17 +28,17 @@ class AdminMenu extends React.Component<IAdminMenuProps> {
     public context: { theme: ReactUWP.ThemeType };
 
     public listSource: TreeItem[]=[{
-        title: "管理菜单",
+        title: "人员管理",
         children: [{
-            title: "基础信息",
+            title: "录入新成员",
             onClick: ()=> this.props.dispatch(
                 {type: "learnerProfile/setField", name: "activeTab", value: "basicInfo"}
             )}, {
-            title: "联系信息",
+            title: "查询成员信息",
             onClick: ()=> this.props.dispatch(
                 {type: "learnerProfile/setField", name: "activeTab", value: "contactInfo"}
             )}, {
-            title: "医疗信息",
+            title: "设定导师关系",
             onClick: ()=> this.props.dispatch(
                 {type: "learnerProfile/setField", name: "activeTab", value: "medicalInfo"}
             )}]

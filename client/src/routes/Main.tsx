@@ -17,6 +17,7 @@ import NewProject from '../components/Content/NewProject';
 import NewFreeStyleProject from '../components/Content/NewFreeStyleProject';
 import NewGuidedProject from '../components/Content/NewGuidedProject';
 import NewCourse from '../components/Content/NewCourse';
+import CreditHourMenu from '../components/Menu/CreditHourMenu';
 
 
 const { Header, Footer, Sider, Content } = Layout;
@@ -43,6 +44,7 @@ class Main extends React.Component<IMainProps> {
                         <Route path="/learner" component={LearnerMenu} />
                         <Route exact path="/project" component={ProjectListMenu}/>
                         <Route exact path="/project/:id" component={ProjectDetailMenu} />
+                        <Route exact path="/credithour" component={CreditHourMenu} />
                         <Route component={NoMatch}/>
                     </Switch>
                 </Sider>

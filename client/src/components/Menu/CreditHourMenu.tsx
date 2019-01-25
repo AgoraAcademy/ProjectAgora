@@ -10,59 +10,48 @@ const baseStyle: React.CSSProperties = {
     margin: "10px 10px 10px 0"
 };
 
-export interface IProjectListMenuProps {
+export interface ICreditHourMenuProps {
     dispatch: any
     learnerProfile: any
 };
 
-/**
- * 项目列表菜单
- *
- * @class ProjectListMenu
- * @extends {React.Component<IProjectListMenuProps>}
- */
 
 
-class ProjectListMenu extends React.Component<IProjectListMenuProps> {
+class CreditHourMenu extends React.Component<ICreditHourMenuProps> {
     public static contextTypes = { theme: PropTypes.object };
     public context: { theme: ReactUWP.ThemeType };
 
     public listSource: TreeItem[]=[{
-        title: "项目管理",
+        title: "学时管理",
         children: [{
-            title: "进行中项目",
+            title: "申请学时",
             onClick: () => this.props.dispatch(
                 { type: "learnerProfile/setField", name: "activeTab", value: "basicInfo" }
             )
         }, {
-            title: "已完成项目",
+            title: "待审核学时",
             onClick: () => this.props.dispatch(
                 { type: "learnerProfile/setField", name: "activeTab", value: "contactInfo" }
             )
         }, {
-            title: "审核中项目",
+            title: "已获得学时",
             onClick: () => this.props.dispatch(
                 { type: "learnerProfile/setField", name: "activeTab", value: "medicalInfo" }
             )
         }]}, {
-            title: "项目管理（导师）",
+            title: "学时管理（导师）",
             children: [{
-                title: "进行中项目",
+                title: "审核学时申请",
                 onClick: () => this.props.dispatch(
                     { type: "learnerProfile/setField", name: "activeTab", value: "basicInfo" }
                 )
             }, {
-                title: "未开始项目",
+                title: "批量授予学时",
                 onClick: () => this.props.dispatch(
                     { type: "learnerProfile/setField", name: "activeTab", value: "contactInfo" }
                 )
             }, {
-                title: "已完成项目",
-                onClick: () => this.props.dispatch(
-                    { type: "learnerProfile/setField", name: "activeTab", value: "contactInfo" }
-                )
-            }, {
-                title: "项目评论",
+                title: "学时授予记录",
                 onClick: () => this.props.dispatch(
                     { type: "learnerProfile/setField", name: "activeTab", value: "medicalInfo" }
                 )
@@ -93,4 +82,4 @@ function mapStateToProps({main, learnerProfile}) {
     return { main, learnerProfile }
 }
 
-export default connect(mapStateToProps)(ProjectListMenu)
+export default connect(mapStateToProps)(CreditHourMenu)

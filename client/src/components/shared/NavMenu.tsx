@@ -41,16 +41,17 @@ class NavMenu extends React.Component<INavMenuProps> {
             (
                 <SplitViewCommand 
                     label="项目式学习" 
-                    icon={"\uE716"} 
+                    icon="Project" 
                     key={Math.random()} 
                     onClick={()=> {this.props.dispatch({type:'main/redirect', path:'#/project'})}}
                 />
             ),
             (
                 <SplitViewCommand 
-                    label="未开放" 
+                    label="学时管理" 
                     key={Math.random()} 
-                    icon="PrintLegacy"
+                    icon="DateTime"
+                    onClick={()=> {this.props.dispatch({type:'main/redirect', path:'#/credithour'})}}
                 />
             )
         ];
