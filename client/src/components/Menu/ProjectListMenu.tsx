@@ -27,9 +27,14 @@ class ProjectListMenu extends React.Component<IProjectListMenuProps> {
     public static contextTypes = { theme: PropTypes.object };
     public context: { theme: ReactUWP.ThemeType };
 
-    public listSource: TreeItem[]=[{
+    public listSource: TreeItem[] = [{
         title: "项目管理",
         children: [{
+            title: "创建新项目",
+            onClick: () => this.props.dispatch(
+                { type: "learnerProfile/setField", name: "activeTab", value: "contactInfo" }
+            )
+        }, {
             title: "进行中项目",
             onClick: () => this.props.dispatch(
                 { type: "learnerProfile/setField", name: "activeTab", value: "basicInfo" }
@@ -44,30 +49,36 @@ class ProjectListMenu extends React.Component<IProjectListMenuProps> {
             onClick: () => this.props.dispatch(
                 { type: "learnerProfile/setField", name: "activeTab", value: "medicalInfo" }
             )
-        }]}, {
-            title: "项目管理（导师）",
-            children: [{
-                title: "进行中项目",
-                onClick: () => this.props.dispatch(
-                    { type: "learnerProfile/setField", name: "activeTab", value: "basicInfo" }
-                )
-            }, {
-                title: "未开始项目",
-                onClick: () => this.props.dispatch(
-                    { type: "learnerProfile/setField", name: "activeTab", value: "contactInfo" }
-                )
-            }, {
-                title: "已完成项目",
-                onClick: () => this.props.dispatch(
-                    { type: "learnerProfile/setField", name: "activeTab", value: "contactInfo" }
-                )
-            }, {
-                title: "项目评论",
-                onClick: () => this.props.dispatch(
-                    { type: "learnerProfile/setField", name: "activeTab", value: "medicalInfo" }
-                )
-            }]
         }]
+    }, {
+        title: "项目管理（导师）",
+        children: [{
+            title: "创建新项目",
+            onClick: () => this.props.dispatch(
+                { type: "learnerProfile/setField", name: "activeTab", value: "contactInfo" }
+            )
+        }, {
+            title: "进行中项目",
+            onClick: () => this.props.dispatch(
+                { type: "learnerProfile/setField", name: "activeTab", value: "basicInfo" }
+            )
+        }, {
+            title: "未开始项目",
+            onClick: () => this.props.dispatch(
+                { type: "learnerProfile/setField", name: "activeTab", value: "contactInfo" }
+            )
+        }, {
+            title: "已完成项目",
+            onClick: () => this.props.dispatch(
+                { type: "learnerProfile/setField", name: "activeTab", value: "contactInfo" }
+            )
+        }, {
+            title: "指导中项目",
+            onClick: () => this.props.dispatch(
+                { type: "learnerProfile/setField", name: "activeTab", value: "medicalInfo" }
+            )
+        }]
+    }]
     public render(): JSX.Element {
         const { theme } = this.context;
         return (

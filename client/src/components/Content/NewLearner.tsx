@@ -1,26 +1,27 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
-import ReactUWP , { Toggle, Button, TextBox } from 'react-uwp'
+import ReactUWP , { Toggle, Button, TextBox, CheckBox } from 'react-uwp'
 import { Layout, Row, Col, Card } from 'antd'
 import { connect } from 'dva'
 import TextArea from '../Widget/TextArea'
+import './NewLearner.less'
 const { Header, Footer, Sider, Content } = Layout;
 const { Meta } = Card;
 
 
-export interface INewFreeStyleProjectProps {
+export interface INewLearnerProps {
     dispatch: any,
     learnerProfile: object,
     editMode: boolean
 }
 /**
  *
- * 创建新的自由项目
+ * 录入新人员
  * 
- * @class NewFreeStyleProject
- * @extends {React.Component<INewFreeStyleProjectProps>}
+ * @class NewLearner
+ * @extends {React.Component<INewLearnerProps>}
  */
-class NewFreeStyleProject extends React.Component<INewFreeStyleProjectProps> {
+class NewLearner extends React.Component<INewLearnerProps> {
     public static contextTypes = { theme: PropTypes.object };
     public context: { theme: ReactUWP.ThemeType };
 
@@ -39,6 +40,10 @@ class NewFreeStyleProject extends React.Component<INewFreeStyleProjectProps> {
         margin: "10px 0px 10px 0px"
     };
 
+    public checkBoxStyle: React.CSSProperties = {
+        margin: "10px 10px 10px 0px"
+    };
+
     public render():JSX.Element {
         const { theme } = this.context;
         const { learnerProfile } = this.props;
@@ -48,7 +53,7 @@ class NewFreeStyleProject extends React.Component<INewFreeStyleProjectProps> {
                 <Row type="flex" justify="space-around" align="middle">
                         <Col span={18}>
                             <span style={{color: 'white', ...theme.typographyStyles.header }}>
-                                创建新的自由项目
+                                录入新人员
                             </span>
                         </Col>
                         <Col span={2} >
@@ -57,7 +62,7 @@ class NewFreeStyleProject extends React.Component<INewFreeStyleProjectProps> {
                         <Col span={2}>
                             <span>placeholder</span>
                         </Col>
-                        <Col span={1} >
+                        <Col span={2} >
                             <span>placeholder</span>
                         </Col>
                     </Row>
@@ -65,46 +70,83 @@ class NewFreeStyleProject extends React.Component<INewFreeStyleProjectProps> {
                 <Content style={{display: "flex", top: "74px", bottom: "0px", width: "auto", flexWrap:"wrap"}}>
                     <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
                         {/* 此处的width可能有兼容性问题 */}
-                        <Col span={2} style={this.labelStyle}>
-                            <span>项目名称</span>
+                        <Col span={1} style={this.labelStyle}>
+                            <span>姓</span>
                         </Col>
-                        <Col span={6}>
+                        <Col span={3}>
                             <TextBox
                                 style={this.formRowStyle}
-                                placeholder="项目名称"
+                                placeholder="姓"
                             />
                         </Col>
-                        <Col span={2}/>
-                        <Col span={2} style={this.labelStyle}>
-                            <span>开始时间</span>
+                        <Col span={1}/>
+                        <Col span={1} style={this.labelStyle}>
+                            <span>名</span>
                         </Col>
-                        <Col span={6}>
+                        <Col span={3}>
                             <TextBox
                                 style={this.formRowStyle}
-                                placeholder="开始时间"
+                                placeholder="名"
+                            />
+                        </Col>
+                        <Col span={1}/>
+                        <Col span={1} style={this.labelStyle}>
+                            <span>昵称</span>
+                        </Col>
+                        <Col span={3}>
+                            <TextBox
+                                style={this.formRowStyle}
+                                placeholder="昵称"
+                            />
+                        </Col>
+                        <Col span={1}/>
+                        <Col span={2}>
+                            <span>是否导师</span>
+                        </Col>
+                        <Col className="checkBox" span={1}>
+                            <CheckBox
+                                style={this.checkBoxStyle}  
+                                defaultChecked={false}
                             />
                         </Col>
                     </Row>
                     <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
                         {/* 此处的width可能有兼容性问题 */}
-                        <Col span={2} style={this.labelStyle}>
-                            <span>项目开始学期</span>
+                        <Col span={1} style={this.labelStyle}>
+                            <span>性别</span>
                         </Col>
-                        <Col span={6}>
+                        <Col span={3}>
                             <TextBox
                                 style={this.formRowStyle}
-                                placeholder="项目开始学期"
+                                placeholder="性别"
                             />
                         </Col>
-                        <Col span={2}/>
-                        <Col span={2} style={this.labelStyle}>
-                            <span>持续学期数</span>
+                        <Col span={1}/>
+                        <Col span={1} style={this.labelStyle}>
+                            <span>民族</span>
                         </Col>
-                        <Col span={6}>
+                        <Col span={3}>
                             <TextBox
                                 style={this.formRowStyle}
-                                placeholder="持续学期数"
+                                placeholder="民族"
                             />
+                        </Col>
+                        <Col span={1}/>
+                        <Col span={1} style={this.labelStyle}>
+                            <span>生日</span>
+                        </Col>
+                        <Col span={3}>
+                            <TextBox
+                                style={this.formRowStyle}
+                                placeholder="生日"
+                            />
+                        </Col>
+                        <Col span={1}/>
+                        <Col span={2} style={this.labelStyle}>
+                            <span>年龄</span>
+                        </Col>
+                        <Col span={1}>
+                            <span>18</span>
                         </Col>
                     </Row>
                     <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
@@ -142,7 +184,7 @@ class NewFreeStyleProject extends React.Component<INewFreeStyleProjectProps> {
                         </Col>
                         <Col span={2}/>
                         <Col span={2} style={this.labelStyle}>
-                            <span>周均指导时间</span>
+                            <span>导师周均指导时间</span>
                         </Col>
                         <Col span={6}>
                             <TextBox
@@ -218,4 +260,4 @@ function mapStateToProps({main, learnerProfile}) {
     return { main, learnerProfile }
 }
 
-export default connect(mapStateToProps)(NewFreeStyleProject)
+export default connect(mapStateToProps)(NewLearner)

@@ -52,8 +52,11 @@ definitions:
       id:
         description: ID
         type: integer
-      name:
-        description: 全名
+      givenName:
+        description: 名
+        type: string
+      familyName:
+        description: 姓
         type: string
       nickname:
         description: 昵称
@@ -64,11 +67,14 @@ definitions:
       gender:
         description: 性别
         type: string
-      status:
-        description: 目前状态，包括在读、在读（游学）、在读（试读）、毕业、导师等；考虑是否需要更换成integer
-        type: string
+      ethnicity:
+        description: 民族
+        type: string  
       birthday:
         description: 生日
+        type: string  
+      status:
+        description: 目前状态，包括在读、在读（游学）、在读（试读）、毕业、导师等；考虑是否需要更换成integer
         type: string
       mainPersonalIdType:
         description: 证件类型
@@ -79,9 +85,6 @@ definitions:
       age:
         description: 年龄（应当是计算字段）
         type: number
-      ethnicity:
-        description: 民族
-        type: string
       phoneNumber:
         description: 电话号码
         type: string

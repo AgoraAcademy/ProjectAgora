@@ -18,6 +18,7 @@ import NewFreeStyleProject from '../components/Content/NewFreeStyleProject';
 import NewGuidedProject from '../components/Content/NewGuidedProject';
 import NewCourse from '../components/Content/NewCourse';
 import CreditHourMenu from '../components/Menu/CreditHourMenu';
+import NewLearner from '../components/Content/NewLearner';
 
 
 const { Header, Footer, Sider, Content } = Layout;
@@ -52,7 +53,8 @@ class Main extends React.Component<IMainProps> {
                     <Content id='global_content'>
                         <Switch>
                             <Route exact path="/" component={Home}/>
-                            <Route path="/learner" component={LearnerProfile} />
+                            <Route exact path="/learner" component={LearnerProfile} />
+                            <Route exact path="/learner/create" component={NewLearner} />
                             <Route exact path="/project" component={ProjectList}/>
                             <Route exact path="/project/create" component={NewProject} />
                             <Route exact path="/project/create/freestyle" component={NewFreeStyleProject} />
