@@ -33,6 +33,7 @@ ProjectAgora计划用于为先锋教育 - 安格学院提供电子化项目式�
 - 建议配置：
     - `Anaconda Scripts`: 适用于VS Code (Windows版) + PowerShell的Anaconda虚拟环境切换脚本
         - 将文件夹中文件放入本机的`Anaconda\Scripts`目录中
+        - 需要在Powershell（管理员）中设定`Set-ExecutionPolicy -ExecutionPolicy RemoteSigned`
 
 ### 环境配置
 
