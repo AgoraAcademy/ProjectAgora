@@ -53,8 +53,8 @@ class Main extends React.Component<IMainProps> {
                     <Content id='global_content'>
                         <Switch>
                             <Route exact path="/" component={Home}/>
-                            <Route exact path="/learner/:id" component={LearnerProfile} />
                             <Route exact path="/learner/create" component={NewLearner} />
+                            <Route exact path="/learner/:id" component={LearnerProfile} />
                             <Route exact path="/project" component={ProjectList}/>
                             <Route exact path="/project/create" component={NewProject} />
                             <Route exact path="/project/create/freestyle" component={NewFreeStyleProject} />

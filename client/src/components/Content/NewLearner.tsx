@@ -51,6 +51,7 @@ class NewLearner extends React.Component<INewLearnerProps> {
     public DropdownMenuStyle: React.CSSProperties = {
         margin: "10px 10px 10px 0px",
         lineHeight: "28px",
+        width: "75%"
     };
 
     public render(): JSX.Element {
@@ -194,28 +195,6 @@ class NewLearner extends React.Component<INewLearnerProps> {
                     <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
                         {/* 此处的width可能有兼容性问题 */}
                         <Col span={2} style={this.labelStyle}>
-                            <span>电话号码</span>
-                        </Col>
-                        <Col span={6}>
-                            <TextBox
-                                style={this.formRowStyle}
-                                placeholder="电话号码"
-                            />
-                        </Col>
-                        <Col span={2} />
-                        <Col span={2} style={this.labelStyle}>
-                            <span>占位</span>
-                        </Col>
-                        <Col span={6}>
-                            <TextBox
-                                style={this.formRowStyle}
-                                placeholder="占位"
-                            />
-                        </Col>
-                    </Row>
-                    <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
-                        {/* 此处的width可能有兼容性问题 */}
-                        <Col span={2} style={this.labelStyle}>
                             <span>加入前状态</span>
                         </Col>
                         <Col span={2} className='DropDownMenu'>
@@ -231,7 +210,7 @@ class NewLearner extends React.Component<INewLearnerProps> {
                         </Col>
                         <Col span={3} className='DropDownMenu'>
                             <CalendarDatePicker
-                                width={"65%"}
+                                width={"75%"}
                                 placeholder={""}
                                 onChangeDate={() => { }}
                             />
@@ -263,7 +242,7 @@ class NewLearner extends React.Component<INewLearnerProps> {
                         </Col>
                         <Col span={3} className='DropDownMenu'>
                             <CalendarDatePicker
-                                width={"65%"}
+                                width={"75%"}
                                 placeholder={""}
                                 onChangeDate={() => { }}
                             />
@@ -318,6 +297,28 @@ class NewLearner extends React.Component<INewLearnerProps> {
                             >
                                 联系方式
                             </Divider>
+                        </Col>
+                    </Row>
+                    <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
+                        {/* 此处的width可能有兼容性问题 */}
+                        <Col span={2} style={this.labelStyle}>
+                            <span>电话号码</span>
+                        </Col>
+                        <Col span={6}>
+                            <TextBox
+                                style={this.formRowStyle}
+                                placeholder="电话号码"
+                            />
+                        </Col>
+                        <Col span={2} />
+                        <Col span={2} style={this.labelStyle}>
+                            <span>占位</span>
+                        </Col>
+                        <Col span={6}>
+                            <TextBox
+                                style={this.formRowStyle}
+                                placeholder="占位"
+                            />
                         </Col>
                     </Row>
                     <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>

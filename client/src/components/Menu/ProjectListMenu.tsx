@@ -32,7 +32,7 @@ class ProjectListMenu extends React.Component<IProjectListMenuProps> {
         children: [{
             title: "创建新项目",
             onClick: () => this.props.dispatch(
-                { type: "learnerProfile/setField", name: "activeTab", value: "contactInfo" }
+                {type: "main/redirect", path:"#/project/create"}
             )
         }, {
             title: "进行中项目",
@@ -53,9 +53,9 @@ class ProjectListMenu extends React.Component<IProjectListMenuProps> {
     }, {
         title: "项目管理（导师）",
         children: [{
-            title: "创建新项目",
+            title: "创建新课程（引导项目）",
             onClick: () => this.props.dispatch(
-                { type: "learnerProfile/setField", name: "activeTab", value: "contactInfo" }
+                {type: "main/redirect", path:"#/course/create"}
             )
         }, {
             title: "进行中项目",

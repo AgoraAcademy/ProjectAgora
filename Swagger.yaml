@@ -398,10 +398,37 @@ definitions:
       createdTime: 
         description: 创建时间 
         type: string
+      createdByID:
+        description: 创建人
+        type: integer  
       createdBy:
-        description: 创建人ID
+        description: 创建人
         type: integer
-      instruction:
+      creditHour:
+        description: 学时设置
+        type: number
+      courseTimeShift:
+        description: 上课时间
+        type: string
+      courseLengthInWeeks:
+        description: 上课周数
+        type: integer
+      formAndEvaluation:
+        description: 课程形式与评价方式
+        type: string
+      goalOfcourse:
+        description: 课程目的
+        type: string
+      objectivesOfInstruction:
+        description: 教学目标
+        type: string
+      planOfInstruction:
+        description: 教学安排
+        type: string
+      miscellaneousNote:
+        description: 其他注意事项
+        type: string
+      instructions:
         description: 课程引导内容
         type: array
         items:

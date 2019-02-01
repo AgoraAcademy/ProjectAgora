@@ -9,7 +9,7 @@ interface IMDEditorProps {
     itemIndex: number,
     value: string,
     setProjectItem: (itemIndex:number, itemType: string, value: string) => void,
-    pushToInstanceList: (instance: any) => void
+    pushToInstanceList?: (instance: any) => void
 }
 
 /**
@@ -40,6 +40,9 @@ class MDEditor extends Component<IMDEditorProps> {
 
     public render() {
         const { value } = this.props
+        if (!this.props.pushToInstanceList) {
+            this.getMdeInstance = () => {return}
+        }
         return (
             <SimpleMDEReact
                 getMdeInstance={this.getMdeInstance}

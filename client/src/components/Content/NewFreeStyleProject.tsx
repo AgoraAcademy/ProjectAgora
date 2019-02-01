@@ -185,7 +185,6 @@ class NewFreeStyleProject extends React.Component<INewFreeStyleProjectProps> {
                         <Col span={16}>
                             <TextArea
                                 style={this.formRowStyle}
-                                type="textarea"
                                 textBoxStyle={this.textAreaStyle}
                                 placeholder="评价标准"
                             />
@@ -199,7 +198,6 @@ class NewFreeStyleProject extends React.Component<INewFreeStyleProjectProps> {
                         <Col span={16}>
                             <TextArea
                                 style={this.formRowStyle}
-                                type="textarea"
                                 textBoxStyle={this.textAreaStyle}
                                 placeholder="评价标准"
                             />

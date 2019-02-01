@@ -106,11 +106,13 @@ class ProjectDetail extends React.Component<IProjectDetailProps> {
         const itemEndDates = projectItems.map((item:IProjectItem) => {
             return item.itemEndDate
         })
-        this.setState({ itemContents: itemContents})
-        this.setState({ itemRecords: itemRecords})
-        this.setState({ itemComments: itemComments})
-        this.setState({ itemStartDates: itemStartDates})
-        this.setState({ itemEndDates: itemEndDates})
+        this.setState({ 
+            itemContents: itemContents,
+            itemRecords: itemRecords,
+            itemComments: itemComments,
+            itemStartDates: itemStartDates,
+            itemEndDates: itemEndDates
+        })
     }
 
     public toggleEditMode = (toggleValue:boolean) => {
@@ -141,7 +143,7 @@ class ProjectDetail extends React.Component<IProjectDetailProps> {
             <Layout>
                 <Header style={{height:"48px", marginBottom:"20px", padding:"0px"}}>
                     <Row type="flex" justify="space-around" align="middle">
-                        <Col span={16}>
+                        <Col span={14}>
                             <span style={{color: 'white', ...theme.typographyStyles.header }}>
                                 ProjectDetail
                             </span>
@@ -151,7 +153,7 @@ class ProjectDetail extends React.Component<IProjectDetailProps> {
                                 编辑项目信息
                             </Button>
                         </Col>
-                        <Col span={2}>
+                        <Col span={3}>
                             <Toggle
                                 label="编辑模式"
                                 size={20}
