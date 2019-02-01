@@ -141,12 +141,12 @@ class ProjectDetail extends React.Component<IProjectDetailProps> {
             <Layout>
                 <Header style={{height:"48px", marginBottom:"20px", padding:"0px"}}>
                     <Row type="flex" justify="space-around" align="middle">
-                        <Col span={18}>
+                        <Col span={16}>
                             <span style={{color: 'white', ...theme.typographyStyles.header }}>
                                 ProjectDetail
                             </span>
                         </Col>
-                        <Col span={2} >
+                        <Col span={3} >
                             <Button style={{width:"100%", height:"32px", lineHeight: "normal"}} onClick={() => this.setState({showDrawer: true})}>
                                 编辑项目信息
                             </Button>
@@ -159,7 +159,7 @@ class ProjectDetail extends React.Component<IProjectDetailProps> {
                                 onToggle={this.toggleEditMode}
                             />
                         </Col>
-                        <Col span={1} >
+                        <Col span={2} >
                             <Button style={{width:"100%", height:"32px", lineHeight: "normal"}}>
                                 保存
                             </Button>
@@ -199,7 +199,7 @@ class ProjectDetail extends React.Component<IProjectDetailProps> {
             this.state.itemContents.map((item: string, index: number) => {
                 return (
                     <Row type={"flex"} justify={"space-around"} key={`rowItem_${index}`} style={{marginBottom: "20px", marginTop:"20px"}}>
-                        <Col span={2}>
+                        <Col span={3}>
                             <Row>
                                 <p id={`item_${index}`}>Number {index}</p>
                             </Row>
@@ -220,7 +220,7 @@ class ProjectDetail extends React.Component<IProjectDetailProps> {
                                 />
                             </Row>
                         </Col>
-                        <Col span={7}>
+                        <Col span={6}>
                             <MDEditor
                                 itemType="itemContent"
                                 itemIndex={index}

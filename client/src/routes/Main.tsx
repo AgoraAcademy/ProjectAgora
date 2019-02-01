@@ -38,8 +38,8 @@ class Main extends React.Component<IMainProps> {
         return (
             <Layout>
                 <NavMenu/>
-                <Sider width={240} className={"global-sider"}>
-                    <Switch>
+                <Sider width={240} className={"global-sider"} collapsible collapsedWidth={50}>
+                    <Switch >
                         <Route exact path="/" component={HomeMenu} />
                         <Route path="/admin" component={AdminMenu} />
                         <Route path="/learner" component={LearnerMenu} />
@@ -53,7 +53,7 @@ class Main extends React.Component<IMainProps> {
                     <Content id='global_content'>
                         <Switch>
                             <Route exact path="/" component={Home}/>
-                            <Route exact path="/learner" component={LearnerProfile} />
+                            <Route exact path="/learner/:id" component={LearnerProfile} />
                             <Route exact path="/learner/create" component={NewLearner} />
                             <Route exact path="/project" component={ProjectList}/>
                             <Route exact path="/project/create" component={NewProject} />
@@ -69,4 +69,5 @@ class Main extends React.Component<IMainProps> {
         );
     };
 }
+
 export default Main

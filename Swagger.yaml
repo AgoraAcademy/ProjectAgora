@@ -20,7 +20,6 @@ securityDefinitions:
     name: api_key
 security:
   - APIKeyHeader: []
-  
 definitions:
   Error:
     description: 错误
@@ -33,6 +32,8 @@ definitions:
   TokenStatus:
     description: Token信息
     properties:
+      learnerID:
+        type: string
       token:
         type: string
       expireBy:
@@ -73,6 +74,9 @@ definitions:
       birthday:
         description: 生日
         type: string  
+      age:
+        description: 年龄（应当是计算字段）
+        type: number
       status:
         description: 目前状态，包括在读、在读（游学）、在读（试读）、毕业、导师等；考虑是否需要更换成integer
         type: string
@@ -81,12 +85,6 @@ definitions:
         type: string
       mainPersonalId:
         description: 证件号码
-        type: string
-      age:
-        description: 年龄（应当是计算字段）
-        type: number
-      phoneNumber:
-        description: 电话号码
         type: string
       dateOfRegistration:
         description: 加入时间
@@ -106,11 +104,6 @@ definitions:
       destinationOfLeave:
         description: 下阶段目的地
         type: string
-      notes:
-        description: 备注
-        type: array
-        items: 
-          type: string
       mentorship:
         description: 导师关系 (object类型 - 导师类型 - learnerID)， 分有负责导师mentorResponsible,协同导师mentorSupportive, 家校沟通导师mentorCommunicative)
         type: object
@@ -121,6 +114,7 @@ definitions:
         description: 监护人信息
         type: array
         items:
+          type: object
           properties: 
             name:
               description: 姓名
@@ -140,18 +134,25 @@ definitions:
             number:
               description: 紧急联系人电话
               type: string
-      weChatContact:
-        description: 微信
-        type: string
-      QQ:
-        description: QQ
-        type: string
-      mailAddress:
-        description: 收件地址（用以寄送书面文件）
-        type: string
-      email:
-        description: 电子邮箱
-        type: string
+      contactInfo:
+        description: 联系信息
+        type: object
+        properties:
+          phoneNumber:
+            description: 电话号码
+            type: string
+          weChat:
+            description: 微信
+            type: string
+          QQ:
+            description: QQ
+            type: string
+          mailAddress:
+            description: 收件地址（用以寄送书面文件）
+            type: string
+          email:
+            description: 电子邮箱
+            type: string
       medicalInfo:
         description: 医疗记录
         type: object
@@ -247,6 +248,11 @@ definitions:
                 type: array
                 items:
                   type: string
+      notes:
+        description: 备注
+        type: array
+        items: 
+          type: string
     required:
       - name
       - isMentor
@@ -374,6 +380,7 @@ definitions:
             type: string
           MentorEvaluation:
             description: 导师结项评语
+            type: string
     required:
       - name
       - createdTime
@@ -435,6 +442,7 @@ definitions:
         type: integer
       applicationId:
         description: 学时相关申请(若不存在申请环节，则为0)
+        type: integer
   CreditHourApplication:
     description: 由学生发起的学时认证申请
     properties:
@@ -452,6 +460,10 @@ definitions:
         type: string
       entryId: 
         description: 关联的学时授予记录（在审核批准前为0）
+        type: array
+        items: 
+          type: integer
+          
 paths:
   /login:
     get:
@@ -576,7 +588,26 @@ paths:
             type: array
             items: 
               $ref: '#/definitions/Project'
-
+  '/learner/{learnerId}/creditHour':
+    get:
+      summary: 返回一个Learner相关的学时记录
+      tags:
+        - Learner
+        - CreditHour
+      parameters:
+        - in: path
+          name: learnerId
+          required: true
+          type: integer
+          format: int64
+          minimum: 1
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items: 
+              $ref: '#/definitions/CreditHourEntry'
 responses:
   UnauthorizedError:
     description: API key is missing or invalid

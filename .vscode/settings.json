@@ -1,4 +1,18 @@
 {
-    "python.pythonPath": "C:\\ProgramData\\Anaconda3\\envs\\ProjectAgora\\python.exe",
-    "python.linting.pylintEnabled": true
+    "python.pythonPath": "C:\\Users\\xct24\\Anaconda3\\envs\\ProjectAgora\\python.exe",
+    "http.proxy": "http://localhost:8118",
+    "python.linting.pylintEnabled": false,
+    "python.linting.mypyEnabled": true,
+    "python.linting.enabled": true,
+    "python.linting.flake8Enabled": true,
+    "terminal.integrated.shellArgs.windows": [
+        "-NoExit",
+        "activate ProjectAgora"
+    ],
+    "python.formatting.provider": "yapf",
+    "python.linting.mypyArgs": [
+        "--ignore-missing-imports",
+        "--disallow-untyped-defs"
+    ],
+    "python.linting.flake8Args": ["--ignore=E501"]
 }

@@ -5,11 +5,22 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Python Module",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "pythonPath": "${config:python.pythonPath}",
+            "module": "swagger_server",
+            "cwd": "${workspaceRoot}\\server",
+        },
+        {
             "name": "Python: SwaggerServer (integrated)",
             "type": "python",
             "request": "launch",
             "program": "${workspaceFolder}\\server\\__init__.py",
-            "console": "integratedTerminal"
+            "console": "integratedTerminal",
+            "args": ["-m", "swagger_server"]
         },
         {
             "name": "Python: Current File (Integrated Terminal)",

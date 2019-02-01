@@ -32,7 +32,7 @@ class AdminMenu extends React.Component<IAdminMenuProps> {
         children: [{
             title: "录入新成员",
             onClick: ()=> this.props.dispatch(
-                {type: "learnerProfile/setField", name: "activeTab", value: "basicInfo"}
+                {type: "main/redirect", path:"#/learner/create"}
             )}, {
             title: "查询成员信息",
             onClick: ()=> this.props.dispatch(
