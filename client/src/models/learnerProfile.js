@@ -5,27 +5,24 @@ export default {
         activeTab: "",
         data: {
             "id": 0,
-            "name": "string",
-            "nickname": "string",
+            "givenName": "givenName",
+            "familyName": "familyName",
+            "nickname": "nickname",
             "isMentor": true,
             "gender": "string",
-            "status": "string",
+            "ethnicity": "string",
             "birthday": "string",
+            "age": 0,
+            "status": "string",
             "mainPersonalIdType": "string",
             "mainPersonalId": "string",
-            "age": 0,
-            "ethnicity": "string",
-            "phoneNumber": "string",
             "dateOfRegistration": "string",
             "reasonOfRegistration": "string",
             "previousStatus": "string",
             "dateOfLeave": "string",
             "reasonOfLeave": "string",
             "destinationOfLeave": "string",
-            "notes": [
-                "string"
-            ],
-            "mentorship": {},
+            "mentorship": [],
             "salaryCard": "string",
             "custodianInfo": [{
                 "name": "Amanda",
@@ -37,10 +34,13 @@ export default {
                     "number": "13666666666"
                 }
             ],
-            "weChatContact": "string",
-            "QQ": "string",
-            "mailAddress": "string",
-            "email": "string",
+            "contactInfo": {
+                "phoneNumber": "string",
+                "weChat": "string",
+                "QQ": "string",
+                "mailAddress": "string",
+                "email": "string",
+            },
             "medicalInfo": {
                 "generalHealthStatus": 0,
                 "bloodType": "string",
@@ -80,7 +80,10 @@ export default {
                         "string"
                     ]
                 }
-            }
+            },
+            "notes": [
+                "string"
+            ]
         }
     },
     reducers: {

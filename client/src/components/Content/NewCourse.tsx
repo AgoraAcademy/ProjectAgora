@@ -9,6 +9,7 @@ import { connect } from 'dva'
 import { Tab } from "react-uwp/Tabs";
 import TextArea from '../Widget/TextArea'
 import MDEditor from "../Widget/MDEditor";
+import CoverUploader from "../Widget/CoverUploader";
 
 export interface INewCourseProps {
     dispatch: any,
@@ -240,6 +241,11 @@ class NewCourse extends React.Component<INewCourseProps> {
                             {this.generateItem()}
                         </Content>
                     </Tab>
+                    <Tab title="课程封面">
+                        <Content>
+                            <CoverUploader/>
+                        </Content>
+                    </Tab>
                 </Tabs>
                 <Footer>
                     <p>footer</p>
@@ -257,7 +263,12 @@ class NewCourse extends React.Component<INewCourseProps> {
                     <Row type={"flex"} justify={"space-around"} key={`rowItem_${index}`} style={{ marginBottom: "20px", marginTop: "20px", width: "-webkit-fill-available" }}>
                         <Col span={3}>
                             <Row>
-                                <p id={`item_${index}`}>Number {index}</p>
+                                <p id={`item_${index}`}>标题</p>
+                                <TextBox
+                                    style={this.formRowStyle}
+                                    placeholder="标题"
+                                    defaultValue={instructionTitles[index]}
+                                />
                             </Row>
                             <Row style={{ marginBottom: "10px" }}>
                                 <p>开始日期</p>

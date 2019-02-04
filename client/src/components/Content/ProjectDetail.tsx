@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
-import ReactUWP, { Toggle, Button } from 'react-uwp'
+import ReactUWP, { Toggle, Button, TextBox } from 'react-uwp'
 import { Drawer } from 'antd';
 import { Layout, Row, Col } from 'antd'
 import { connect } from 'dva'
@@ -34,6 +34,7 @@ type IProjectItem = {
 }
 
 interface IProjectDetailState {
+    itemTitles: string[],
     itemContents: string[],
     itemRecords: string[],
     itemComments: string[],
@@ -54,7 +55,12 @@ interface IProjectDetailState {
 class ProjectDetail extends React.Component<IProjectDetailProps> {
     public static contextTypes = { theme: PropTypes.object };
     public context: { theme: ReactUWP.ThemeType };
+    public formRowStyle: React.CSSProperties = {
+        margin: "10px 0px 10px 0px",
+        width: "100%"
+    };
     public state: IProjectDetailState = {
+        itemTitles: [],
         itemContents: [],
         itemRecords: [],
         itemComments: [],
@@ -196,14 +202,19 @@ class ProjectDetail extends React.Component<IProjectDetailProps> {
 
     private generateItem = () => {
         const { dispatch } = this.props
-        const { itemComments, itemContents, itemRecords, itemStartDates, itemEndDates} = this.state
+        const { itemTitles, itemComments, itemContents, itemRecords, itemStartDates, itemEndDates} = this.state
         return (
             this.state.itemContents.map((item: string, index: number) => {
                 return (
                     <Row type={"flex"} justify={"space-around"} key={`rowItem_${index}`} style={{marginBottom: "20px", marginTop:"20px"}}>
                         <Col span={3}>
                             <Row>
-                                <p id={`item_${index}`}>Number {index}</p>
+                                <p id={`item_${index}`}>标题</p>
+                                <TextBox
+                                    style={this.formRowStyle}
+                                    placeholder="标题"
+                                    // defaultValue={item[index]}
+                                />
                             </Row>
                             <Row style={{marginBottom: "10px"}}>
                                 <p>开始日期</p>

@@ -28,9 +28,9 @@ class NewProject extends React.Component<INewProjectProps> {
         return (
             <Layout>
                 <Header style={{height:"48px", marginBottom:"20px", padding:"0px"}}>
-                <Row type="flex" justify="space-around" align="middle">
+                    <Row type="flex" justify="space-around" align="middle">
                         <Col span={18}>
-                            <span style={{color: 'white', ...theme.typographyStyles.header }}>
+                            <span style={{ color: 'white', ...theme.typographyStyles.header }}>
                                 创建新项目
                             </span>
                         </Col>
@@ -52,7 +52,10 @@ class NewProject extends React.Component<INewProjectProps> {
                             <Card
                                 hoverable
                                 style={{ width: "80%" }}
-                                cover={<img alt="example" src="" />}
+                                cover={<img alt="example" src="asset/Logo.png" />}
+                                onClick={()=> this.props.dispatch(
+                                    {type: "main/redirect", path:"#/project/create/freestyle"}
+                                )}
                             >
                                 <Meta
                                     title="自由项目"
@@ -64,7 +67,10 @@ class NewProject extends React.Component<INewProjectProps> {
                             <Card
                                 hoverable
                                 style={{ width: "80%" }}
-                                cover={<img alt="example" src="" />}
+                                cover={<img alt="example" src="asset/Logo.png" />}
+                                onClick={()=> this.props.dispatch(
+                                    {type: "main/redirect", path:"#/project/create/guided"}
+                                )}
                             >
                                 <Meta
                                     title="引导项目"

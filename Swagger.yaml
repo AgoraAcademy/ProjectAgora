@@ -105,8 +105,20 @@ definitions:
         description: 下阶段目的地
         type: string
       mentorship:
-        description: 导师关系 (object类型 - 导师类型 - learnerID)， 分有负责导师mentorResponsible,协同导师mentorSupportive, 家校沟通导师mentorCommunicative)
-        type: object
+        description: 导师关系
+        type: array
+        items:
+          type: object
+          properties:
+            mentorType:
+              description: 导师类型,  分有负责导师mentorResponsible,协同导师mentorSupportive, 家校沟通导师mentorCommunicative)
+              type: string
+            mentorID:
+              description: 导师ID
+              type: integer
+            mentorName:
+              description: 导师名称
+              type: string
       salaryCard:
         description: 工资卡号
         type: string

@@ -21,26 +21,26 @@ export default {
         instructions: [
             {
                 instructionTitle: "Item1",
-                instructionStartDate: new Date(),
-                instructionEndDate: new Date(),
+                instructionStartDate: new Date().toLocaleDateString(),
+                instructionEndDate: new Date().toLocaleDateString(),
                 instructionContent: "chushi 1 content" ,
             },
             {
                 instructionTitle: "Item2",
-                instructionStartDate: new Date(),
-                instructionEndDate: new Date(),
+                instructionStartDate: new Date().toLocaleDateString(),
+                instructionEndDate: new Date().toLocaleDateString(),
                 instructionContent: "chushi 2 content",
             },
             {
                 instructionTitle: "Item3",
-                instructionStartDate: new Date(),
-                instructionEndDate: new Date(),
+                instructionStartDate: new Date().toLocaleDateString(),
+                instructionEndDate: new Date().toLocaleDateString(),
                 instructionContent: "chushi 3 content",
             },
             {
                 instructionTitle: "Item4",
-                instructionStartDate: new Date(),
-                instructionEndDate: new Date(),
+                instructionStartDate: new Date().toLocaleDateString(),
+                instructionEndDate: new Date().toLocaleDateString(),
                 instructionContent: "chushi 4 content",
             }
         ]

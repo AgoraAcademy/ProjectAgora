@@ -39,32 +39,32 @@ export default {
         projectItems: [
             {
                 itemTitle: "Item1",
-                itemStartDate: new Date(),
-                itemEndDate: new Date(),
+                itemStartDate: new Date().toLocaleDateString(),
+                itemEndDate: new Date().toLocaleDateString(),
                 itemContent: "chushi 1 content" ,
                 itemRecord: "chushi 1 record",
                 itemComment: "chushi 1 comment"
             },
             {
                 itemTitle: "Item2",
-                itemStartDate: new Date(),
-                itemEndDate: new Date(),
+                itemStartDate: new Date().toLocaleDateString(),
+                itemEndDate: new Date().toLocaleDateString(),
                 itemContent: "chushi 2 content",
                 itemRecord: "",
                 itemComment: ""
             },
             {
                 itemTitle: "Item3",
-                itemStartDate: new Date(),
-                itemEndDate: new Date(),
+                itemStartDate: new Date().toLocaleDateString(),
+                itemEndDate: new Date().toLocaleDateString(),
                 itemContent: "chushi 3 content",
                 itemRecord: "",
                 itemComment: ""
             },
             {
                 itemTitle: "Item4",
-                itemStartDate: new Date(),
-                itemEndDate: new Date(),
+                itemStartDate: new Date().toLocaleDateString(),
+                itemEndDate: new Date().toLocaleDateString(),
                 itemContent: "chushi 4 content",
                 itemRecord: "",
                 itemComment: ""
@@ -111,8 +111,8 @@ export default {
             newState.projectItems.push(
                 {
                     itemTitle: "New Item",
-                    itemStartDate: new Date(),
-                    itemEndDate: new Date(),
+                    itemStartDate: new Date().toLocaleDateString(),
+                    itemEndDate: new Date().toLocaleDateString(),
                     itemContent: "",
                     itemRecord: "",
                     itemComment: ""
