@@ -5,6 +5,7 @@ import Main from './routes/Main';
 import NoMatch from './components/shared/Nomatch'
 import { Theme as UWPThemeProvider, getTheme } from "react-uwp/Theme";
 import Test from './routes/Test';
+import Oauth from './routes/Oauth';
 
 interface ITheme {
     themeName: any, // 
@@ -32,6 +33,7 @@ export default function RouterConfig({ history }) {
                 <Switch>
                     <Route exact path="/test" component={Test} />
                     <Route exact path="/login" component={Login} />
+                    <Route exact path="/oauth2" component={Oauth} />
                     <Route path="/" component={Main} />
                 </Switch>
             </HashRouter>

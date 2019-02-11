@@ -2,7 +2,7 @@
     "python.pythonPath": "C:\\Users\\xct24\\Anaconda3\\envs\\ProjectAgora\\python.exe",
     "http.proxy": "http://localhost:8118",
     "python.linting.pylintEnabled": false,
-    "python.linting.mypyEnabled": true,
+    "python.linting.mypyEnabled": false,
     "python.linting.enabled": true,
     "python.linting.flake8Enabled": true,
     "terminal.integrated.shellArgs.windows": [
@@ -12,7 +12,6 @@
     "python.formatting.provider": "yapf",
     "python.linting.mypyArgs": [
         "--ignore-missing-imports",
-        "--disallow-untyped-defs"
     ],
     "python.linting.flake8Args": ["--ignore=E501"]
 }

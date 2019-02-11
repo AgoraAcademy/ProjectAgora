@@ -6,10 +6,9 @@ import Icon from "react-uwp/Icon";
 import ReactUWP from 'react-uwp'
 import Button from "react-uwp/Button";
 import './Login.less'
-
+import WxLogin from '../components/Widget/WxLogin';
 
 const { Header, Content, Footer } = Layout;
-
 const baseStyle: React.CSSProperties = {
     margin: "10px 0"
 };
@@ -28,7 +27,6 @@ export interface ILoginState {
  */
 
 class Login extends React.Component<ILoginProps, ILoginState> {
-    public contextTypes = { theme: PropTypes.object };
     public context: { theme: ReactUWP.ThemeType };
     public defaultBtnStyle: React.CSSProperties = {
         margin: 4
@@ -42,7 +40,7 @@ class Login extends React.Component<ILoginProps, ILoginState> {
                 <Content
                     className='mainView'
                 >
-                    <div
+                    {/* <div
                         className='loginPortal'
                     >
                         <TextBox
@@ -62,7 +60,13 @@ class Login extends React.Component<ILoginProps, ILoginState> {
                         >
                                 登录
                         </Button>
-                    </div>
+                    </div> */}
+                    <WxLogin 
+                        appid="wxbadf910ec2b32d3c"
+                        scope="snsapi_login"
+                        state="lalala"
+                        redirect_uri="https://projectagora.agoraacademy.cn/oauth2"
+                    />
                 </Content>
                 <Footer>
                     Footer
