@@ -56,13 +56,8 @@ class Oauth extends React.Component<IOauthProps> {
                 <Content
                     className='mainView'
                 >
+                    <div>oauth2</div>
                     
-                    <WxLogin 
-                        appid="wxbadf910ec2b32d3c"
-                        scope="snsapi_login"
-                        state="lalala"
-                        redirect_uri="https://projectagora.agoraacademy.cn/oauth2"
-                    />
                 </Content>
                 <Footer>
                     Footer
