@@ -1,8 +1,8 @@
 {
   "private": true,
   "scripts": {
-    "start": "roadhog server",
-    "build": "roadhog build",
+    "start": "node ./scripts/create-env.js && roadhog server",
+    "build": "node ./scripts/create-env.js && roadhog build",
     "lint": "eslint --ext .js src test",
     "precommit": "npm run lint"
   },

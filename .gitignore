@@ -10,3 +10,4 @@
 .DS_Store
 npm-debug.log*
 src/routes/Test.tsx
+env.js
