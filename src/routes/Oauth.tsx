@@ -7,7 +7,7 @@ import ReactUWP from 'react-uwp'
 import Button from "react-uwp/Button";
 import './Login.less'
 import WxLogin from '../components/Widget/WxLogin';
-import {WXLOGINAPPID, WXLOGINSECRET, SERVERURL } from '../../env'
+import {WXLOGINAPPID, SERVERURL } from '../../env'
 
 const { Header, Content, Footer } = Layout;
 const baseStyle: React.CSSProperties = {
@@ -28,7 +28,6 @@ class Oauth extends React.Component<IOauthProps> {
     public componentDidMount = () =>{
         let code: string, state: string
         try{
-            console.log(this.props)
             const query = this.props.location.search
             const arr = query.split('&')
             code = arr[0].substr(6)
@@ -37,6 +36,7 @@ class Oauth extends React.Component<IOauthProps> {
         {
             console.log("没有正确获得code和state", error)
         }
+        console.log("尝试获取登录信息，服务器地址为", SERVERURL)
         fetch(`${SERVERURL}/v1/oauth2?code=${code}&state=${state}`, {
             headers: {
                 'content-type': 'application/json'
