@@ -41,11 +41,13 @@ class Oauth extends React.Component<IOauthProps> {
             headers: {
                 'content-type': 'application/json'
             }
-        }).then(
-            (response) => {
-                console.log(response)
-            }
-        )
+        })
+        .then(response => response.json())
+        .then(data => {
+            localStorage.setItem("access_token",data.access_token)
+            localStorage.setItem("openid",data.openid)
+            localStorage.setItem("refresh_token",data.refresh_token)
+        })
     }
 
     public render(): JSX.Element {
