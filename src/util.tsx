@@ -11,6 +11,7 @@ import { SERVERURL } from '../env'
 export function fetchRequest(url, method, params = '') {
     let header = {
         "Content-Type": "application/json;charset=UTF-8",
+        'Access-Control-Allow-Origin': '*',
         "access_token": window.localStorage.getItem("access_token"),
         "refresh_token": window.localStorage.getItem("refresh_token"),
         "openid": window.localStorage.getItem("openid"), //用户登陆后返回的token，某些涉及用户数据的接口需要在header中加上token

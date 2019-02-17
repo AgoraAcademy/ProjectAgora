@@ -39,7 +39,8 @@ class Oauth extends React.Component<IOauthProps> {
         console.log("尝试获取登录信息，服务器地址为", SERVERURL)
         fetch(`${SERVERURL}/v1/oauth2?code=${code}&state=${state}`, {
             headers: {
-                'content-type': 'application/json'
+                'content-type': 'application/json',
+                'Access-Control-Allow-Origin': '*'
             }
         })
         .then(response => response.json())
