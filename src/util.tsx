@@ -12,7 +12,7 @@ export function fetchRequest(url, method, params = '') {
     let header = {
         "Content-Type": "application/json;charset=UTF-8",
         'Access-Control-Allow-Origin': '*',
-        "access_token": window.localStorage.getItem("access_token"),
+        "Authorization": window.localStorage.getItem("access_token"),
         "refresh_token": window.localStorage.getItem("refresh_token"),
         "openid": window.localStorage.getItem("openid"), //用户登陆后返回的token，某些涉及用户数据的接口需要在header中加上token
     };
@@ -25,7 +25,7 @@ export function fetchRequest(url, method, params = '') {
             }).then((response) => response.json())
                 .then((responseData) => {
                     console.log('res:', url, responseData); //网络请求成功返回的数据
-                    window.localStorage.setItem("access_token", responseData.headers.get("access_token"))
+                    window.localStorage.setItem("access_token", responseData.headers.get("Authorization"))
                     window.localStorage.setItem("refresh_token", responseData.headers.get("refresh_token"))
                     resolve(responseData);
                 })
@@ -43,7 +43,7 @@ export function fetchRequest(url, method, params = '') {
             }).then((response) => response.json())
                 .then((responseData) => {
                     console.log('res:', url, responseData); //网络请求成功返回的数据
-                    window.localStorage.setItem("access_token", responseData.headers.get("access_token"))
+                    window.localStorage.setItem("access_token", responseData.headers.get("Authorization"))
                     window.localStorage.setItem("refresh_token", responseData.headers.get("refresh_token"))
                     resolve(responseData);
                 })
