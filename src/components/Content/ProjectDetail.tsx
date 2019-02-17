@@ -4,7 +4,6 @@ import ReactUWP, { Toggle, Button, TextBox } from 'react-uwp'
 import { Drawer } from 'antd';
 import { Layout, Row, Col } from 'antd'
 import { connect } from 'dva'
-import { deepCopy } from '../../util'
 import MDEditor from "../Widget/MDEditor";
 import CalendarDatePicker from "react-uwp/CalendarDatePicker";
 import "simplemde/dist/simplemde.min.css";

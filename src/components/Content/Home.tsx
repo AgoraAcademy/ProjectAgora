@@ -1,7 +1,8 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
-import ReactUWP from 'react-uwp'
+import ReactUWP, { Button } from 'react-uwp'
 import { Layout } from 'antd'
+import { fetchRequest } from '../../util'
 const { Header, Footer, Sider, Content } = Layout;
 
 import { connect } from 'dva'
@@ -31,7 +32,7 @@ class Home extends React.Component<IHomeProps> {
                 </Header>
                 <Content>
                     <h5 style={{color: 'white', ...theme.typographyStyles.header}}>
-                        Home
+                        <Button onClick={() => fetchRequest("/v1/learner", "GET")}>测试fetch</Button>
                     </h5>
                 </Content>
                 <Footer>
