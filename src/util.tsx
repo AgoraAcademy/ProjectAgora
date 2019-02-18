@@ -25,8 +25,12 @@ export function fetchRequest(url, method, params = '') {
             }).then((response) => response.json())
                 .then((responseData) => {
                     console.log('res:', url, responseData); //网络请求成功返回的数据
-                    window.localStorage.setItem("access_token", responseData.headers.get("Authorization"))
-                    window.localStorage.setItem("refresh_token", responseData.headers.get("refresh_token"))
+                    try{
+                        window.localStorage.setItem("access_token", responseData.headers.get("Authorization"))
+                        window.localStorage.setItem("refresh_token", responseData.headers.get("refresh_token"))}
+                    catch(err){
+                        console.log(err)
+                    }
                     resolve(responseData);
                 })
                 .catch((err) => {
@@ -43,8 +47,12 @@ export function fetchRequest(url, method, params = '') {
             }).then((response) => response.json())
                 .then((responseData) => {
                     console.log('res:', url, responseData); //网络请求成功返回的数据
-                    window.localStorage.setItem("access_token", responseData.headers.get("Authorization"))
-                    window.localStorage.setItem("refresh_token", responseData.headers.get("refresh_token"))
+                    try{
+                        window.localStorage.setItem("access_token", responseData.headers.get("Authorization"))
+                        window.localStorage.setItem("refresh_token", responseData.headers.get("refresh_token"))}
+                    catch(err){
+                        console.log(err)
+                    }
                     resolve(responseData);
                 })
                 .catch((err) => {
