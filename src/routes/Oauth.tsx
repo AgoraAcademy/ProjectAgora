@@ -63,14 +63,16 @@ class Oauth extends React.Component<IOauthProps> {
             dispatch({type: "main/redirect", path:"#/"})
             return
         }
-        if (isLearner == "true") {
+        else if (isLearner == "true") {
             return(
                 <div>等待验证</div>
             )
         }
-        return (
-            <div>添加用户</div>
-        )
+        else {
+            return (
+                <div>添加用户</div>
+            )
+        }
     }
     public render(): JSX.Element {
         return (
