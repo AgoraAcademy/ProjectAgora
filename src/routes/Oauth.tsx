@@ -8,6 +8,7 @@ import Button from "react-uwp/Button";
 import './Login.less'
 import WxLogin from '../components/Widget/WxLogin';
 import {WXLOGINAPPID, SERVERURL } from '../../env'
+import { connect } from 'dva';
 
 const { Header, Content, Footer } = Layout;
 const baseStyle: React.CSSProperties = {
@@ -15,7 +16,9 @@ const baseStyle: React.CSSProperties = {
 };
 
 export interface IOauthProps {
-    location: any
+    location: any,
+    dispatch: any,
+    main: any
 };
 // 如果有记录，直接转入
 //如果没记录，
@@ -48,9 +51,27 @@ class Oauth extends React.Component<IOauthProps> {
             localStorage.setItem("access_token",data.access_token)
             localStorage.setItem("openid",data.openid)
             localStorage.setItem("refresh_token",data.refresh_token)
+            localStorage.setItem("isLearner",data.isLearner)
+            localStorage.setItem("validated",data.validated || false)
         })
     }
-
+    public generateContent = () => {
+        const { dispatch } = this.props
+        const isLearner = localStorage.getItem("isLearner")
+        const validated = localStorage.getItem("validated")
+        if (validated) {
+            dispatch({type: "main/redirect", path:"#/"})
+            return
+        }
+        if (isLearner) {
+            return(
+                <div>等待验证</div>
+            )
+        }
+        return (
+            <div>添加用户</div>
+        )
+    }
     public render(): JSX.Element {
         return (
             <Layout>
@@ -72,7 +93,7 @@ class Oauth extends React.Component<IOauthProps> {
 }
 
 
-function mapStateToProps({main, learnerProfile}) {
+function mapStateToProps({main}) {
     return { main }
 }
-export default Oauth;
+export default connect(mapStateToProps)(Oauth);
