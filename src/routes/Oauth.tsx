@@ -81,8 +81,7 @@ class Oauth extends React.Component<IOauthProps> {
                 <Content
                     className='mainView'
                 >
-                    <div>oauth2</div>
-                    
+                    {this.generateContent()}
                 </Content>
                 <Footer>
                     Footer
