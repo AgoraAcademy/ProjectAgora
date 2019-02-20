@@ -59,11 +59,11 @@ class Oauth extends React.Component<IOauthProps> {
         const { dispatch } = this.props
         const isLearner = localStorage.getItem("isLearner")
         const validated = localStorage.getItem("validated")
-        if (validated) {
+        if (validated == "true") {
             dispatch({type: "main/redirect", path:"#/"})
             return
         }
-        if (isLearner) {
+        if (isLearner == "true") {
             return(
                 <div>等待验证</div>
             )
