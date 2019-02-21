@@ -41,7 +41,7 @@ class Main extends React.Component<IMainProps> {
         const { dispatch } = this.props
         const isLearner = localStorage.getItem("isLearner")
         const validated = localStorage.getItem("validated")
-        const openid = localStorage.getItem("openid") || null
+        const openid = localStorage.getItem("openid") || "undefined"
         if ( openid === "undefined" ) {
             dispatch({type: "main/redirect", path:"#/login?message=noid"})
             // 这里想做一个跳转后弹出一个toast说明未登录，需要重新登录
