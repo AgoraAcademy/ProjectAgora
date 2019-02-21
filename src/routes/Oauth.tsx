@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Layout, Row, Col, Divider } from 'antd' 
+import { Layout, Row, Col, Divider, Card } from 'antd' 
 import * as PropTypes from "prop-types";
 import TextBox from "react-uwp/TextBox";
 import Icon from "react-uwp/Icon";
@@ -11,6 +11,8 @@ import {WXLOGINAPPID, SERVERURL } from '../../env'
 import { connect } from 'dva';
 
 const { Header, Content, Footer } = Layout;
+const { Meta } = Card;
+
 const baseStyle: React.CSSProperties = {
     margin: "10px 0"
 };
@@ -451,840 +453,868 @@ class Oauth extends React.Component<IOauthProps> {
     }
     public generateContent = () => {
         const { theme } = this.context;
+        return (
+            <Content>
+                <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available", display: "flex" }}>
+                    <Col span={6} style={this.labelStyle}>
+                        <Card
+                            hoverable
+                            style={{ width: "100%" }}
+                            cover={<img alt="example" src="asset/Logo.png" />}
+                        >
+                            <Meta
+                                title="引导内容"
+                                description="引导内容"
+                            />
+                        </Card>
+                    </Col>
+                </Row>
+                <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available", display: "flex"}}>
+                    <Col span={18} style={this.labelStyle}>
+                        <Divider
+                            style={{ color: 'white', ...theme.typographyStyles.subHeader }}
+                        >
+                            注册新学习者账户
+                        </Divider>
+                    </Col>
+                </Row>
+                <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
+                    {/* 此处的width可能有兼容性问题 */}
+                    <Col span={1} style={this.labelStyle}>
+                        <span>姓</span>
+                    </Col>
+                    <Col span={3}>
+                        <TextBox
+                            style={this.formRowStyle}
+                            placeholder="姓"
+                            onChangeValue={(familyName) => this.setState({familyName})}
+                        />
+                    </Col>
+                    <Col span={1} />
+                    <Col span={1} style={this.labelStyle}>
+                        <span>名</span>
+                    </Col>
+                    <Col span={3}>
+                        <TextBox
+                            style={this.formRowStyle}
+                            placeholder="名"
+                            onChangeValue={(givenName) => this.setState({givenName})}
+                        />
+                    </Col>
+                    <Col span={1} />
+                    <Col span={1} style={this.labelStyle}>
+                        <span>昵称</span>
+                    </Col>
+                    <Col span={3}>
+                        <TextBox
+                            style={this.formRowStyle}
+                            placeholder="昵称"
+                            onChangeValue={(nickname) => this.setState({nickname})}
+                        />
+                    </Col>
+                    <Col span={1} />
+                    <Col span={2}>
+                        <span>是否导师</span>
+                    </Col>
+                    <Col className="checkBox" span={1}>
+                        <CheckBox
+                            style={this.checkBoxStyle}
+                            defaultChecked={this.state.isMentor}
+                            onCheck={(isMentor) => this.setState({isMentor})}
+                        />
+                    </Col>
+                </Row>
+                <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
+                    {/* 此处的width可能有兼容性问题 */}
+                    <Col span={1} style={this.labelStyle}>
+                        <span>性别</span>
+                    </Col>
+                    <Col span={3}>
+                        <TextBox
+                            style={this.formRowStyle}
+                            placeholder="性别"
+                            onChangeValue={(gender) => this.setState({gender})}
+                        />
+                    </Col>
+                    <Col span={1} />
+                    <Col span={1} style={this.labelStyle}>
+                        <span>民族</span>
+                    </Col>
+                    <Col span={3}>
+                        <TextBox
+                            style={this.formRowStyle}
+                            placeholder="民族"
+                            onChangeValue={(ethnicity) => this.setState({ethnicity})}
+                        />
+                    </Col>
+                    <Col span={1} />
+                    <Col span={1} style={this.labelStyle}>
+                        <span>生日</span>
+                    </Col>
+                    <Col span={3}>
+                        <CalendarDatePicker
+                            width={"75%"}
+                            placeholder={"生日"}
+                            onChangeDate={(birthday) => this.setState({birthday: birthday.toLocaleDateString()})}
+                        />
+                    </Col>
+                    <Col span={1} />
+                    <Col span={2} style={this.labelStyle}>
+                        <span>年龄</span>
+                    </Col>
+                    <Col span={1}>
+                        <span>
+                            {this.getAge(this.state.birthday) || ""}
+                        </span>
+                    </Col>
+                </Row>
+                <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
+                    {/* 此处的width可能有兼容性问题 */}
+                    <Col span={2} style={this.labelStyle}>
+                        <span>目前状态</span>
+                    </Col>
+                    <Col span={2} className='DropDownMenu'>
+                        <DropDownMenu
+                            style={this.DropdownMenuStyle}
+                            itemWidth={120}
+                            values={["在读", "在读（游学）", " 在读（试读）", "毕业", "导师"]}
+                            defaultValue={this.state.status}
+                            onChangeValue={(status)=> this.setState({status})}
+                        />
+                    </Col>
+                    <Col span={1} />
+                    <Col span={2} style={this.labelStyle}>
+                        <span>证件类型</span>
+                    </Col>
+                    <Col span={3} className='DropDownMenu'>
+                        <DropDownMenu
+                            style={this.DropdownMenuStyle}
+                            itemWidth={120}
+                            values={["身份证", "护照"]}
+                            defaultValue={this.state.mainPersonalIdType}
+                            onChangeValue={(mainPersonalIdType)=> this.setState({mainPersonalIdType})}
+                        />
+                    </Col>
+                    <Col span={2} style={this.labelStyle}>
+                        <span>证件号码</span>
+                    </Col>
+                    <Col span={6} className='DropDownMenu'>
+                        <TextBox
+                            style={this.formRowStyle}
+                            placeholder="证件号码"
+                            onChangeValue={(mainPersonalId) => this.setState({mainPersonalId})}
+                        />
+                    </Col>
+                </Row>
+                <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
+                    {/* 此处的width可能有兼容性问题 */}
+                    <Col span={2} style={this.labelStyle}>
+                        <span>加入前状态</span>
+                    </Col>
+                    <Col span={2} className='DropDownMenu'>
+                        <DropDownMenu
+                            style={this.DropdownMenuStyle}
+                            itemWidth={120}
+                            values={["在读", "在读（游学）", " 在读（试读）", "毕业", "导师", "其他"]}
+                            defaultValue={this.state.previousStatus}
+                            onChangeValue={(previousStatus)=> this.setState({previousStatus})}
+                        />
+                    </Col>
+                    <Col span={1} />
+                    <Col span={2} style={this.labelStyle}>
+                        <span>加入时间</span>
+                    </Col>
+                    <Col span={3} className='DropDownMenu'>
+                        <CalendarDatePicker
+                            width={"75%"}
+                            placeholder={"加入时间"}
+                            onChangeDate={(dateOfRegistration) => this.setState({dateOfRegistration: dateOfRegistration.toLocaleDateString()})}
+                        />
+                    </Col>
+                    <Col span={2} style={this.labelStyle}>
+                        <span>加入原因</span>
+                    </Col>
+                    <Col span={6} className='DropDownMenu'>
+                        <TextBox
+                            style={this.formRowStyle}
+                            placeholder="加入原因"
+                            onChangeValue={(reasonOfRegistration) => this.setState({reasonOfRegistration})}
+                        />
+                    </Col>
+                </Row>
+                <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
+                    {/* 此处的width可能有兼容性问题 */}
+                    <Col span={2} style={this.labelStyle}>
+                        <span>下阶段目的地</span>
+                    </Col>
+                    <Col span={2} className='DropDownMenu'>
+                        <TextBox
+                            style={this.formRowStyle}
+                            placeholder="下阶段目的地"
+                            onChangeValue={(destinationOfLeave) => this.setState({destinationOfLeave})}
+                        />
+                    </Col>
+                    <Col span={1} />
+                    <Col span={2} style={this.labelStyle}>
+                        <span>离开时间</span>
+                    </Col>
+                    <Col span={3} className='DropDownMenu'>
+                        <CalendarDatePicker
+                            width={"75%"}
+                            placeholder={""}
+                            onChangeDate={(dateOfLeave) => this.setState({dateOfLeave: dateOfLeave.toLocaleDateString()})}
+                        />
+                    </Col>
+                    <Col span={2} style={this.labelStyle}>
+                        <span>离开原因</span>
+                    </Col>
+                    <Col span={6} className='DropDownMenu'>
+                        <TextBox
+                            style={this.formRowStyle}
+                            placeholder="离开原因"
+                            onChangeValue={(reasonOfLeave) => this.setState({reasonOfLeave})}
+                        />
+                    </Col>
+                </Row>
+                <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available", display: this.state.isMentor? "flex": "none" }}>
+                    <Col span={18} style={this.labelStyle}>
+                        <Divider
+                            orientation="left"
+                            style={{ color: 'white', ...theme.typographyStyles.subHeader }}
+                        >
+                            导师相关信息
+                        </Divider>
+                    </Col>
+                </Row>
+                <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available", display: this.state.isMentor? "flex": "none" }}>
+                    {/* 此处的width可能有兼容性问题 */}
+                    <Col span={2} style={this.labelStyle}>
+                        <span>工资卡号</span>
+                    </Col>
+                    <Col span={6}>
+                        <TextBox
+                            style={this.formRowStyle}
+                            placeholder="工资卡号"
+                            onChangeValue={(salaryCard) => this.setState({salaryCard})}
+                        />
+                    </Col>
+                    <Col span={2} />
+                    <Col span={2} style={this.labelStyle}>
+                        <span>占位</span>
+                    </Col>
+                    <Col span={6}>
+                        <TextBox
+                            style={this.formRowStyle}
+                            placeholder="占位"
+                        />
+                    </Col>
+                </Row>
+                <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
+                    <Col span={18} style={this.labelStyle}>
+                        <Divider
+                            orientation="left"
+                            style={{ color: 'white', ...theme.typographyStyles.subHeader }}
+                        >
+                            联系方式
+                        </Divider>
+                    </Col>
+                </Row>
+                <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
+                    {/* 此处的width可能有兼容性问题 */}
+                    <Col span={2} style={this.labelStyle}>
+                        <span>电话号码</span>
+                    </Col>
+                    <Col span={6}>
+                        <TextBox
+                            style={this.formRowStyle}
+                            placeholder="电话号码"
+                            onChangeValue={(phoneNumber) => this.setState({contactInfo: {...this.state.contactInfo, phoneNumber}})}
+                        />
+                    </Col>
+                    <Col span={2} />
+                    <Col span={2} style={this.labelStyle}>
+                        <span>占位</span>
+                    </Col>
+                    <Col span={6}>
+                        <TextBox
+                            style={this.formRowStyle}
+                            placeholder="占位"
+                        />
+                    </Col>
+                </Row>
+                <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
+                    {/* 此处的width可能有兼容性问题 */}
+                    <Col span={2} style={this.labelStyle}>
+                        <span>微信</span>
+                    </Col>
+                    <Col span={6}>
+                        <TextBox
+                            style={this.formRowStyle}
+                            placeholder="微信"
+                            onChangeValue={(weChat) => this.setState({contactInfo: {...this.state.contactInfo, weChat}})}
+                        />
+                    </Col>
+                    <Col span={2} />
+                    <Col span={2} style={this.labelStyle}>
+                        <span>QQ</span>
+                    </Col>
+                    <Col span={6}>
+                        <TextBox
+                            style={this.formRowStyle}
+                            placeholder="QQ"
+                            onChangeValue={(QQ) => this.setState({contactInfo: {...this.state.contactInfo, QQ}})}
+                        />
+                    </Col>
+                </Row>
+                <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
+                    {/* 此处的width可能有兼容性问题 */}
+                    <Col span={2} style={this.labelStyle}>
+                        <span>收件地址</span>
+                    </Col>
+                    <Col span={6}>
+                        <TextBox
+                            style={this.formRowStyle}
+                            placeholder="收件地址"
+                            onChangeValue={(mailAddress) => this.setState({contactInfo: {...this.state.contactInfo, mailAddress}})}
+                        />
+                    </Col>
+                    <Col span={2} />
+                    <Col span={2} style={this.labelStyle}>
+                        <span>电子邮箱</span>
+                    </Col>
+                    <Col span={6}>
+                        <TextBox
+                            style={this.formRowStyle}
+                            placeholder="电子邮箱"
+                            onChangeValue={(email) => this.setState({contactInfo: {...this.state.contactInfo, email}})}
+                        />
+                    </Col>
+                </Row>
+                <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
+                    <Col span={18} style={this.labelStyle}>
+                        <Divider
+                            orientation="left"
+                            style={{ color: 'white', ...theme.typographyStyles.subHeader }}
+                        >
+                            监护人信息
+                        </Divider>
+                    </Col>
+                </Row>
+                {this.generateCustodianInfoRows()}
+                <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
+                    <Col span={3}>
+                        <Button onClick={()=> {
+                            let newCustodianInfo = [...this.state.custodianInfo]
+                            newCustodianInfo.push({name: "", relationship: ""})
+                            this.setState({custodianInfo: newCustodianInfo})}}>新增</Button>
+                        <Button onClick={()=> {
+                            let newCustodianInfo = [...this.state.custodianInfo]
+                            if (newCustodianInfo.length >= 2) {
+                                newCustodianInfo.pop()
+                            }
+                            this.setState({custodianInfo: newCustodianInfo})}}>删减</Button>
+                    </Col>
+                    <Col span={15}/>
+                </Row>
+                <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
+                    <Col span={18} style={this.labelStyle}>
+                        <Divider
+                            orientation="left"
+                            style={{ color: 'white', ...theme.typographyStyles.subHeader }}
+                        >
+                            紧急联系人
+                        </Divider>
+                    </Col>
+                </Row>
+                {this.generateEmergentContactRows()}
+                <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
+                    <Col span={3}>
+                        <Button onClick={()=> {
+                            let newEmergentContact = [...this.state.emergentContact]
+                            newEmergentContact.push({name: "", number: ""})
+                            this.setState({emergentContact: newEmergentContact})}}>新增</Button>
+                        <Button onClick={()=> {
+                            let newEmergentContact = [...this.state.emergentContact]
+                            if (newEmergentContact.length >= 2) {
+                                newEmergentContact.pop()
+                            }
+                            this.setState({emergentContact: newEmergentContact})}}>删减</Button>
+                    </Col>
+                    <Col span={15}/>
+                </Row>
+                <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
+                    <Col span={18} style={this.labelStyle}>
+                        <Divider
+                            orientation="left"
+                            style={{ color: 'white', ...theme.typographyStyles.subHeader }}
+                        >
+                            医疗信息
+                        </Divider>
+                    </Col>
+                </Row>
+                <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
+                    {/* 此处的width可能有兼容性问题 */}
+                    <Col span={2} style={this.labelStyle}>
+                        <span>整体健康状况</span>
+                    </Col>
+                    <Col span={4} className='DropDownMenu'>
+                        <DropDownMenu
+                            style={this.DropdownMenuStyle}
+                            itemWidth={250}
+                            values={[
+                                "很好（基本不生病，从不住院）", 
+                                "一般（偶尔生病住院）", 
+                                " 欠佳（每个季度都曾生病住院）"
+                            ]}
+                            defaultValue={this.state.medicalInfo.generalHealthStatus}
+                            onChangeValue={(generalHealthStatus)=> this.setState({medicalInfo: {...this.state.medicalInfo, generalHealthStatus}})}
+                        />
+                    </Col>
+                    <Col span={1} />
+                    <Col span={2} style={this.labelStyle}>
+                        <span>血型</span>
+                    </Col>
+                    <Col span={2}>
+                        <TextBox
+                            style={this.formRowStyle}
+                            placeholder="血型"
+                            onChangeValue={(bloodType)=> this.setState({medicalInfo: {...this.state.medicalInfo, bloodType}})}
+                        />
+                    </Col>
+                    <Col span={1} />
+                    <Col span={3} style={this.labelStyle}>
+                        <span>最近一次体检时间</span>
+                    </Col>
+                    <Col span={3}>
+                        <CalendarDatePicker
+                            width={"100%"}
+                            placeholder={""}
+                            onChangeDate={(lastPhysicalExam) => {
+                                const dateString = lastPhysicalExam.toLocaleDateString()
+                                this.setState({medicalInfo: {...this.state.medicalInfo, lastPhysicalExam: dateString }})
+                            }}
+                        />
+                    </Col>
+                </Row>
+                <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
+                    {/* 此处的width可能有兼容性问题 */}
+                    <Col span={18} style={this.labelStyle}>
+                        <Divider
+                            style={{ color: 'white', ...theme.typographyStyles.title }}
+                        >
+                            既往疾病
+                        </Divider>
+                    </Col>
+                </Row>
+                {this.generatePreviousDiagnosisRows()}
+                <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
+                    <Col span={3}>
+                        <Button onClick={()=> {
+                            let newPreviousDiagnosis = [...this.state.medicalInfo.previousDiagnosis]
+                            newPreviousDiagnosis.push({nameOfDiagnosis: "", hospitalOfDiagnosis: "", note:""})
+                            this.setState({medicalInfo: {...this.state.medicalInfo, previousDiagnosis: newPreviousDiagnosis}})}}>新增</Button>
+                        <Button onClick={()=> {
+                            let newPreviousDiagnosis = [...this.state.medicalInfo.previousDiagnosis]
+                            if (newPreviousDiagnosis.length >= 2) {
+                                newPreviousDiagnosis.pop()
+                            }
+                            this.setState({medicalInfo: {...this.state.medicalInfo, previousDiagnosis: newPreviousDiagnosis}})}}>删减</Button>
+                    </Col>
+                    <Col span={15}/>
+                </Row>
+                <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
+                    {/* 此处的width可能有兼容性问题 */}
+                    <Col span={18} style={this.labelStyle}>
+                        <Divider
+                            style={{ color: 'white', ...theme.typographyStyles.title }}
+                        >
+                            长期用药
+                        </Divider>
+                    </Col>
+                </Row>
+                {this.generateRegularMedicationRows()}
+                <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
+                    <Col span={3}>
+                        <Button onClick={()=> {
+                            let newRegularMedication = [...this.state.medicalInfo.regularMedication]
+                            newRegularMedication.push({nameOfMedication: "", instructionOfMedication: "", note:""})
+                            this.setState({medicalInfo: {...this.state.medicalInfo, regularMedication: newRegularMedication}})}}>新增</Button>
+                        <Button onClick={()=> {
+                            let newRegularMedication = [...this.state.medicalInfo.regularMedication]
+                            if (newRegularMedication.length >= 2) {
+                                newRegularMedication.pop()
+                            }
+                            this.setState({medicalInfo: {...this.state.medicalInfo, regularMedication: newRegularMedication}})}}>删减</Button>
+                    </Col>
+                    <Col span={15}/>
+                </Row>
+                <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
+                    {/* 此处的width可能有兼容性问题 */}
+                    <Col span={8} style={this.labelStyle}>
+                        <Divider
+                            style={{ color: 'white', ...theme.typographyStyles.title }}
+                        >
+                            食物过敏
+                        </Divider>
+                    </Col>
+                    <Col span={2} />
+                    <Col span={8} style={this.labelStyle}>
+                        <Divider
+                            style={{ color: 'white', ...theme.typographyStyles.title }}
+                        >
+                            药物过敏
+                        </Divider>
+                    </Col>
+                </Row>
+                <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
+                    {/* 此处的width可能有兼容性问题 */}
+                    <Col span={8} style={this.labelStyle}>
+                        <Col span={10} style={this.labelStyle}>
+                            <span style={this.spanStyle}>奶类过敏（乳糖不耐受）</span>
+                        </Col>
+                        <Col span={1} className="checkBox">
+                            <CheckBox
+                                style={this.checkBoxStyle}
+                                defaultChecked={this.state.medicalInfo.foodAlergy.lactoseIntolerance}
+                                onCheck={(lactoseIntolerance) => this.setState({
+                                    medicalInfo: {
+                                        ...this.state.medicalInfo, 
+                                        foodAlergy: {
+                                            ...this.state.medicalInfo.foodAlergy,
+                                            lactoseIntolerance
+                                        }
+                                    }})}
+                            />
+                        </Col>
+                        <Col span={2} />
+                        <Col span={10} style={this.labelStyle}>
+                            <span style={this.spanStyle}>禽蛋类过敏</span>
+                        </Col>
+                        <Col span={1} className="checkBox">
+                            <CheckBox
+                                style={this.checkBoxStyle}
+                                defaultChecked={this.state.medicalInfo.foodAlergy.eggAllergy}
+                                onCheck={(eggAllergy) => this.setState({
+                                    medicalInfo: {
+                                        ...this.state.medicalInfo, 
+                                        foodAlergy: {
+                                            ...this.state.medicalInfo.foodAlergy,
+                                            eggAllergy
+                                        }
+                                    }})}
+                            />
+                        </Col>
+                    </Col>
+                    <Col span={2} />
+                    <Col span={8} style={this.labelStyle}>
+                        <Col span={10} style={this.labelStyle}>
+                            <span style={this.spanStyle}>抗生素过敏</span>
+                        </Col>
+                        <Col span={1} className="checkBox">
+                            <CheckBox
+                                style={this.checkBoxStyle}
+                                defaultChecked={this.state.medicalInfo.medicationAllergy.antibioticsAllergy}
+                                onCheck={(antibioticsAllergy) => this.setState({
+                                    medicalInfo: {
+                                        ...this.state.medicalInfo, 
+                                        medicationAllergy: {
+                                            ...this.state.medicalInfo.medicationAllergy,
+                                            antibioticsAllergy
+                                        }
+                                    }})}
+                            />
+                        </Col>
+                        <Col span={2} />
+                        <Col span={10} style={this.labelStyle}>
+                            <span style={this.spanStyle}>磺胺类药物过敏</span>
+                        </Col>
+                        <Col span={1} className="checkBox">
+                            <CheckBox
+                                style={this.checkBoxStyle}
+                                defaultChecked={this.state.medicalInfo.medicationAllergy.sulfonamidesAllergy}
+                                onCheck={(sulfonamidesAllergy) => this.setState({
+                                    medicalInfo: {
+                                        ...this.state.medicalInfo, 
+                                        medicationAllergy: {
+                                            ...this.state.medicalInfo.medicationAllergy,
+                                            sulfonamidesAllergy
+                                        }
+                                    }})}
+                            />
+                        </Col>
+                    </Col>
+                </Row>
+                <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
+                    {/* 此处的width可能有兼容性问题 */}
+                    <Col span={8} style={this.labelStyle}>
+                        <Col span={10} style={this.labelStyle}>
+                            <span style={this.spanStyle}>鱼类过敏</span>
+                        </Col>
+                        <Col span={1} className="checkBox">
+                            <CheckBox
+                                style={this.checkBoxStyle}
+                                defaultChecked={this.state.medicalInfo.foodAlergy.fishAllergy}
+                                onCheck={(fishAllergy) => this.setState({
+                                    medicalInfo: {
+                                        ...this.state.medicalInfo, 
+                                        foodAlergy: {
+                                            ...this.state.medicalInfo.foodAlergy,
+                                            fishAllergy
+                                        }
+                                    }})}
+                            />
+                        </Col>
+                        <Col span={2} />
+                        <Col span={10} style={this.labelStyle}>
+                            <span style={this.spanStyle}>甲壳类过敏</span>
+                        </Col>
+                        <Col span={1} className="checkBox">
+                            <CheckBox
+                                style={this.checkBoxStyle}
+                                defaultChecked={this.state.medicalInfo.foodAlergy.shellAllergy}
+                                onCheck={(shellAllergy) => this.setState({
+                                    medicalInfo: {
+                                        ...this.state.medicalInfo, 
+                                        foodAlergy: {
+                                            ...this.state.medicalInfo.foodAlergy,
+                                            shellAllergy
+                                        }
+                                    }})}
+                            />
+                        </Col>
+                    </Col>
+                    <Col span={2} />
+                    <Col span={8} style={this.labelStyle}>
+                        <Col span={10} style={this.labelStyle}>
+                            <span style={this.spanStyle}>解热镇痛药</span>
+                        </Col>
+                        <Col span={1} className="checkBox">
+                            <CheckBox
+                                style={this.checkBoxStyle}
+                                defaultChecked={this.state.medicalInfo.medicationAllergy.painkillerAllergy}
+                                onCheck={(painkillerAllergy) => this.setState({
+                                    medicalInfo: {
+                                        ...this.state.medicalInfo, 
+                                        medicationAllergy: {
+                                            ...this.state.medicalInfo.medicationAllergy,
+                                            painkillerAllergy
+                                        }
+                                    }})}
+                            />
+                        </Col>
+                        <Col span={2} />
+                        <Col span={10} style={this.labelStyle}>
+                            <span style={this.spanStyle}>麻醉用药</span>
+                        </Col>
+                        <Col span={1} className="checkBox">
+                            <CheckBox
+                                style={this.checkBoxStyle}
+                                defaultChecked={this.state.medicalInfo.medicationAllergy.anestheticAllergy}
+                                onCheck={(anestheticAllergy) => this.setState({
+                                    medicalInfo: {
+                                        ...this.state.medicalInfo, 
+                                        medicationAllergy: {
+                                            ...this.state.medicalInfo.medicationAllergy,
+                                            anestheticAllergy
+                                        }
+                                    }})}
+                            />
+                        </Col>
+                    </Col>
+                </Row>
+                <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
+                    {/* 此处的width可能有兼容性问题 */}
+                    <Col span={8} style={this.labelStyle}>
+                        <Col span={10} style={this.labelStyle}>
+                            <span style={this.spanStyle}>花生过敏</span>
+                        </Col>
+                        <Col span={1} className="checkBox">
+                            <CheckBox
+                                style={this.checkBoxStyle}
+                                defaultChecked={this.state.medicalInfo.foodAlergy.peanutAllergy}
+                                onCheck={(peanutAllergy) => this.setState({
+                                    medicalInfo: {
+                                        ...this.state.medicalInfo, 
+                                        foodAlergy: {
+                                            ...this.state.medicalInfo.foodAlergy,
+                                            peanutAllergy
+                                        }
+                                    }})}
+                            />
+                        </Col>
+                        <Col span={2} />
+                        <Col span={10} style={this.labelStyle}>
+                            <span style={this.spanStyle}>大豆过敏</span>
+                        </Col>
+                        <Col span={1} className="checkBox">
+                            <CheckBox
+                                style={this.checkBoxStyle}
+                                defaultChecked={this.state.medicalInfo.foodAlergy.soyBeanAllergy}
+                                onCheck={(soyBeanAllergy) => this.setState({
+                                    medicalInfo: {
+                                        ...this.state.medicalInfo, 
+                                        foodAlergy: {
+                                            ...this.state.medicalInfo.foodAlergy,
+                                            soyBeanAllergy
+                                        }
+                                    }})}
+
+                            />
+                        </Col>
+                    </Col>
+                    <Col span={2} />
+                    <Col span={8} style={this.labelStyle}>
+                        <Col span={10} style={this.labelStyle}>
+                            <span style={this.spanStyle}>疫苗类药物</span>
+                        </Col>
+                        <Col span={1} className="checkBox">
+                            <CheckBox
+                                style={this.checkBoxStyle}
+                                defaultChecked={this.state.medicalInfo.medicationAllergy.vaccineAllergy}
+                                onCheck={(vaccineAllergy) => this.setState({
+                                    medicalInfo: {
+                                        ...this.state.medicalInfo, 
+                                        medicationAllergy: {
+                                            ...this.state.medicalInfo.medicationAllergy,
+                                            vaccineAllergy
+                                        }
+                                    }})}
+                            />
+                        </Col>
+                        <Col span={2} />
+                        <Col span={4} style={this.labelStyle}>
+                            <span style={this.spanStyle}>其他药物</span>
+                        </Col>
+                        <Col span={7}>
+                            <TextBox
+                                style={this.formRowStyle}
+                                placeholder="其他药物"
+                                onChangeValue={(otherMedicationAllergy) => this.setState({
+                                    medicalInfo: {
+                                        ...this.state.medicalInfo, 
+                                        medicationAllergy: {
+                                            ...this.state.medicalInfo.medicationAllergy,
+                                            otherMedicationAllergy
+                                        }
+                                    }})}
+                            />
+                        </Col>
+                    </Col>
+                </Row>
+                <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
+                    {/* 此处的width可能有兼容性问题 */}
+                    <Col span={8} style={this.labelStyle}>
+                        <Col span={10} style={this.labelStyle}>
+                            <span style={this.spanStyle}>坚果类过敏</span>
+                        </Col>
+                        <Col span={1} className="checkBox">
+                            <CheckBox
+                                style={this.checkBoxStyle}
+                                defaultChecked={this.state.medicalInfo.foodAlergy.nutAllergy}
+                                onCheck={(nutAllergy) => this.setState({
+                                    medicalInfo: {
+                                        ...this.state.medicalInfo, 
+                                        foodAlergy: {
+                                            ...this.state.medicalInfo.foodAlergy,
+                                            nutAllergy
+                                        }
+                                    }})}
+                            />
+                        </Col>
+                        <Col span={2} />
+                        <Col span={10} style={this.labelStyle}>
+                            <span style={this.spanStyle}>小麦过敏</span>
+                        </Col>
+                        <Col span={1} className="checkBox">
+                            <CheckBox
+                                style={this.checkBoxStyle}
+                                defaultChecked={this.state.medicalInfo.foodAlergy.wheatAllergy}
+                                onCheck={(wheatAllergy) => this.setState({
+                                    medicalInfo: {
+                                        ...this.state.medicalInfo, 
+                                        foodAlergy: {
+                                            ...this.state.medicalInfo.foodAlergy,
+                                            wheatAllergy
+                                        }
+                                    }})}
+                            />
+                        </Col>
+                    </Col>
+                    <Col span={2} />
+                    <Col span={8} style={this.labelStyle}>
+                        
+                    </Col>
+                </Row>
+                <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
+                    {/* 此处的width可能有兼容性问题 */}
+                    <Col span={8} style={this.labelStyle}>
+                        <Col span={4} style={this.labelStyle}>
+                            <span style={this.spanStyle}>其他食物</span>
+                        </Col>
+                        <Col span={7}>
+                            <TextBox
+                                style={this.formRowStyle}
+                                placeholder="其他食物"
+                                onChangeValue={(otherFoodAllergy) => this.setState({
+                                    medicalInfo: {
+                                        ...this.state.medicalInfo, 
+                                        foodAlergy: {
+                                            ...this.state.medicalInfo.foodAlergy,
+                                            otherFoodAllergy
+                                        }
+                                    }})}
+                            />
+                        </Col>
+                        <Col span={2} />
+                        <Col span={10} style={this.labelStyle}>
+                        </Col>
+                        <Col span={1} className="checkBox">
+                        </Col>
+                    </Col>
+                    <Col span={2} />
+                    <Col span={8} style={this.labelStyle}>
+                    </Col>
+                </Row>
+                <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available", display: "flex"}}>
+                    <Col span={18} style={this.labelStyle}>
+                        <Divider
+                            orientation="right"
+                            style={{ color: 'white', ...theme.typographyStyles.subHeader }}
+                        >
+                            <Button>确认</Button>
+                        </Divider>
+                    </Col>
+                </Row>
+            </Content>
+        )
+    }
+
+    public render(): JSX.Element {
         const { dispatch } = this.props
         const isLearner = localStorage.getItem("isLearner")
         const validated = localStorage.getItem("validated")
         const openid = localStorage.getItem("openid") || null
-        // if ( openid === "undefined" ) {
-        //     dispatch({type: "main/redirect", path:"#/login"})
-        //     return
-        // }
-        // else if (validated == "true") {
-        //     dispatch({type: "main/redirect", path:"#/"})
-        //     return
-        // }
-        // else if (isLearner == "true") {
-        //     return(
-        //         <div>等待验证</div>
-        //     )
-        // }
-        // else {
-        if (true) {
-            return (
-                <Content>
-                    <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
-                        {/* 此处的width可能有兼容性问题 */}
-                        <Col span={1} style={this.labelStyle}>
-                            <span>姓</span>
-                        </Col>
-                        <Col span={3}>
-                            <TextBox
-                                style={this.formRowStyle}
-                                placeholder="姓"
-                                onChangeValue={(familyName) => this.setState({familyName})}
-                            />
-                        </Col>
-                        <Col span={1} />
-                        <Col span={1} style={this.labelStyle}>
-                            <span>名</span>
-                        </Col>
-                        <Col span={3}>
-                            <TextBox
-                                style={this.formRowStyle}
-                                placeholder="名"
-                                onChangeValue={(givenName) => this.setState({givenName})}
-                            />
-                        </Col>
-                        <Col span={1} />
-                        <Col span={1} style={this.labelStyle}>
-                            <span>昵称</span>
-                        </Col>
-                        <Col span={3}>
-                            <TextBox
-                                style={this.formRowStyle}
-                                placeholder="昵称"
-                                onChangeValue={(nickname) => this.setState({nickname})}
-                            />
-                        </Col>
-                        <Col span={1} />
-                        <Col span={2}>
-                            <span>是否导师</span>
-                        </Col>
-                        <Col className="checkBox" span={1}>
-                            <CheckBox
-                                style={this.checkBoxStyle}
-                                defaultChecked={this.state.isMentor}
-                                onCheck={(isMentor) => this.setState({isMentor})}
-                            />
-                        </Col>
-                    </Row>
-                    <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
-                        {/* 此处的width可能有兼容性问题 */}
-                        <Col span={1} style={this.labelStyle}>
-                            <span>性别</span>
-                        </Col>
-                        <Col span={3}>
-                            <TextBox
-                                style={this.formRowStyle}
-                                placeholder="性别"
-                                onChangeValue={(gender) => this.setState({gender})}
-                            />
-                        </Col>
-                        <Col span={1} />
-                        <Col span={1} style={this.labelStyle}>
-                            <span>民族</span>
-                        </Col>
-                        <Col span={3}>
-                            <TextBox
-                                style={this.formRowStyle}
-                                placeholder="民族"
-                                onChangeValue={(ethnicity) => this.setState({ethnicity})}
-                            />
-                        </Col>
-                        <Col span={1} />
-                        <Col span={1} style={this.labelStyle}>
-                            <span>生日</span>
-                        </Col>
-                        <Col span={3}>
-                            <CalendarDatePicker
-                                width={"75%"}
-                                placeholder={"生日"}
-                                onChangeDate={(birthday) => this.setState({birthday: birthday.toLocaleDateString()})}
-                            />
-                        </Col>
-                        <Col span={1} />
-                        <Col span={2} style={this.labelStyle}>
-                            <span>年龄</span>
-                        </Col>
-                        <Col span={1}>
-                            <span>
-                                {this.getAge(this.state.birthday) || ""}
-                            </span>
-                        </Col>
-                    </Row>
-                    <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
-                        {/* 此处的width可能有兼容性问题 */}
-                        <Col span={2} style={this.labelStyle}>
-                            <span>目前状态</span>
-                        </Col>
-                        <Col span={2} className='DropDownMenu'>
-                            <DropDownMenu
-                                style={this.DropdownMenuStyle}
-                                itemWidth={120}
-                                values={["在读", "在读（游学）", " 在读（试读）", "毕业", "导师"]}
-                                defaultValue={this.state.status}
-                                onChangeValue={(status)=> this.setState({status})}
-                            />
-                        </Col>
-                        <Col span={1} />
-                        <Col span={2} style={this.labelStyle}>
-                            <span>证件类型</span>
-                        </Col>
-                        <Col span={3} className='DropDownMenu'>
-                            <DropDownMenu
-                                style={this.DropdownMenuStyle}
-                                itemWidth={120}
-                                values={["身份证", "护照"]}
-                                defaultValue={this.state.mainPersonalIdType}
-                                onChangeValue={(mainPersonalIdType)=> this.setState({mainPersonalIdType})}
-                            />
-                        </Col>
-                        <Col span={2} style={this.labelStyle}>
-                            <span>证件号码</span>
-                        </Col>
-                        <Col span={6} className='DropDownMenu'>
-                            <TextBox
-                                style={this.formRowStyle}
-                                placeholder="证件号码"
-                                onChangeValue={(mainPersonalId) => this.setState({mainPersonalId})}
-                            />
-                        </Col>
-                    </Row>
-                    <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
-                        {/* 此处的width可能有兼容性问题 */}
-                        <Col span={2} style={this.labelStyle}>
-                            <span>加入前状态</span>
-                        </Col>
-                        <Col span={2} className='DropDownMenu'>
-                            <DropDownMenu
-                                style={this.DropdownMenuStyle}
-                                itemWidth={120}
-                                values={["在读", "在读（游学）", " 在读（试读）", "毕业", "导师", "其他"]}
-                                defaultValue={this.state.previousStatus}
-                                onChangeValue={(previousStatus)=> this.setState({previousStatus})}
-                            />
-                        </Col>
-                        <Col span={1} />
-                        <Col span={2} style={this.labelStyle}>
-                            <span>加入时间</span>
-                        </Col>
-                        <Col span={3} className='DropDownMenu'>
-                            <CalendarDatePicker
-                                width={"75%"}
-                                placeholder={"加入时间"}
-                                onChangeDate={(dateOfRegistration) => this.setState({dateOfRegistration: dateOfRegistration.toLocaleDateString()})}
-                            />
-                        </Col>
-                        <Col span={2} style={this.labelStyle}>
-                            <span>加入原因</span>
-                        </Col>
-                        <Col span={6} className='DropDownMenu'>
-                            <TextBox
-                                style={this.formRowStyle}
-                                placeholder="加入原因"
-                                onChangeValue={(reasonOfRegistration) => this.setState({reasonOfRegistration})}
-                            />
-                        </Col>
-                    </Row>
-                    <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
-                        {/* 此处的width可能有兼容性问题 */}
-                        <Col span={2} style={this.labelStyle}>
-                            <span>下阶段目的地</span>
-                        </Col>
-                        <Col span={2} className='DropDownMenu'>
-                            <TextBox
-                                style={this.formRowStyle}
-                                placeholder="下阶段目的地"
-                                onChangeValue={(destinationOfLeave) => this.setState({destinationOfLeave})}
-                            />
-                        </Col>
-                        <Col span={1} />
-                        <Col span={2} style={this.labelStyle}>
-                            <span>离开时间</span>
-                        </Col>
-                        <Col span={3} className='DropDownMenu'>
-                            <CalendarDatePicker
-                                width={"75%"}
-                                placeholder={""}
-                                onChangeDate={(dateOfLeave) => this.setState({dateOfLeave: dateOfLeave.toLocaleDateString()})}
-                            />
-                        </Col>
-                        <Col span={2} style={this.labelStyle}>
-                            <span>离开原因</span>
-                        </Col>
-                        <Col span={6} className='DropDownMenu'>
-                            <TextBox
-                                style={this.formRowStyle}
-                                placeholder="离开原因"
-                                onChangeValue={(reasonOfLeave) => this.setState({reasonOfLeave})}
-                            />
-                        </Col>
-                    </Row>
-                    <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available", display: this.state.isMentor? "flex": "none" }}>
-                        <Col span={18} style={this.labelStyle}>
-                            <Divider
-                                orientation="left"
-                                style={{ color: 'white', ...theme.typographyStyles.subHeader }}
-                            >
-                                导师相关信息
-                            </Divider>
-                        </Col>
-                    </Row>
-                    <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available", display: this.state.isMentor? "flex": "none" }}>
-                        {/* 此处的width可能有兼容性问题 */}
-                        <Col span={2} style={this.labelStyle}>
-                            <span>工资卡号</span>
-                        </Col>
-                        <Col span={6}>
-                            <TextBox
-                                style={this.formRowStyle}
-                                placeholder="工资卡号"
-                                onChangeValue={(salaryCard) => this.setState({salaryCard})}
-                            />
-                        </Col>
-                        <Col span={2} />
-                        <Col span={2} style={this.labelStyle}>
-                            <span>占位</span>
-                        </Col>
-                        <Col span={6}>
-                            <TextBox
-                                style={this.formRowStyle}
-                                placeholder="占位"
-                            />
-                        </Col>
-                    </Row>
-                    <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
-                        <Col span={18} style={this.labelStyle}>
-                            <Divider
-                                orientation="left"
-                                style={{ color: 'white', ...theme.typographyStyles.subHeader }}
-                            >
-                                联系方式
-                            </Divider>
-                        </Col>
-                    </Row>
-                    <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
-                        {/* 此处的width可能有兼容性问题 */}
-                        <Col span={2} style={this.labelStyle}>
-                            <span>电话号码</span>
-                        </Col>
-                        <Col span={6}>
-                            <TextBox
-                                style={this.formRowStyle}
-                                placeholder="电话号码"
-                                onChangeValue={(phoneNumber) => this.setState({contactInfo: {...this.state.contactInfo, phoneNumber}})}
-                            />
-                        </Col>
-                        <Col span={2} />
-                        <Col span={2} style={this.labelStyle}>
-                            <span>占位</span>
-                        </Col>
-                        <Col span={6}>
-                            <TextBox
-                                style={this.formRowStyle}
-                                placeholder="占位"
-                            />
-                        </Col>
-                    </Row>
-                    <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
-                        {/* 此处的width可能有兼容性问题 */}
-                        <Col span={2} style={this.labelStyle}>
-                            <span>微信</span>
-                        </Col>
-                        <Col span={6}>
-                            <TextBox
-                                style={this.formRowStyle}
-                                placeholder="微信"
-                                onChangeValue={(weChat) => this.setState({contactInfo: {...this.state.contactInfo, weChat}})}
-                            />
-                        </Col>
-                        <Col span={2} />
-                        <Col span={2} style={this.labelStyle}>
-                            <span>QQ</span>
-                        </Col>
-                        <Col span={6}>
-                            <TextBox
-                                style={this.formRowStyle}
-                                placeholder="QQ"
-                                onChangeValue={(QQ) => this.setState({contactInfo: {...this.state.contactInfo, QQ}})}
-                            />
-                        </Col>
-                    </Row>
-                    <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
-                        {/* 此处的width可能有兼容性问题 */}
-                        <Col span={2} style={this.labelStyle}>
-                            <span>收件地址</span>
-                        </Col>
-                        <Col span={6}>
-                            <TextBox
-                                style={this.formRowStyle}
-                                placeholder="收件地址"
-                                onChangeValue={(mailAddress) => this.setState({contactInfo: {...this.state.contactInfo, mailAddress}})}
-                            />
-                        </Col>
-                        <Col span={2} />
-                        <Col span={2} style={this.labelStyle}>
-                            <span>电子邮箱</span>
-                        </Col>
-                        <Col span={6}>
-                            <TextBox
-                                style={this.formRowStyle}
-                                placeholder="电子邮箱"
-                                onChangeValue={(email) => this.setState({contactInfo: {...this.state.contactInfo, email}})}
-                            />
-                        </Col>
-                    </Row>
-                    <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
-                        <Col span={18} style={this.labelStyle}>
-                            <Divider
-                                orientation="left"
-                                style={{ color: 'white', ...theme.typographyStyles.subHeader }}
-                            >
-                                监护人信息
-                            </Divider>
-                        </Col>
-                    </Row>
-                    {this.generateCustodianInfoRows()}
-                    <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
-                        <Col span={3}>
-                            <Button onClick={()=> {
-                                let newCustodianInfo = [...this.state.custodianInfo]
-                                newCustodianInfo.push({name: "", relationship: ""})
-                                this.setState({custodianInfo: newCustodianInfo})}}>新增</Button>
-                            <Button onClick={()=> {
-                                let newCustodianInfo = [...this.state.custodianInfo]
-                                if (newCustodianInfo.length >= 2) {
-                                    newCustodianInfo.pop()
-                                }
-                                this.setState({custodianInfo: newCustodianInfo})}}>删减</Button>
-                        </Col>
-                        <Col span={15}/>
-                    </Row>
-                    <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
-                        <Col span={18} style={this.labelStyle}>
-                            <Divider
-                                orientation="left"
-                                style={{ color: 'white', ...theme.typographyStyles.subHeader }}
-                            >
-                                紧急联系人
-                            </Divider>
-                        </Col>
-                    </Row>
-                    {this.generateEmergentContactRows()}
-                    <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
-                        <Col span={3}>
-                            <Button onClick={()=> {
-                                let newEmergentContact = [...this.state.emergentContact]
-                                newEmergentContact.push({name: "", number: ""})
-                                this.setState({emergentContact: newEmergentContact})}}>新增</Button>
-                            <Button onClick={()=> {
-                                let newEmergentContact = [...this.state.emergentContact]
-                                if (newEmergentContact.length >= 2) {
-                                    newEmergentContact.pop()
-                                }
-                                this.setState({emergentContact: newEmergentContact})}}>删减</Button>
-                        </Col>
-                        <Col span={15}/>
-                    </Row>
-                    <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
-                        <Col span={18} style={this.labelStyle}>
-                            <Divider
-                                orientation="left"
-                                style={{ color: 'white', ...theme.typographyStyles.subHeader }}
-                            >
-                                医疗信息
-                            </Divider>
-                        </Col>
-                    </Row>
-                    <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
-                        {/* 此处的width可能有兼容性问题 */}
-                        <Col span={2} style={this.labelStyle}>
-                            <span>整体健康状况</span>
-                        </Col>
-                        <Col span={4} className='DropDownMenu'>
-                            <DropDownMenu
-                                style={this.DropdownMenuStyle}
-                                itemWidth={250}
-                                values={[
-                                    "很好（基本不生病，从不住院）", 
-                                    "一般（偶尔生病住院）", 
-                                    " 欠佳（每个季度都曾生病住院）"
-                                ]}
-                                defaultValue={this.state.medicalInfo.generalHealthStatus}
-                                onChangeValue={(generalHealthStatus)=> this.setState({medicalInfo: {...this.state.medicalInfo, generalHealthStatus}})}
-                            />
-                        </Col>
-                        <Col span={1} />
-                        <Col span={2} style={this.labelStyle}>
-                            <span>血型</span>
-                        </Col>
-                        <Col span={2}>
-                            <TextBox
-                                style={this.formRowStyle}
-                                placeholder="血型"
-                                onChangeValue={(bloodType)=> this.setState({medicalInfo: {...this.state.medicalInfo, bloodType}})}
-                            />
-                        </Col>
-                        <Col span={1} />
-                        <Col span={3} style={this.labelStyle}>
-                            <span>最近一次体检时间</span>
-                        </Col>
-                        <Col span={3}>
-                            <CalendarDatePicker
-                                width={"100%"}
-                                placeholder={""}
-                                onChangeDate={(lastPhysicalExam) => {
-                                    const dateString = lastPhysicalExam.toLocaleDateString()
-                                    this.setState({medicalInfo: {...this.state.medicalInfo, lastPhysicalExam: dateString }})
-                                }}
-                            />
-                        </Col>
-                    </Row>
-                    <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
-                        {/* 此处的width可能有兼容性问题 */}
-                        <Col span={18} style={this.labelStyle}>
-                            <Divider
-                                style={{ color: 'white', ...theme.typographyStyles.title }}
-                            >
-                                既往疾病
-                            </Divider>
-                        </Col>
-                    </Row>
-                    {this.generatePreviousDiagnosisRows()}
-                    <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
-                        <Col span={3}>
-                            <Button onClick={()=> {
-                                let newPreviousDiagnosis = [...this.state.medicalInfo.previousDiagnosis]
-                                newPreviousDiagnosis.push({nameOfDiagnosis: "", hospitalOfDiagnosis: "", note:""})
-                                this.setState({medicalInfo: {...this.state.medicalInfo, previousDiagnosis: newPreviousDiagnosis}})}}>新增</Button>
-                            <Button onClick={()=> {
-                                let newPreviousDiagnosis = [...this.state.medicalInfo.previousDiagnosis]
-                                if (newPreviousDiagnosis.length >= 2) {
-                                    newPreviousDiagnosis.pop()
-                                }
-                                this.setState({medicalInfo: {...this.state.medicalInfo, previousDiagnosis: newPreviousDiagnosis}})}}>删减</Button>
-                        </Col>
-                        <Col span={15}/>
-                    </Row>
-                    <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
-                        {/* 此处的width可能有兼容性问题 */}
-                        <Col span={18} style={this.labelStyle}>
-                            <Divider
-                                style={{ color: 'white', ...theme.typographyStyles.title }}
-                            >
-                                长期用药
-                            </Divider>
-                        </Col>
-                    </Row>
-                    {this.generateRegularMedicationRows()}
-                    <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
-                        <Col span={3}>
-                            <Button onClick={()=> {
-                                let newRegularMedication = [...this.state.medicalInfo.regularMedication]
-                                newRegularMedication.push({nameOfMedication: "", instructionOfMedication: "", note:""})
-                                this.setState({medicalInfo: {...this.state.medicalInfo, regularMedication: newRegularMedication}})}}>新增</Button>
-                            <Button onClick={()=> {
-                                let newRegularMedication = [...this.state.medicalInfo.regularMedication]
-                                if (newRegularMedication.length >= 2) {
-                                    newRegularMedication.pop()
-                                }
-                                this.setState({medicalInfo: {...this.state.medicalInfo, regularMedication: newRegularMedication}})}}>删减</Button>
-                        </Col>
-                        <Col span={15}/>
-                    </Row>
-                    <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
-                        {/* 此处的width可能有兼容性问题 */}
-                        <Col span={8} style={this.labelStyle}>
-                            <Divider
-                                style={{ color: 'white', ...theme.typographyStyles.title }}
-                            >
-                                食物过敏
-                            </Divider>
-                        </Col>
-                        <Col span={2} />
-                        <Col span={8} style={this.labelStyle}>
-                            <Divider
-                                style={{ color: 'white', ...theme.typographyStyles.title }}
-                            >
-                                药物过敏
-                            </Divider>
-                        </Col>
-                    </Row>
-                    <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
-                        {/* 此处的width可能有兼容性问题 */}
-                        <Col span={8} style={this.labelStyle}>
-                            <Col span={10} style={this.labelStyle}>
-                                <span style={this.spanStyle}>奶类过敏（乳糖不耐受）</span>
-                            </Col>
-                            <Col span={1} className="checkBox">
-                                <CheckBox
-                                    style={this.checkBoxStyle}
-                                    defaultChecked={this.state.medicalInfo.foodAlergy.lactoseIntolerance}
-                                    onCheck={(lactoseIntolerance) => this.setState({
-                                        medicalInfo: {
-                                            ...this.state.medicalInfo, 
-                                            foodAlergy: {
-                                                ...this.state.medicalInfo.foodAlergy,
-                                                lactoseIntolerance
-                                            }
-                                        }})}
-                                />
-                            </Col>
-                            <Col span={2} />
-                            <Col span={10} style={this.labelStyle}>
-                                <span style={this.spanStyle}>禽蛋类过敏</span>
-                            </Col>
-                            <Col span={1} className="checkBox">
-                                <CheckBox
-                                    style={this.checkBoxStyle}
-                                    defaultChecked={this.state.medicalInfo.foodAlergy.eggAllergy}
-                                    onCheck={(eggAllergy) => this.setState({
-                                        medicalInfo: {
-                                            ...this.state.medicalInfo, 
-                                            foodAlergy: {
-                                                ...this.state.medicalInfo.foodAlergy,
-                                                eggAllergy
-                                            }
-                                        }})}
-                                />
-                            </Col>
-                        </Col>
-                        <Col span={2} />
-                        <Col span={8} style={this.labelStyle}>
-                            <Col span={10} style={this.labelStyle}>
-                                <span style={this.spanStyle}>抗生素过敏</span>
-                            </Col>
-                            <Col span={1} className="checkBox">
-                                <CheckBox
-                                    style={this.checkBoxStyle}
-                                    defaultChecked={this.state.medicalInfo.medicationAllergy.antibioticsAllergy}
-                                    onCheck={(antibioticsAllergy) => this.setState({
-                                        medicalInfo: {
-                                            ...this.state.medicalInfo, 
-                                            medicationAllergy: {
-                                                ...this.state.medicalInfo.medicationAllergy,
-                                                antibioticsAllergy
-                                            }
-                                        }})}
-                                />
-                            </Col>
-                            <Col span={2} />
-                            <Col span={10} style={this.labelStyle}>
-                                <span style={this.spanStyle}>磺胺类药物过敏</span>
-                            </Col>
-                            <Col span={1} className="checkBox">
-                                <CheckBox
-                                    style={this.checkBoxStyle}
-                                    defaultChecked={this.state.medicalInfo.medicationAllergy.sulfonamidesAllergy}
-                                    onCheck={(sulfonamidesAllergy) => this.setState({
-                                        medicalInfo: {
-                                            ...this.state.medicalInfo, 
-                                            medicationAllergy: {
-                                                ...this.state.medicalInfo.medicationAllergy,
-                                                sulfonamidesAllergy
-                                            }
-                                        }})}
-                                />
-                            </Col>
-                        </Col>
-                    </Row>
-                    <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
-                        {/* 此处的width可能有兼容性问题 */}
-                        <Col span={8} style={this.labelStyle}>
-                            <Col span={10} style={this.labelStyle}>
-                                <span style={this.spanStyle}>鱼类过敏</span>
-                            </Col>
-                            <Col span={1} className="checkBox">
-                                <CheckBox
-                                    style={this.checkBoxStyle}
-                                    defaultChecked={this.state.medicalInfo.foodAlergy.fishAllergy}
-                                    onCheck={(fishAllergy) => this.setState({
-                                        medicalInfo: {
-                                            ...this.state.medicalInfo, 
-                                            foodAlergy: {
-                                                ...this.state.medicalInfo.foodAlergy,
-                                                fishAllergy
-                                            }
-                                        }})}
-                                />
-                            </Col>
-                            <Col span={2} />
-                            <Col span={10} style={this.labelStyle}>
-                                <span style={this.spanStyle}>甲壳类过敏</span>
-                            </Col>
-                            <Col span={1} className="checkBox">
-                                <CheckBox
-                                    style={this.checkBoxStyle}
-                                    defaultChecked={this.state.medicalInfo.foodAlergy.shellAllergy}
-                                    onCheck={(shellAllergy) => this.setState({
-                                        medicalInfo: {
-                                            ...this.state.medicalInfo, 
-                                            foodAlergy: {
-                                                ...this.state.medicalInfo.foodAlergy,
-                                                shellAllergy
-                                            }
-                                        }})}
-                                />
-                            </Col>
-                        </Col>
-                        <Col span={2} />
-                        <Col span={8} style={this.labelStyle}>
-                            <Col span={10} style={this.labelStyle}>
-                                <span style={this.spanStyle}>解热镇痛药</span>
-                            </Col>
-                            <Col span={1} className="checkBox">
-                                <CheckBox
-                                    style={this.checkBoxStyle}
-                                    defaultChecked={this.state.medicalInfo.medicationAllergy.painkillerAllergy}
-                                    onCheck={(painkillerAllergy) => this.setState({
-                                        medicalInfo: {
-                                            ...this.state.medicalInfo, 
-                                            medicationAllergy: {
-                                                ...this.state.medicalInfo.medicationAllergy,
-                                                painkillerAllergy
-                                            }
-                                        }})}
-                                />
-                            </Col>
-                            <Col span={2} />
-                            <Col span={10} style={this.labelStyle}>
-                                <span style={this.spanStyle}>麻醉用药</span>
-                            </Col>
-                            <Col span={1} className="checkBox">
-                                <CheckBox
-                                    style={this.checkBoxStyle}
-                                    defaultChecked={this.state.medicalInfo.medicationAllergy.anestheticAllergy}
-                                    onCheck={(anestheticAllergy) => this.setState({
-                                        medicalInfo: {
-                                            ...this.state.medicalInfo, 
-                                            medicationAllergy: {
-                                                ...this.state.medicalInfo.medicationAllergy,
-                                                anestheticAllergy
-                                            }
-                                        }})}
-                                />
-                            </Col>
-                        </Col>
-                    </Row>
-                    <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
-                        {/* 此处的width可能有兼容性问题 */}
-                        <Col span={8} style={this.labelStyle}>
-                            <Col span={10} style={this.labelStyle}>
-                                <span style={this.spanStyle}>花生过敏</span>
-                            </Col>
-                            <Col span={1} className="checkBox">
-                                <CheckBox
-                                    style={this.checkBoxStyle}
-                                    defaultChecked={this.state.medicalInfo.foodAlergy.peanutAllergy}
-                                    onCheck={(peanutAllergy) => this.setState({
-                                        medicalInfo: {
-                                            ...this.state.medicalInfo, 
-                                            foodAlergy: {
-                                                ...this.state.medicalInfo.foodAlergy,
-                                                peanutAllergy
-                                            }
-                                        }})}
-                                />
-                            </Col>
-                            <Col span={2} />
-                            <Col span={10} style={this.labelStyle}>
-                                <span style={this.spanStyle}>大豆过敏</span>
-                            </Col>
-                            <Col span={1} className="checkBox">
-                                <CheckBox
-                                    style={this.checkBoxStyle}
-                                    defaultChecked={this.state.medicalInfo.foodAlergy.soyBeanAllergy}
-                                    onCheck={(soyBeanAllergy) => this.setState({
-                                        medicalInfo: {
-                                            ...this.state.medicalInfo, 
-                                            foodAlergy: {
-                                                ...this.state.medicalInfo.foodAlergy,
-                                                soyBeanAllergy
-                                            }
-                                        }})}
-
-                                />
-                            </Col>
-                        </Col>
-                        <Col span={2} />
-                        <Col span={8} style={this.labelStyle}>
-                            <Col span={10} style={this.labelStyle}>
-                                <span style={this.spanStyle}>疫苗类药物</span>
-                            </Col>
-                            <Col span={1} className="checkBox">
-                                <CheckBox
-                                    style={this.checkBoxStyle}
-                                    defaultChecked={this.state.medicalInfo.medicationAllergy.vaccineAllergy}
-                                    onCheck={(vaccineAllergy) => this.setState({
-                                        medicalInfo: {
-                                            ...this.state.medicalInfo, 
-                                            medicationAllergy: {
-                                                ...this.state.medicalInfo.medicationAllergy,
-                                                vaccineAllergy
-                                            }
-                                        }})}
-                                />
-                            </Col>
-                            <Col span={2} />
-                            <Col span={4} style={this.labelStyle}>
-                                <span style={this.spanStyle}>其他药物</span>
-                            </Col>
-                            <Col span={7}>
-                                <TextBox
-                                    style={this.formRowStyle}
-                                    placeholder="其他药物"
-                                    onChangeValue={(otherMedicationAllergy) => this.setState({
-                                        medicalInfo: {
-                                            ...this.state.medicalInfo, 
-                                            medicationAllergy: {
-                                                ...this.state.medicalInfo.medicationAllergy,
-                                                otherMedicationAllergy
-                                            }
-                                        }})}
-                                />
-                            </Col>
-                        </Col>
-                    </Row>
-                    <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
-                        {/* 此处的width可能有兼容性问题 */}
-                        <Col span={8} style={this.labelStyle}>
-                            <Col span={10} style={this.labelStyle}>
-                                <span style={this.spanStyle}>坚果类过敏</span>
-                            </Col>
-                            <Col span={1} className="checkBox">
-                                <CheckBox
-                                    style={this.checkBoxStyle}
-                                    defaultChecked={this.state.medicalInfo.foodAlergy.nutAllergy}
-                                    onCheck={(nutAllergy) => this.setState({
-                                        medicalInfo: {
-                                            ...this.state.medicalInfo, 
-                                            foodAlergy: {
-                                                ...this.state.medicalInfo.foodAlergy,
-                                                nutAllergy
-                                            }
-                                        }})}
-                                />
-                            </Col>
-                            <Col span={2} />
-                            <Col span={10} style={this.labelStyle}>
-                                <span style={this.spanStyle}>小麦过敏</span>
-                            </Col>
-                            <Col span={1} className="checkBox">
-                                <CheckBox
-                                    style={this.checkBoxStyle}
-                                    defaultChecked={this.state.medicalInfo.foodAlergy.wheatAllergy}
-                                    onCheck={(wheatAllergy) => this.setState({
-                                        medicalInfo: {
-                                            ...this.state.medicalInfo, 
-                                            foodAlergy: {
-                                                ...this.state.medicalInfo.foodAlergy,
-                                                wheatAllergy
-                                            }
-                                        }})}
-                                />
-                            </Col>
-                        </Col>
-                        <Col span={2} />
-                        <Col span={8} style={this.labelStyle}>
-                            
-                        </Col>
-                    </Row>
-                    <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
-                        {/* 此处的width可能有兼容性问题 */}
-                        <Col span={8} style={this.labelStyle}>
-                            <Col span={4} style={this.labelStyle}>
-                                <span style={this.spanStyle}>其他食物</span>
-                            </Col>
-                            <Col span={7}>
-                                <TextBox
-                                    style={this.formRowStyle}
-                                    placeholder="其他食物"
-                                    onChangeValue={(otherFoodAllergy) => this.setState({
-                                        medicalInfo: {
-                                            ...this.state.medicalInfo, 
-                                            foodAlergy: {
-                                                ...this.state.medicalInfo.foodAlergy,
-                                                otherFoodAllergy
-                                            }
-                                        }})}
-                                />
-                            </Col>
-                            <Col span={2} />
-                            <Col span={10} style={this.labelStyle}>
-                            </Col>
-                            <Col span={1} className="checkBox">
-                            </Col>
-                        </Col>
-                        <Col span={2} />
-                        <Col span={8} style={this.labelStyle}>
-                        </Col>
-                    </Row>
-                </Content>
+        if ( openid === "undefined" ) {
+            dispatch({type: "main/redirect", path:"#/login"})
+            // 这里想做一个跳转后弹出一个toast说明登录不成功，需要重新登录
+            return
+        }
+        else if (validated == "true") {
+            dispatch({type: "main/redirect", path:"#/"})
+            return
+        }
+        else if (isLearner == "true") {
+            return(
+                <div>等待验证</div>
             )
         }
-    }
-    public render(): JSX.Element {
-        return (
-            <Layout>
-                <Header>
-                    Header
-                </Header>
+        else {
+            return (
+                <Layout>
                     {this.generateContent()}
-                <Footer>
-                    Footer
-                </Footer>
-            </Layout>
-        );
+                </Layout>
+            );
+        }
     };
 }
 
