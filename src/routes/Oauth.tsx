@@ -1300,11 +1300,11 @@ class Oauth extends React.Component<IOauthProps> {
             dispatch({type: "main/redirect", path:"#/login?message=noid"})
             return
         }
-        else if (validated == "true") {
+        else if (validated === "true") {
             dispatch({type: "main/redirect", path:"#/"})
             return
         }
-        else if (isLearner == "true") {
+        else if (isLearner === "true") {
             return(
                 <div>等待验证</div>
             )
