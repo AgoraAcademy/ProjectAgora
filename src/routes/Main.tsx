@@ -24,7 +24,9 @@ import NewLearner from '../components/Content/NewLearner';
 const { Header, Footer, Sider, Content } = Layout;
 
 export interface IMainProps {
+    dispatch: any,
     newslist?: Array<{ title: string, content: 'string' }>;
+    
 };
 /**
  * 主体View
@@ -34,6 +36,22 @@ export interface IMainProps {
  */
 
 class Main extends React.Component<IMainProps> {
+    public componentDidMount() {
+        const { dispatch } = this.props
+        const isLearner = localStorage.getItem("isLearner")
+        const validated = localStorage.getItem("validated")
+        const openid = localStorage.getItem("openid") || null
+        if ( openid === "undefined" ) {
+            dispatch({type: "main/redirect", path:"#/login"})
+            // 这里想做一个跳转后弹出一个toast说明未登录，需要重新登录
+        } else if (isLearner === "false"){
+            dispatch({type: "main/redirect", path:"#/login"})
+            // 这里想做一个跳转后弹出一个toast说明未注册，需要重新登录
+        } else if (validated === "false"){
+            dispatch({type: "main/redirect", path:"#/login"})
+            // 这里想做一个跳转后弹出一个toast说明未验证，需要等待验证
+        }
+    }
     public render(): JSX.Element {
         return (
             <Layout>
