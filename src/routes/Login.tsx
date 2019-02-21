@@ -3,7 +3,7 @@ import { Layout } from 'antd'
 import * as PropTypes from "prop-types";
 import TextBox from "react-uwp/TextBox";
 import Icon from "react-uwp/Icon";
-import ReactUWP from 'react-uwp'
+import ReactUWP, { Toast } from 'react-uwp'
 import Button from "react-uwp/Button";
 import './Login.less'
 import WxLogin from '../components/Widget/WxLogin';
@@ -14,10 +14,12 @@ const baseStyle: React.CSSProperties = {
 };
 
 export interface ILoginProps {
-    placeholder: string
+    placeholder: string,
+    location: any
 };
 export interface ILoginState {
-    placeholder: string
+    placeholder: string,
+    message: string
 };
 /**
  * 登录页面
@@ -31,7 +33,20 @@ class Login extends React.Component<ILoginProps, ILoginState> {
     public defaultBtnStyle: React.CSSProperties = {
         margin: 4
     };
+
+    public message = this.props.location.search.split('&')[0].substr(9) || ""
+    
+    public state: ILoginState = {
+        placeholder: "",
+        message: this.message
+    }
+
     public render(): JSX.Element {
+        const toastMessageMapper = {
+            noid: "未登录",
+            notlearner: "未注册",
+            notvalidated: "未验证"
+        }
         return (
             <Layout>
                 <Header>
@@ -69,7 +84,15 @@ class Login extends React.Component<ILoginProps, ILoginState> {
                     />
                 </Content>
                 <Footer>
-                    Footer
+                    <Toast
+                        defaultShow={this.state.message === ""? false: true}
+                        // onToggleShowToast={message => this.setState({ showToast1 })}
+                        // logoNode={<Image style={{ clipPath: "circle(16px at 16px 16px)" }} src={require("assets/images/icon-32x32.png")} />}
+                        title={toastMessageMapper[this.state.message]}
+                        description={[`${toastMessageMapper[this.state.message]}`]}
+                        showCloseIcon
+                        closeDelay={5000}
+                    />
                 </Footer>
             </Layout>
         );

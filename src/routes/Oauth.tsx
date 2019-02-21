@@ -1295,8 +1295,7 @@ class Oauth extends React.Component<IOauthProps> {
         const validated = localStorage.getItem("validated")
         const openid = localStorage.getItem("openid") || null
         if ( openid === "undefined" ) {
-            dispatch({type: "main/redirect", path:"#/login"})
-            // 这里想做一个跳转后弹出一个toast说明登录不成功，需要重新登录
+            dispatch({type: "main/redirect", path:"#/login?message=noid"})
             return
         }
         else if (validated == "true") {

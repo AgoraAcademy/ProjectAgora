@@ -43,13 +43,13 @@ class Main extends React.Component<IMainProps> {
         const validated = localStorage.getItem("validated")
         const openid = localStorage.getItem("openid") || null
         if ( openid === "undefined" ) {
-            dispatch({type: "main/redirect", path:"#/login"})
+            dispatch({type: "main/redirect", path:"#/login?message=noid"})
             // 这里想做一个跳转后弹出一个toast说明未登录，需要重新登录
         } else if (isLearner === "false"){
-            dispatch({type: "main/redirect", path:"#/login"})
+            dispatch({type: "main/redirect", path:"#/login?message=notlearner"})
             // 这里想做一个跳转后弹出一个toast说明未注册，需要重新登录
         } else if (validated === "false"){
-            dispatch({type: "main/redirect", path:"#/login"})
+            dispatch({type: "main/redirect", path:"#/login?message=notvalidated"})
             // 这里想做一个跳转后弹出一个toast说明未验证，需要等待验证
         }
     }
