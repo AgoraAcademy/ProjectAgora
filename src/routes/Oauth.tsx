@@ -1298,16 +1298,26 @@ class Oauth extends React.Component<IOauthProps> {
         const openid = localStorage.getItem("openid") || null
         if ( openid === "undefined" ) {
             dispatch({type: "main/redirect", path:"#/login?message=noid"})
-            return
+            return (
+                <Layout>
+                    <div>请稍候</div>
+                </Layout>
+            );
         }
         else if (validated === "true") {
             dispatch({type: "main/redirect", path:"#/"})
-            return
+            return (
+                <Layout>
+                    <div>请稍候</div>
+                </Layout>
+            );
         }
         else if (isLearner === "true") {
             return(
-                <div>等待验证</div>
-            )
+                <Layout>
+                    <div>请等待验证</div>
+                </Layout>
+            );
         }
         else {
             return (

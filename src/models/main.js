@@ -55,10 +55,9 @@ export default {
         setField(state, action) {
             console.log("此处action", action)
             const {name, value} = action;
-            let obj = {};
-            obj[name] = value;
-            let newState = Object.assign({}, state, obj);
-            return Object.assign({}, newState);
+            let newState = {...state}
+            newState[name] = value
+            return newState;
         },
     },
     effects: {
