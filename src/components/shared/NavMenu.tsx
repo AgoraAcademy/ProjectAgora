@@ -6,7 +6,8 @@ import { connect } from 'dva'
 import './NavMenu.less'
 
 export interface INavMenuProps {
-    dispatch: any
+    dispatch: any,
+    main: any
 };
 
 /**
@@ -21,6 +22,22 @@ class NavMenu extends React.Component<INavMenuProps> {
     public paneStyle = {
         backgroundColor: 'black',
         paddingRight: 10,
+    }
+
+    public getNavigationBottomNode = () => {
+        let navigationBottomNode = [
+            <SplitViewCommand label="用户中心" icon="Contact" key={Math.random()}/>,
+            <SplitViewCommand label="设置" icon="Settings" key={Math.random()}/>
+        ]
+        if (this.props.main.isAdmin === true) {
+            navigationBottomNode.unshift(<SplitViewCommand 
+                label="管理员入口" 
+                icon="Admin" 
+                key={Math.random()} 
+                onClick={()=> {this.props.dispatch({type:'main/redirect', path:'#/admin'})}}
+            />)
+        }
+        return navigationBottomNode
     }
 
     public render() {
@@ -56,18 +73,7 @@ class NavMenu extends React.Component<INavMenuProps> {
             )
         ];
 
-        const navigationBottomNode = [
-            (
-                <SplitViewCommand 
-                    label="管理员入口" 
-                    icon="Admin" 
-                    key={Math.random()} 
-                    onClick={()=> {this.props.dispatch({type:'main/redirect', path:'#/admin'})}}
-                />
-            ),
-            <SplitViewCommand label="用户中心" icon="Contact" key={Math.random()}/>,
-            <SplitViewCommand label="设置" icon="Settings" key={Math.random()}/>
-        ];
+        const navigationBottomNode = this.getNavigationBottomNode()
 
         return (
             <div 
