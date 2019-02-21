@@ -19,6 +19,7 @@ import NewGuidedProject from '../components/Content/NewGuidedProject';
 import NewCourse from '../components/Content/NewCourse';
 import CreditHourMenu from '../components/Menu/CreditHourMenu';
 import NewLearner from '../components/Content/NewLearner';
+import { connect } from 'dva';
 
 
 const { Header, Footer, Sider, Content } = Layout;
@@ -88,4 +89,8 @@ class Main extends React.Component<IMainProps> {
     };
 }
 
-export default Main
+function mapStateToProps({main}) {
+    return { main }
+}
+
+export default connect(mapStateToProps)(Main)
