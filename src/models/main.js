@@ -3,6 +3,8 @@ import { routerRedux } from "dva/router";
 export default {
     namespace: 'main',
     state: {
+        isMentor: false,
+        isAdmin: false,
         projectList: [
             {
                 "name": "测试项目1",
@@ -50,7 +52,14 @@ export default {
         userlist: [],
     },
     reducers: {
-        
+        setField(state, action) {
+            console.log("此处action", action)
+            const {name, value} = action;
+            let obj = {};
+            obj[name] = value;
+            let newState = Object.assign({}, state, obj);
+            return Object.assign({}, newState);
+        },
     },
     effects: {
         * deprecatedRedirect (action, { put }) {
