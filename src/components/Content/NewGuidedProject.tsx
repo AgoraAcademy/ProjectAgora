@@ -48,31 +48,7 @@ class NewGuidedProject extends React.Component<INewGuidedProjectProps> {
                 </Header>
                 <Content style={{display: "flex", top: "74px", bottom: "0px", width: "auto"}}>
                     <Row type="flex" justify="space-around" align="middle" style={{width: "-webkit-fill-available"}}> 
-                    {/* 此处的width可能有兼容性问题 */}
-                        <Col span={8}>
-                            <Card
-                                hoverable
-                                style={{ width: "80%" }}
-                                cover={<img alt="example" src="" />}
-                            >
-                                <Meta
-                                    title="自由项目"
-                                    description="www.instagram.com"
-                                />
-                            </Card>
-                        </Col>
-                        <Col span={8}>
-                            <Card
-                                hoverable
-                                style={{ width: "80%" }}
-                                cover={<img alt="example" src="" />}
-                            >
-                                <Meta
-                                    title="引导项目"
-                                    description="www.instagram.com"
-                                />
-                            </Card>
-                        </Col>
+                        <div>这里应该是courselist</div>
                     </Row>
                 </Content>
                 <Footer>

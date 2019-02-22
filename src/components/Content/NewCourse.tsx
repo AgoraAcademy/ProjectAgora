@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
-import ReactUWP, { Toggle, Button, TextBox, Tabs, CalendarDatePicker } from 'react-uwp'
+import ReactUWP, { Toggle, Button, TextBox, Tabs, CalendarDatePicker, Slider } from 'react-uwp'
 import { Layout, Row, Col, Card } from 'antd'
 const { Header, Footer, Sider, Content } = Layout;
 const { Meta } = Card;
@@ -19,6 +19,15 @@ export interface INewCourseProps {
 }
 
 export interface INewCourseState {
+    name: string,
+    creditHour: number,
+    courseTimeShift: string,
+    courseLengthInWeeks: number,
+    formAndEvaluation: string,
+    goalOfcourse: string,
+    objectivesOfInstruction: string,
+    planOfInstruction: string,
+    miscellaneousNote: string,
     instructionContents: string[],
     instructionStartDates: string[],
     instructionEndDates: string[],
@@ -43,6 +52,15 @@ class NewCourse extends React.Component<INewCourseProps> {
     public context: { theme: ReactUWP.ThemeType };
 
     public state: INewCourseState = {
+        name: "",
+        creditHour: 0,
+        courseTimeShift: "",
+        courseLengthInWeeks: 0,
+        formAndEvaluation: "",
+        goalOfcourse: "",
+        objectivesOfInstruction: "",
+        planOfInstruction: "",
+        miscellaneousNote: "",
         instructionContents: [],
         instructionStartDates: [],
         instructionEndDates: [],
@@ -69,6 +87,11 @@ class NewCourse extends React.Component<INewCourseProps> {
         height: "200px",
         margin: "10px 0px 10px 0px"
     };
+
+    public sliderStyle: React.CSSProperties = {
+        margin: "5px" ,
+        width:"80%"
+    }
 
     public componentDidMount = () => {
         const { instructions } = this.props.course
@@ -133,6 +156,7 @@ class NewCourse extends React.Component<INewCourseProps> {
                                     <TextBox
                                         style={this.formRowStyle}
                                         placeholder="课程名称"
+                                        onChangeValue={(name) => this.setState({name})}
                                     />
                                 </Col>
                                 <Col span={2} />
@@ -152,9 +176,17 @@ class NewCourse extends React.Component<INewCourseProps> {
                                     <span>学时设置</span>
                                 </Col>
                                 <Col span={6}>
-                                    <TextBox
-                                        style={this.formRowStyle}
-                                        placeholder="学时设置"
+                                    <Slider
+                                        style={this.sliderStyle}
+                                        showValueInfo
+                                        initValue={0}
+                                        minValue={0}
+                                        maxValue={40}
+                                        numberToFixed={1}
+                                        customControllerStyle={{
+                                            background: this.context.theme.baseHigh
+                                        }}
+                                        unit="小时"
                                     />
                                 </Col>
                                 <Col span={2} />
@@ -162,9 +194,17 @@ class NewCourse extends React.Component<INewCourseProps> {
                                     <span>上课周数</span>
                                 </Col>
                                 <Col span={6}>
-                                    <TextBox
-                                        style={this.formRowStyle}
-                                        placeholder="上课周数"
+                                    <Slider
+                                        style={this.sliderStyle}
+                                        showValueInfo
+                                        initValue={0}
+                                        minValue={0}
+                                        maxValue={40}
+                                        numberToFixed={0}
+                                        customControllerStyle={{
+                                            background: this.context.theme.baseHigh
+                                        }}
+                                        unit="周"
                                     />
                                 </Col>
                             </Row>
@@ -179,6 +219,7 @@ class NewCourse extends React.Component<INewCourseProps> {
                                         style={this.formRowStyle}
                                         textBoxStyle={this.textAreaStyle}
                                         placeholder="课程形式与评价方式"
+                                        onChangeValue={(formAndEvaluation) => this.setState({formAndEvaluation})}
                                     />
                                 </Col>
                             </Row>
@@ -192,6 +233,7 @@ class NewCourse extends React.Component<INewCourseProps> {
                                         style={this.formRowStyle}
                                         textBoxStyle={this.textAreaStyle}
                                         placeholder="课程目的"
+                                        onChangeValue={(goalOfcourse) => this.setState({goalOfcourse})}
                                     />
                                 </Col>
                             </Row>
@@ -205,6 +247,7 @@ class NewCourse extends React.Component<INewCourseProps> {
                                         style={this.formRowStyle}
                                         textBoxStyle={this.textAreaStyle}
                                         placeholder="教学目标"
+                                        onChangeValue={(objectivesOfInstruction) => this.setState({objectivesOfInstruction})}
                                     />
                                 </Col>
                             </Row>
@@ -218,6 +261,7 @@ class NewCourse extends React.Component<INewCourseProps> {
                                         style={this.formRowStyle}
                                         textBoxStyle={this.textAreaStyle}
                                         placeholder="教学安排"
+                                        onChangeValue={(planOfInstruction) => this.setState({planOfInstruction})}
                                     />
                                 </Col>
                             </Row>
@@ -231,6 +275,7 @@ class NewCourse extends React.Component<INewCourseProps> {
                                         style={this.formRowStyle}
                                         textBoxStyle={this.textAreaStyle}
                                         placeholder="其他注意事项"
+                                        onChangeValue={(miscellaneousNote) => this.setState({miscellaneousNote})}
                                     />
                                 </Col>
                             </Row>
@@ -287,7 +332,7 @@ class NewCourse extends React.Component<INewCourseProps> {
                                 />
                             </Row>
                         </Col>
-                        <Col span={7}>
+                        <Col span={12}>
                             <MDEditor
                                 itemType="instruction"
                                 itemIndex={index}

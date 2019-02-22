@@ -18,7 +18,6 @@ import NewFreeStyleProject from '../components/Content/NewFreeStyleProject';
 import NewGuidedProject from '../components/Content/NewGuidedProject';
 import NewCourse from '../components/Content/NewCourse';
 import CreditHourMenu from '../components/Menu/CreditHourMenu';
-import NewLearner from '../components/Content/NewLearner';
 import { connect } from 'dva';
 
 
@@ -42,16 +41,16 @@ class Main extends React.Component<IMainProps> {
         const isLearner = localStorage.getItem("isLearner")
         const validated = localStorage.getItem("validated")
         const openid = localStorage.getItem("openid") || "undefined"
-        if ( openid === "undefined" ) {
-            dispatch({type: "main/redirect", path:"#/login?message=noid"})
-            // 这里想做一个跳转后弹出一个toast说明未登录，需要重新登录
-        } else if (isLearner === "false"){
-            dispatch({type: "main/redirect", path:"#/login?message=notlearner"})
-            // 这里想做一个跳转后弹出一个toast说明未注册，需要重新登录
-        } else if (validated === "false"){
-            dispatch({type: "main/redirect", path:"#/login?message=notvalidated"})
-            // 这里想做一个跳转后弹出一个toast说明未验证，需要等待验证
-        }
+        // if ( openid === "undefined" ) {
+        //     dispatch({type: "main/redirect", path:"#/login?message=noid"})
+        //     // 这里想做一个跳转后弹出一个toast说明未登录，需要重新登录
+        // } else if (isLearner === "false"){
+        //     dispatch({type: "main/redirect", path:"#/login?message=notlearner"})
+        //     // 这里想做一个跳转后弹出一个toast说明未注册，需要重新登录
+        // } else if (validated === "false"){
+        //     dispatch({type: "main/redirect", path:"#/login?message=notvalidated"})
+        //     // 这里想做一个跳转后弹出一个toast说明未验证，需要等待验证
+        // }
     }
     public render(): JSX.Element {
         return (
@@ -72,7 +71,6 @@ class Main extends React.Component<IMainProps> {
                     <Content id='global_content'>
                         <Switch>
                             <Route exact path="/" component={Home}/>
-                            <Route exact path="/learner/create" component={NewLearner} />
                             <Route exact path="/learner/:id" component={LearnerProfile} />
                             <Route exact path="/project" component={ProjectList}/>
                             <Route exact path="/project/create" component={NewProject} />
