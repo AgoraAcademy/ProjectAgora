@@ -40,6 +40,7 @@ class CreditHourMenu extends React.Component<ICreditHourMenuProps> {
             )
         }]}, {
             title: "学时管理（导师）",
+            hidden: !(localStorage.getItem("isMentor") === "true"),
             children: [{
                 title: "审核学时申请",
                 onClick: () => this.props.dispatch(
