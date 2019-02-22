@@ -447,10 +447,10 @@ class Oauth extends React.Component<IOauthProps> {
             localStorage.setItem("access_token",data.access_token)
             localStorage.setItem("openid",data.openid)
             localStorage.setItem("refresh_token",data.refresh_token)
-            localStorage.setItem("isLearner",data.isLearner)
-            localStorage.setItem("validated",data.validated || false)
-            this.props.dispatch({type:"main/setField", name: "isMentor", value: data.isMentor})
-            this.props.dispatch({type:"main/setField", name: "isAdmin", value: data.isAdmin})
+            localStorage.setItem("isLearner",data.isLearner || "false")
+            localStorage.setItem("validated",data.validated || "false")
+            localStorage.setItem("isMentor",data.isMentor || "false")
+            localStorage.setItem("isAdmin",data.isAdmin || "false")
         })
     }
     public generateContent = () => {

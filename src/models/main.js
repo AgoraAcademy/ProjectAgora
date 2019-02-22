@@ -3,8 +3,6 @@ import { routerRedux } from "dva/router";
 export default {
     namespace: 'main',
     state: {
-        isMentor: false,
-        isAdmin: false,
         projectList: [
             {
                 "name": "测试项目1",

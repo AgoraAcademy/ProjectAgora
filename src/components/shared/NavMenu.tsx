@@ -29,7 +29,7 @@ class NavMenu extends React.Component<INavMenuProps> {
             <SplitViewCommand label="用户中心" icon="Contact" key={Math.random()}/>,
             <SplitViewCommand label="设置" icon="Settings" key={Math.random()}/>
         ]
-        if (this.props.main.isAdmin === true) {
+        if (localStorage.getItem("isAdmin") === "true") {
             navigationBottomNode.unshift(<SplitViewCommand 
                 label="管理员入口" 
                 icon="Admin" 
