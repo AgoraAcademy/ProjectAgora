@@ -24,6 +24,7 @@ import { connect } from 'dva';
 const { Header, Footer, Sider, Content } = Layout;
 
 export interface IMainProps {
+    location: any,
     dispatch: any,
     newslist?: Array<{ title: string, content: 'string' }>;
     
@@ -49,11 +50,22 @@ class Main extends React.Component<IMainProps> {
             dispatch({type: "main/redirect", path:"#/login?message=notvalidated"})
         }
     }
+
+    public siderWidthMapper = () => {
+        const routeMap = {
+            "/": 240,
+            "/admin": 240,
+            "/project": 240,
+        }
+        const siderWidth = routeMap[this.props.location.pathname] || 0
+        return siderWidth
+        
+    }
     public render(): JSX.Element {
         return (
             <Layout>
                 <NavMenu/>
-                <Sider width={240} className={"global-sider"} collapsible collapsedWidth={50}>
+                <Sider width={this.siderWidthMapper()} className={"global-sider"} collapsible collapsedWidth={50}>
                     <Switch >
                         <Route exact path="/" component={HomeMenu} />
                         <Route path="/admin" component={AdminMenu} />

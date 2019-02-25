@@ -54,19 +54,9 @@ class ProjectListMenu extends React.Component<IProjectListMenuProps> {
         title: "项目管理（导师）",
         hidden: !(localStorage.getItem("isMentor") === "true"),
         children: [{
-            title: "创建新课程（引导项目）",
-            onClick: () => this.props.dispatch(
-                {type: "main/redirect", path:"#/course/create"}
-            )
-        }, {
-            title: "进行中项目",
+            title: "指导中项目",
             onClick: () => this.props.dispatch(
                 { type: "learnerProfile/setField", name: "activeTab", value: "basicInfo" }
-            )
-        }, {
-            title: "未开始项目",
-            onClick: () => this.props.dispatch(
-                { type: "learnerProfile/setField", name: "activeTab", value: "contactInfo" }
             )
         }, {
             title: "已完成项目",
@@ -74,9 +64,33 @@ class ProjectListMenu extends React.Component<IProjectListMenuProps> {
                 { type: "learnerProfile/setField", name: "activeTab", value: "contactInfo" }
             )
         }, {
-            title: "指导中项目",
+            title: "待审核项目",
             onClick: () => this.props.dispatch(
                 { type: "learnerProfile/setField", name: "activeTab", value: "medicalInfo" }
+            )
+        }]
+    }, {
+        title: "课程管理（导师）",
+        hidden: !(localStorage.getItem("isMentor") === "true"),
+        children: [{
+            title: "创建新课程（引导项目）",
+            onClick: () => this.props.dispatch(
+                {type: "main/redirect", path:"#/course/create"}
+            )
+        }, {
+            title: "进行中课程",
+            onClick: () => this.props.dispatch(
+                { type: "learnerProfile/setField", name: "activeTab", value: "basicInfo" }
+            )
+        }, {
+            title: "已完成课程",
+            onClick: () => this.props.dispatch(
+                { type: "learnerProfile/setField", name: "activeTab", value: "basicInfo" }
+            )
+        }, {
+            title: "审核中课程",
+            onClick: () => this.props.dispatch(
+                { type: "learnerProfile/setField", name: "activeTab", value: "contactInfo" }
             )
         }]
     }]

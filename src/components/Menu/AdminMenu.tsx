@@ -30,9 +30,9 @@ class AdminMenu extends React.Component<IAdminMenuProps> {
     public listSource: TreeItem[]=[{
         title: "人员管理",
         children: [{
-            title: "录入新成员",
+            title: "审核新成员",
             onClick: ()=> this.props.dispatch(
-                {type: "main/redirect", path:"#/learner/create"}
+                // {type: "main/redirect", path:"#/learner/create"}
             )}, {
             title: "查询成员信息",
             onClick: ()=> this.props.dispatch(

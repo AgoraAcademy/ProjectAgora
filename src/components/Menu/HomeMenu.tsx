@@ -26,21 +26,32 @@ class HomeMenu extends React.Component<IHomeMenuProps> {
     public context: { theme: ReactUWP.ThemeType };
 
     public listSource: TreeItem[]=[{
-        title: "主页菜单",
+        title: "公示信息",
         children: [{
-            title: "基础信息",
+            title: "公示信息",
             onClick: ()=> this.props.dispatch(
-                {type: "learnerProfile/setField", name: "activeTab", value: "basicInfo"}
             )}, {
-            title: "联系信息",
+            title: "公示信息",
             onClick: ()=> this.props.dispatch(
-                {type: "learnerProfile/setField", name: "activeTab", value: "contactInfo"}
             )}, {
-            title: "医疗信息",
+            title: "公示信息",
             onClick: ()=> this.props.dispatch(
-                {type: "learnerProfile/setField", name: "activeTab", value: "medicalInfo"}
             )}]
-        }]
+        },
+        {
+            title: "使用帮助",
+            children: [{
+                title: "使用帮助",
+                onClick: ()=> this.props.dispatch(
+                )}, {
+                title: "使用帮助",
+                onClick: ()=> this.props.dispatch(
+                )}, {
+                title: "使用帮助",
+                onClick: ()=> this.props.dispatch(
+                )}]
+            },    
+    ]
     public render(): JSX.Element {
         const { theme } = this.context;
         return (

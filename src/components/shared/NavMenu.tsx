@@ -67,14 +67,14 @@ class NavMenu extends React.Component<INavMenuProps> {
                     onClick={()=> {this.props.dispatch({type:'main/redirect', path:'#/project'})}}
                 />
             ),
-            (
-                <SplitViewCommand 
-                    label="学时管理" 
-                    key={Math.random()} 
-                    icon="DateTime"
-                    onClick={()=> {this.props.dispatch({type:'main/redirect', path:'#/credithour'})}}
-                />
-            )
+            // (
+            //     <SplitViewCommand 
+            //         label="学时管理" 
+            //         key={Math.random()} 
+            //         icon="DateTime"
+            //         onClick={()=> {this.props.dispatch({type:'main/redirect', path:'#/credithour'})}}
+            //     />
+            // )
         ];
 
         const navigationBottomNode = this.getNavigationBottomNode()

@@ -3,6 +3,10 @@ import { routerRedux } from "dva/router";
 export default {
     namespace: 'main',
     state: {
+        instructorIDDict: {
+            "肖春腾": 1,
+            "莫一夫": 2
+        },
         projectList: [
             {
                 "name": "测试项目1",

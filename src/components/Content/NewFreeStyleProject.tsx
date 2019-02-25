@@ -1,14 +1,16 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
-import ReactUWP , { Toggle, Button, TextBox, Slider } from 'react-uwp'
-import { Layout, Row, Col, Card } from 'antd'
+import ReactUWP, { Toggle, Button, TextBox, Slider } from 'react-uwp'
+import { Layout, Row, Col, Card, Select } from 'antd'
 import { connect } from 'dva'
 import TextArea from '../Widget/TextArea'
 const { Header, Footer, Sider, Content } = Layout;
 const { Meta } = Card;
+const Option = Select.Option;
 
 
 export interface INewFreeStyleProjectProps {
+    main: any,
     dispatch: any,
     learnerProfile: object,
     editMode: boolean
@@ -84,8 +86,8 @@ class NewFreeStyleProject extends React.Component<INewFreeStyleProjectProps> {
     }
 
     public sliderStyle: React.CSSProperties = {
-        margin: "5px" ,
-        width:"80%"
+        margin: "5px",
+        width: "80%"
     }
 
     public formRowStyle: React.CSSProperties = {
@@ -103,15 +105,23 @@ class NewFreeStyleProject extends React.Component<INewFreeStyleProjectProps> {
         margin: "10px 0px 10px 0px"
     };
 
-    public render():JSX.Element {
+    public generateProjectMentorOptions = () => {
+        const { instructorIDDict } = this.props.main 
+        const projectMentorOptions = Object.keys(instructorIDDict).map(item => {
+            return <Option value={item}>{item}</Option>
+        })
+        return projectMentorOptions
+    }
+
+    public render(): JSX.Element {
         const { theme } = this.context;
         const { learnerProfile } = this.props;
         return (
             <Layout>
-                <Header style={{height:"48px", marginBottom:"20px", padding:"0px"}}>
-                <Row type="flex" justify="space-around" align="middle">
+                <Header style={{ height: "48px", marginBottom: "20px", padding: "0px" }}>
+                    <Row type="flex" justify="space-around" align="middle">
                         <Col span={18}>
-                            <span style={{color: 'white', ...theme.typographyStyles.header }}>
+                            <span style={{ color: 'white', ...theme.typographyStyles.header }}>
                                 创建新的自由项目
                             </span>
                         </Col>
@@ -126,7 +136,7 @@ class NewFreeStyleProject extends React.Component<INewFreeStyleProjectProps> {
                         </Col>
                     </Row>
                 </Header>
-                <Content style={{display: "flex", top: "74px", bottom: "0px", width: "auto", flexWrap:"wrap"}}>
+                <Content style={{ display: "flex", top: "74px", bottom: "0px", width: "auto", flexWrap: "wrap" }}>
                     <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
                         {/* 此处的width可能有兼容性问题 */}
                         <Col span={2} style={this.labelStyle}>
@@ -136,10 +146,10 @@ class NewFreeStyleProject extends React.Component<INewFreeStyleProjectProps> {
                             <TextBox
                                 style={this.formRowStyle}
                                 placeholder="项目名称"
-                                onChangeValue={(name) => this.setState({name})}
+                                onChangeValue={(name) => this.setState({ name })}
                             />
                         </Col>
-                        <Col span={2}/>
+                        <Col span={2} />
                         <Col span={2} style={this.labelStyle}>
                             <span>开始时间</span>
                         </Col>
@@ -161,7 +171,7 @@ class NewFreeStyleProject extends React.Component<INewFreeStyleProjectProps> {
                                 placeholder="项目开始学期"
                             />
                         </Col>
-                        <Col span={2}/>
+                        <Col span={2} />
                         <Col span={2} style={this.labelStyle}>
                             <span>持续学期数</span>
                         </Col>
@@ -200,7 +210,7 @@ class NewFreeStyleProject extends React.Component<INewFreeStyleProjectProps> {
                             />
                             {/* 加个计算器如何？ */}
                         </Col>
-                        <Col span={2}/>
+                        <Col span={2} />
                         <Col span={2} style={this.labelStyle}>
                             <span>预期总学时</span>
                         </Col>
@@ -225,14 +235,33 @@ class NewFreeStyleProject extends React.Component<INewFreeStyleProjectProps> {
                             <span>项目导师</span>
                         </Col>
                         <Col span={6}>
-                            <TextBox
+                            {/* <TextBox
                                 style={this.formRowStyle}
                                 placeholder="项目导师"
                                 onChangeValue={(projectMentor) => this.setState({projectMentor})}
-                            />
+                            /> */}
                             {/* 搜索器 */}
+                            <Select
+                                showSearch
+                                style={{ width: 200 }}
+                                placeholder="Select a person"
+                                optionFilterProp="children"
+                                onChange={(projectMentor) => {
+                                    console.log(projectMentor)
+                                    const projectMentorID = this.props.main.instructorIDDict[projectMentor.toString()]
+                                    this.setState({
+                                        projectMentor,
+                                        projectMentorID
+                                    })
+                                }}
+                                filterOption={(input, option) => {
+                                    return option.props.children.toString().toLowerCase().indexOf(input.toLowerCase()) >= 0
+                                }}
+                            >
+                                {this.generateProjectMentorOptions()}
+                            </Select>
                         </Col>
-                        <Col span={2}/>
+                        <Col span={2} />
                         <Col span={2} style={this.labelStyle}>
                             <span>周均指导时间</span>
                         </Col>
@@ -262,7 +291,7 @@ class NewFreeStyleProject extends React.Component<INewFreeStyleProjectProps> {
                                 textBoxStyle={this.textAreaStyle}
                                 placeholder="项目简介"
                                 onChangeValue={(projectIntro) => this.setState({
-                                    projectMeta: {...this.state.projectMeta, projectIntro}
+                                    projectMeta: { ...this.state.projectMeta, projectIntro }
                                 })}
                             />
                         </Col>
@@ -278,7 +307,7 @@ class NewFreeStyleProject extends React.Component<INewFreeStyleProjectProps> {
                                 textBoxStyle={this.textAreaStyle}
                                 placeholder="项目目标"
                                 onChangeValue={(projectGoal) => this.setState({
-                                    projectMeta: {...this.state.projectMeta, projectGoal}
+                                    projectMeta: { ...this.state.projectMeta, projectGoal }
                                 })}
                             />
                         </Col>
@@ -294,7 +323,7 @@ class NewFreeStyleProject extends React.Component<INewFreeStyleProjectProps> {
                                 textBoxStyle={this.textAreaStyle}
                                 placeholder="评价标准"
                                 onChangeValue={(evaluationSchema) => this.setState({
-                                    projectMeta: {...this.state.projectMeta, evaluationSchema}
+                                    projectMeta: { ...this.state.projectMeta, evaluationSchema }
                                 })}
                             />
                         </Col>
@@ -310,7 +339,7 @@ class NewFreeStyleProject extends React.Component<INewFreeStyleProjectProps> {
                                 textBoxStyle={this.textAreaStyle}
                                 placeholder="项目计划"
                                 onChangeValue={(projectPlan) => this.setState({
-                                    projectMeta: {...this.state.projectMeta, projectPlan}
+                                    projectMeta: { ...this.state.projectMeta, projectPlan }
                                 })}
                             />
                         </Col>
@@ -326,7 +355,7 @@ class NewFreeStyleProject extends React.Component<INewFreeStyleProjectProps> {
                                 textBoxStyle={this.textAreaStyle}
                                 placeholder="项目指导计划"
                                 onChangeValue={(instructionPlan) => this.setState({
-                                    projectMeta: {...this.state.projectMeta, instructionPlan}
+                                    projectMeta: { ...this.state.projectMeta, instructionPlan }
                                 })}
                             />
                         </Col>
@@ -340,7 +369,7 @@ class NewFreeStyleProject extends React.Component<INewFreeStyleProjectProps> {
     }
 }
 
-function mapStateToProps({main, learnerProfile}) {
+function mapStateToProps({ main, learnerProfile }) {
     return { main, learnerProfile }
 }
 
