@@ -45,12 +45,12 @@ class Login extends React.Component<ILoginProps, ILoginState> {
         const toastMessageMapper = {
             noid: "未登录",
             notlearner: "未注册",
-            notvalidated: "未验证"
+            notvalidated: "未验证",
+            loggedout: "已注销"
         }
         return (
             <Layout>
                 <Header>
-                    Header
                 </Header>
                 <Content
                     className='mainView'

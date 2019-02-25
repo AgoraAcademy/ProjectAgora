@@ -26,8 +26,12 @@ class NavMenu extends React.Component<INavMenuProps> {
 
     public getNavigationBottomNode = () => {
         let navigationBottomNode = [
+            <SplitViewCommand label="注销" icon="Clear" key={Math.random()} onClick={() => {
+                localStorage.clear()
+                this.props.dispatch({type: "main/redirect", path:"#/login?message=loggedout"})
+            }}/>,
             <SplitViewCommand label="用户中心" icon="Contact" key={Math.random()}/>,
-            <SplitViewCommand label="设置" icon="Settings" key={Math.random()}/>
+            <SplitViewCommand label="设置" icon="Settings" key={Math.random()}/>,
         ]
         if (localStorage.getItem("isAdmin") === "true") {
             navigationBottomNode.unshift(<SplitViewCommand 
