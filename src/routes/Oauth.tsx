@@ -1325,12 +1325,19 @@ class Oauth extends React.Component<IOauthProps> {
                 </Layout>
             );
         }
-        else {
+        else if (isLearner === "false" && validated === "false" ) {
             return (
                 <Layout>
                     {this.generateContent()}
                 </Layout>
             );
+        }
+        else {
+            return (
+                <Layout>
+                    <div>加载中</div>
+                </Layout>
+            )
         }
     };
 }
