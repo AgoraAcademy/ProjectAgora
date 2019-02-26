@@ -25,6 +25,7 @@ export interface IOauthProps {
 };
 
 export interface IOauthState {
+    loginResult: string,
     givenName: string,
     familyName: string,
     nickname: string,
@@ -98,6 +99,7 @@ class Oauth extends React.Component<IOauthProps> {
     public static contextTypes = { theme: PropTypes.object };
     public context: { theme: ReactUWP.ThemeType };
     public state: IOauthState = {
+        loginResult: "waiting",
         givenName: "",
         familyName: "",
         nickname: "",
@@ -424,7 +426,7 @@ class Oauth extends React.Component<IOauthProps> {
         return age;
     }
 
-    public componentWillMount = () =>{
+    public componentMDidMount = () =>{
         let code: string, state: string
         try{
             const query = this.props.location.search
@@ -451,6 +453,15 @@ class Oauth extends React.Component<IOauthProps> {
             localStorage.setItem("validated",data.validated || "false")
             localStorage.setItem("isMentor",data.isMentor || "false")
             localStorage.setItem("isAdmin",data.isAdmin || "false")
+            if (data.validated === true) {
+                this.setState({ loginResult: "success"})
+            }
+            else if (data.isLearner === true) {
+                this.setState({ loginResult: "waitForValidation"})
+            }
+            else {
+                this.setState({ loginResult: "register"})
+            }
         })
     }
     public generateContent = () => {
@@ -1299,47 +1310,38 @@ class Oauth extends React.Component<IOauthProps> {
 
     public render(): JSX.Element {
         const { dispatch } = this.props
-        const isLearner = localStorage.getItem("isLearner")
-        const validated = localStorage.getItem("validated")
-        const openid = localStorage.getItem("openid") || null
-        if ( openid === "undefined" ) {
-            dispatch({type: "main/redirect", path:"#/login?message=noid"})
+        const { loginResult } = this.state
+        if (loginResult === "success") {
+            setTimeout(()=> dispatch({type: "main/redirect", path:"#/"}), 5000)
             return (
                 <Layout>
-                    <div>请稍候</div>
+                    <div>加载中</div>
+                    <div>若5秒内未跳转请点击<Button onClick={()=> dispatch({type: "main/redirect", path:"#/"})} >跳转</Button></div>
                 </Layout>
-            );
+            )
         }
-        else if (validated === "true") {
-            dispatch({type: "main/redirect", path:"#/"})
+        if (loginResult === "waitForValidation") {
+            setTimeout(()=> dispatch({type: "main/redirect", path:"#/"}), 5000)
             return (
-                <Layout>
-                    <div>请稍候</div>
-                </Layout>
-            );
-        }
-        else if (isLearner === "true") {
-            return(
                 <Layout>
                     <div>请等待验证</div>
                 </Layout>
-            );
+            )
         }
-        else if (isLearner === "false" && validated === "false" ) {
+        if (loginResult === "register") {
             return (
                 <Layout>
                     {this.generateContent()}
                 </Layout>
-            );
+            )
         }
-        else {
-            setTimeout(() => dispatch({type: "main/redirect", path:"#/"}), 5000)
+        else{
             return (
                 <Layout>
-                    <div>加载中</div>
-                    <div>若5秒内未跳转请点击<Button onClick={()=> dispatch({type: "main/redirect", path:"#/"})} ></Button></div>
+                    <div>请稍候</div>
                 </Layout>
             )
+            
         }
     };
 }
