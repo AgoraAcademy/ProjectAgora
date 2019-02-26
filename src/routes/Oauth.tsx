@@ -424,7 +424,7 @@ class Oauth extends React.Component<IOauthProps> {
         return age;
     }
 
-    public componentDidMount = () =>{
+    public componentWillMount = () =>{
         let code: string, state: string
         try{
             const query = this.props.location.search
