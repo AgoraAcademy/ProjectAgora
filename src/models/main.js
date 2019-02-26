@@ -13,42 +13,49 @@ export default {
                 "id": 1,
                 "createdTime": "创建时间1",
                 "createdBy": "创建人1",
-                "relatedCourse": "相关课程1"
+                "relatedCourse": "相关课程1",
+                "projectMentorID": 1,
+                "status": "已完成"
             },
             {
                 "name": "测试项目2",
                 "id": 1,
                 "createdTime": "创建时间1",
                 "createdBy": "创建人1",
-                "relatedCourse": "相关课程1"
+                "relatedCourse": "相关课程1",
+                "status": "已完成"
             },
             {
                 "name": "测试项目3",
                 "id": 1,
                 "createdTime": "创建时间1",
                 "createdBy": "创建人1",
-                "relatedCourse": "相关课程1"
+                "relatedCourse": "相关课程1",
+                "status": "已完成"
             },
             {
                 "name": "测试项目4",
                 "id": 1,
                 "createdTime": "创建时间1",
                 "createdBy": "创建人1",
-                "relatedCourse": "相关课程1"
+                "relatedCourse": "相关课程1",
+                "status": "已完成"
             },
             {
                 "name": "测试项目5",
                 "id": 1,
                 "createdTime": "创建时间1",
                 "createdBy": "创建人1",
-                "relatedCourse": "相关课程1"
+                "relatedCourse": "相关课程1",
+                "status": "已完成"
             },
             {
                 "name": "测试项目6",
                 "id": 1,
                 "createdTime": "创建时间1",
                 "createdBy": "创建人1",
-                "relatedCourse": "相关课程1"
+                "relatedCourse": "相关课程1",
+                "status": "已完成"
             },
         ],
         userlist: [],

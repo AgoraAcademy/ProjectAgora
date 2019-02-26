@@ -9,6 +9,7 @@ import './Oauth.less'
 import WxLogin from '../components/Widget/WxLogin';
 import {WXLOGINAPPID, SERVERURL } from '../../env'
 import { connect } from 'dva';
+import { fetchRequest } from '../util';
 
 const { Header, Content, Footer } = Layout;
 const { Meta } = Card;
@@ -92,8 +93,7 @@ export interface IOauthState {
     },
     notes: string[]
 }
-// 如果有记录，直接转入
-//如果没记录，
+
 class Oauth extends React.Component<IOauthProps> {
     public static contextTypes = { theme: PropTypes.object };
     public context: { theme: ReactUWP.ThemeType };
@@ -1283,12 +1283,18 @@ class Oauth extends React.Component<IOauthProps> {
                             orientation="right"
                             style={{ color: 'white', ...theme.typographyStyles.subHeader }}
                         >
-                            <Button>确认</Button>
+                            <Button onClick={this.submitNewLearner}>确认</Button>
                         </Divider>
                     </Col>
                 </Row>
             </Content>
         )
+    }
+
+    public submitNewLearner = () => {
+        const postBody = {...this.state}
+        console.log(postBody)
+        fetchRequest("/v1/learner", "POST", postBody)
     }
 
     public render(): JSX.Element {

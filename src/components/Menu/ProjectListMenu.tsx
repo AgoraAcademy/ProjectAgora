@@ -45,7 +45,7 @@ class ProjectListMenu extends React.Component<IProjectListMenuProps> {
                 { type: "learnerProfile/setField", name: "activeTab", value: "contactInfo" }
             )
         }, {
-            title: "审核中项目",
+            title: "待审核项目",
             onClick: () => this.props.dispatch(
                 { type: "learnerProfile/setField", name: "activeTab", value: "medicalInfo" }
             )

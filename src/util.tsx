@@ -8,7 +8,7 @@ import { SERVERURL } from '../env'
  * @param {string} [params='']
  * @returns
  */
-export function fetchRequest(url, method, params = '') {
+export function fetchRequest(url, method, params: any = '') {
     let header = {
         "Content-Type": "application/json;charset=UTF-8",
         'Access-Control-Allow-Origin': '*',

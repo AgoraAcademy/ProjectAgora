@@ -30,7 +30,7 @@ class ProjectCard extends Component<IProjectCardProps> {
                 hoverable
                 style={{ width: 300, margin: 20 }}
                 cover={<img alt="example" src="asset/ProjectCover-PlaceHolder.png" />}
-                actions={[<Icon type="setting" />, <Icon type="edit" />, <Icon type="ellipsis" />]}
+                // actions={[<Icon type="setting" />, <Icon type="edit" />, <Icon type="ellipsis" />]}
             >
                 <Meta
                     title={this.props.name}
