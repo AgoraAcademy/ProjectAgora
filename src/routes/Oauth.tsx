@@ -39,9 +39,6 @@ export interface IOauthState {
     dateOfRegistration: string,
     reasonOfRegistration: string,
     previousStatus: string,
-    dateOfLeave: string,
-    reasonOfLeave: string,
-    destinationOfLeave: string,
     salaryCard: string,
     custodianInfo: {
         name: string,
@@ -113,9 +110,6 @@ class Oauth extends React.Component<IOauthProps> {
         dateOfRegistration: "",
         reasonOfRegistration: "",
         previousStatus: "",
-        dateOfLeave: "",
-        reasonOfLeave: "",
-        destinationOfLeave: "",
         salaryCard: "",
         custodianInfo: [
             {
@@ -652,40 +646,6 @@ class Oauth extends React.Component<IOauthProps> {
                             style={this.formRowStyle}
                             placeholder="加入原因"
                             onChangeValue={(reasonOfRegistration) => this.setState({reasonOfRegistration})}
-                        />
-                    </Col>
-                </Row>
-                <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
-                    {/* 此处的width可能有兼容性问题 */}
-                    <Col span={2} style={this.labelStyle}>
-                        <span>下阶段目的地</span>
-                    </Col>
-                    <Col span={2} className='DropDownMenu'>
-                        <TextBox
-                            style={this.formRowStyle}
-                            placeholder="下阶段目的地"
-                            onChangeValue={(destinationOfLeave) => this.setState({destinationOfLeave})}
-                        />
-                    </Col>
-                    <Col span={1} />
-                    <Col span={2} style={this.labelStyle}>
-                        <span>离开时间</span>
-                    </Col>
-                    <Col span={3} className='DropDownMenu'>
-                        <CalendarDatePicker
-                            width={"75%"}
-                            placeholder={""}
-                            onChangeDate={(dateOfLeave) => this.setState({dateOfLeave: dateOfLeave.toLocaleDateString()})}
-                        />
-                    </Col>
-                    <Col span={2} style={this.labelStyle}>
-                        <span>离开原因</span>
-                    </Col>
-                    <Col span={6} className='DropDownMenu'>
-                        <TextBox
-                            style={this.formRowStyle}
-                            placeholder="离开原因"
-                            onChangeValue={(reasonOfLeave) => this.setState({reasonOfLeave})}
                         />
                     </Col>
                 </Row>
