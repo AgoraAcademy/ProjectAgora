@@ -1,9 +1,11 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
-import ReactUWP, { Toggle, Button, TextBox, Slider } from 'react-uwp'
-import { Layout, Row, Col, Card, Select } from 'antd'
+import ReactUWP, { Toggle, Button, TextBox, CalendarDatePicker, DropDownMenu } from 'react-uwp'
+import { Layout, Row, Col, Card, Select, Divider, Slider, InputNumber } from 'antd'
 import { connect } from 'dva'
 import TextArea from '../Widget/TextArea'
+import { fetchRequest } from "../../util";
+import swal from 'sweetalert';
 const { Header, Footer, Sider, Content } = Layout;
 const { Meta } = Card;
 const Option = Select.Option;
@@ -34,11 +36,11 @@ export interface INewFreeStyleProjectState {
         instructionPlan: string,
     },
     // projectApprovalInfo: {
-    //     ApprovalCommitteeOfAcademics: {
+    //     approvalCommitteeOfAcademics: {
     //         result: string,
     //         advice: string,
     //     },
-    //     ApprovalMentor: {
+    //     approvalMentor: {
     //         result: string,
     //         advice: string,
     //     }
@@ -53,7 +55,7 @@ export interface INewFreeStyleProjectState {
     // }[],
     // conclusionInfo: {
     //     selfEvaluation: string,
-    //     MentorEvaluation: string,
+    //     mentorEvaluation: string,
     // },
 }
 /**
@@ -105,10 +107,16 @@ class NewFreeStyleProject extends React.Component<INewFreeStyleProjectProps> {
         margin: "10px 0px 10px 0px"
     };
 
+    public DropdownMenuStyle: React.CSSProperties = {
+        margin: "10px 10px 10px 0px",
+        lineHeight: "28px",
+        width: "75%"
+    };
+
     public generateProjectMentorOptions = () => {
         const { instructorIDDict } = this.props.main 
         const projectMentorOptions = Object.keys(instructorIDDict).map(item => {
-            return <Option value={item}>{item}</Option>
+            return <Option key={item} value={item}>{item}</Option>
         })
         return projectMentorOptions
     }
@@ -154,9 +162,10 @@ class NewFreeStyleProject extends React.Component<INewFreeStyleProjectProps> {
                             <span>开始时间</span>
                         </Col>
                         <Col span={6}>
-                            <TextBox
-                                style={this.formRowStyle}
-                                placeholder="开始时间"
+                            <CalendarDatePicker
+                            width={"75%"}
+                            placeholder={"开始时间"}
+                            onChangeDate={(projectStartDate) => this.setState({projectStartDate: projectStartDate.toLocaleDateString()})}
                             />
                         </Col>
                     </Row>
@@ -165,10 +174,13 @@ class NewFreeStyleProject extends React.Component<INewFreeStyleProjectProps> {
                         <Col span={2} style={this.labelStyle}>
                             <span>项目开始学期</span>
                         </Col>
-                        <Col span={6}>
-                            <TextBox
-                                style={this.formRowStyle}
-                                placeholder="项目开始学期"
+                        <Col span={6} className='DropDownMenu'>
+                            <DropDownMenu
+                                style={this.DropdownMenuStyle}
+                                itemWidth={120}
+                                values={["1903", "1909", " 2003", "2009", "2103", "2109"]}
+                                defaultValue={this.state.projectTerm}
+                                onChangeValue={(projectTerm)=> this.setState({projectTerm})}
                             />
                         </Col>
                         <Col span={2} />
@@ -176,18 +188,26 @@ class NewFreeStyleProject extends React.Component<INewFreeStyleProjectProps> {
                             <span>持续学期数</span>
                         </Col>
                         <Col span={6}>
-                            <Slider
-                                style={this.sliderStyle}
-                                showValueInfo
-                                initValue={1}
-                                minValue={1}
-                                maxValue={8}
-                                numberToFixed={0}
-                                customControllerStyle={{
-                                    background: this.context.theme.baseHigh
-                                }}
-                                unit="学期"
-                            />
+                            <Row>
+                                <Col span={16}>
+                                    <Slider
+                                        min={0}
+                                        max={8}
+                                        step={0.5}
+                                        onChange={(projectTermLength) => this.setState({projectTermLength})}
+                                        value={typeof this.state.projectTermLength === 'number' ? this.state.projectTermLength : 0}
+                                    />
+                                </Col>
+                                <Col span={6}>
+                                    <InputNumber
+                                        min={1}
+                                        max={8}
+                                        style={{ marginLeft: 16, width: "100%" }}
+                                        value={this.state.projectTermLength}
+                                        onChange={(projectTermLength) => this.setState({projectTermLength})}
+                                    />
+                                </Col>
+                            </Row>
                         </Col>
                     </Row>
                     <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
@@ -196,51 +216,58 @@ class NewFreeStyleProject extends React.Component<INewFreeStyleProjectProps> {
                             <span>预期周均学时</span>
                         </Col>
                         <Col span={6}>
-                            <Slider
-                                style={this.sliderStyle}
-                                showValueInfo
-                                initValue={0}
-                                minValue={0}
-                                maxValue={40}
-                                numberToFixed={1}
-                                customControllerStyle={{
-                                    background: this.context.theme.baseHigh
-                                }}
-                                unit="小时"
-                            />
-                            {/* 加个计算器如何？ */}
+                            <Col span={16}>
+                                <Slider
+                                    min={0}
+                                    max={40}
+                                    step={0.1}
+                                    onChange={(averageIntendedCreditHourPerWeek) => this.setState({ averageIntendedCreditHourPerWeek })}
+                                    value={typeof this.state.averageIntendedCreditHourPerWeek === 'number' ? this.state.averageIntendedCreditHourPerWeek : 0}
+                                />
+                            </Col>
+                            <Col span={6}>
+                                <InputNumber
+                                    min={0}
+                                    max={40}
+                                    style={{ marginLeft: 16, width: "100%" }}
+                                    value={this.state.averageIntendedCreditHourPerWeek}
+                                    step={0.1}
+                                    onChange={(averageIntendedCreditHourPerWeek) => this.setState({ averageIntendedCreditHourPerWeek })}
+                                />
+                            </Col>
                         </Col>
                         <Col span={2} />
                         <Col span={2} style={this.labelStyle}>
                             <span>预期总学时</span>
                         </Col>
                         <Col span={6}>
-                            <Slider
-                                style={this.sliderStyle}
-                                showValueInfo
-                                initValue={0}
-                                minValue={0}
-                                maxValue={200}
-                                numberToFixed={1}
-                                customControllerStyle={{
-                                    background: this.context.theme.baseHigh
-                                }}
-                                unit="小时"
-                            />
+                            <Col span={16}>
+                                <Slider
+                                    min={0}
+                                    max={1000}
+                                    step={0.1}
+                                    onChange={(totalIntendedCreditHour) => this.setState({ totalIntendedCreditHour })}
+                                    value={typeof this.state.totalIntendedCreditHour === 'number' ? this.state.totalIntendedCreditHour : 0}
+                                />
+                            </Col>
+                            <Col span={6}>
+                                <InputNumber
+                                    min={0}
+                                    max={1000}
+                                    style={{ marginLeft: 16, width: "100%" }}
+                                    step={0.1}
+                                    value={this.state.totalIntendedCreditHour}
+                                    onChange={(totalIntendedCreditHour) => this.setState({ totalIntendedCreditHour })}
+                                />
+                            </Col>
                         </Col>
                     </Row>
-                    <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
+                    <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available", margin: "10px 0 0 0" }}>
                         {/* 此处的width可能有兼容性问题 */}
                         <Col span={2} style={this.labelStyle}>
                             <span>项目导师</span>
                         </Col>
                         <Col span={6}>
-                            {/* <TextBox
-                                style={this.formRowStyle}
-                                placeholder="项目导师"
-                                onChangeValue={(projectMentor) => this.setState({projectMentor})}
-                            /> */}
-                            {/* 搜索器 */}
                             <Select
                                 showSearch
                                 style={{ width: 200 }}
@@ -266,18 +293,25 @@ class NewFreeStyleProject extends React.Component<INewFreeStyleProjectProps> {
                             <span>周均指导时间</span>
                         </Col>
                         <Col span={6}>
-                            <Slider
-                                style={this.sliderStyle}
-                                showValueInfo
-                                initValue={0}
-                                minValue={0}
-                                maxValue={40}
-                                numberToFixed={1}
-                                customControllerStyle={{
-                                    background: this.context.theme.baseHigh
-                                }}
-                                unit="小时"
-                            />
+                            <Col span={16}>
+                                <Slider
+                                    min={0}
+                                    max={40}
+                                    step={0.1}
+                                    onChange={(averageGuidingHourPerWeek) => this.setState({ averageGuidingHourPerWeek })}
+                                    value={typeof this.state.averageGuidingHourPerWeek === 'number' ? this.state.averageGuidingHourPerWeek : 0}
+                                />
+                            </Col>
+                            <Col span={6}>
+                                <InputNumber
+                                    min={0}
+                                    max={40}
+                                    step={0.1}
+                                    style={{ marginLeft: 16, width: "100%" }}
+                                    value={this.state.averageGuidingHourPerWeek}
+                                    onChange={(averageGuidingHourPerWeek) => this.setState({ averageGuidingHourPerWeek })}
+                                />
+                            </Col>
                         </Col>
                     </Row>
                     <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
@@ -360,12 +394,55 @@ class NewFreeStyleProject extends React.Component<INewFreeStyleProjectProps> {
                             />
                         </Col>
                     </Row>
+                    <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available", display: "flex"}}>
+                    <Col span={18} style={this.labelStyle}>
+                        <Divider
+                            orientation="right"
+                            style={{ color: 'white', ...theme.typographyStyles.subHeader }}
+                        >
+                            <Button onClick={this.submitNewFreeStyleProject}>确认</Button>
+                        </Divider>
+                    </Col>
+                </Row>
                 </Content>
                 <Footer>
                     <p>footer</p>
                 </Footer>
             </Layout>
         );
+    }
+
+    public submitNewFreeStyleProject = () => {
+        const postBody = {
+            ...this.state,
+            relatedCourseId: 0,
+            relatedCourse: "",
+            projectApprovalInfo: {
+                approvalCommitteeOfAcademics: {
+                    result: "",
+                    advice: ""
+                },
+                approvalMentor:{
+                    result: "",
+                    advice: ""
+                }
+            },
+            conclusionInfo: {
+                selfEvaluation: "",
+                mentorEvaluation: ""
+            }
+        }
+        console.log(postBody)
+        fetchRequest("/v1/project", "POST", postBody)
+        .then((response:any) => {
+            if (!response.error) {
+                swal("成功提交项目，请等待审核结果！")
+            }
+            else {
+                swal("出错！")
+            }
+            
+        })
     }
 }
 
