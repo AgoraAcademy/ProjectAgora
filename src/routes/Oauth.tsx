@@ -1333,10 +1333,11 @@ class Oauth extends React.Component<IOauthProps> {
             );
         }
         else {
-            window.setTimeout(dispatch({type: "main/redirect", path:"#/"}), 3000)
+            setTimeout(() => dispatch({type: "main/redirect", path:"#/"}), 5000)
             return (
                 <Layout>
                     <div>加载中</div>
+                    <div>若5秒内未跳转请点击<Button onClick={()=> dispatch({type: "main/redirect", path:"#/"})} ></Button></div>
                 </Layout>
             )
         }
