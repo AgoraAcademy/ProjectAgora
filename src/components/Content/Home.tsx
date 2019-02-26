@@ -32,7 +32,9 @@ class Home extends React.Component<IHomeProps> {
                 </Header>
                 <Content>
                     <h5 style={{color: 'white', ...theme.typographyStyles.header}}>
-                        <Button onClick={() => fetchRequest("/v1/learner", "GET")}>测试fetch</Button>
+                        <Button onClick={() => {
+                            fetchRequest("/v1/learner", "GET").then((response)=> console.log(response))
+                        }}>测试fetch</Button>
                     </h5>
                 </Content>
                 <Footer>

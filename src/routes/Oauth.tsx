@@ -1266,6 +1266,10 @@ class Oauth extends React.Component<IOauthProps> {
         const postBody = {...this.state}
         console.log(postBody)
         fetchRequest("/v1/learner", "POST", postBody)
+        .then((response) => {
+            console.log(response)
+            alert("成功注册，请等待管理员认证")
+        })
     }
 
     public render(): JSX.Element {
