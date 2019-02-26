@@ -10,6 +10,7 @@ import WxLogin from '../components/Widget/WxLogin';
 import {WXLOGINAPPID, SERVERURL } from '../../env'
 import { connect } from 'dva';
 import { fetchRequest } from '../util';
+import swal from 'sweetalert';
 
 const { Header, Content, Footer } = Layout;
 const { Meta } = Card;
@@ -1268,7 +1269,7 @@ class Oauth extends React.Component<IOauthProps> {
         fetchRequest("/v1/learner", "POST", postBody)
         .then((response) => {
             console.log(response)
-            alert("成功注册，请等待管理员认证")
+            swal("成功注册，请等待管理员认证!")
         })
     }
 

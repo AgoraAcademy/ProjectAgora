@@ -3,6 +3,7 @@ import * as PropTypes from "prop-types";
 import ReactUWP, { Button } from 'react-uwp'
 import { Layout } from 'antd'
 import { fetchRequest } from '../../util'
+import swal from 'sweetalert';
 const { Header, Footer, Sider, Content } = Layout;
 
 import { connect } from 'dva'
@@ -33,8 +34,11 @@ class Home extends React.Component<IHomeProps> {
                 <Content>
                     <h5 style={{color: 'white', ...theme.typographyStyles.header}}>
                         <Button onClick={() => {
-                            fetchRequest("/v1/learner", "GET").then((response)=> console.log(response))
+                            fetchRequest("/v1/learner", "GET").then((response)=> swal("Hello world!"))
                         }}>测试fetch</Button>
+                        <Button onClick={() => {
+                            swal("Hello world!")
+                        }}>测试swal</Button>
                     </h5>
                 </Content>
                 <Footer>

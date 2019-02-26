@@ -15,7 +15,8 @@
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-simplemde-editor": "^3.6.22",
-    "react-uwp": "^1.2.2"
+    "react-uwp": "^1.2.2",
+    "sweetalert": "^2.1.2"
   },
   "devDependencies": {
     "@types/react": "^16.7.11",
