@@ -96,7 +96,7 @@ export default {
                 instructorIDDict = data.reduce((newDict, mentor) => {
                     newDict[`${mentor.familyName}${mentor.givenName}`] = mentor.id
                     return newDict
-                })
+                },{})
             }
             yield put({ type: "setField", name: "instructorIDDict", value: instructorIDDict })
         }
