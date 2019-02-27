@@ -1,11 +1,10 @@
 import { routerRedux } from "dva/router";
+import { fetchRequest } from "../util";
 
 export default {
     namespace: 'main',
     state: {
         instructorIDDict: {
-            "肖春腾": 1,
-            "莫一夫": 2
         },
         projectList: [
             {
@@ -84,7 +83,22 @@ export default {
             if(reload) {
                 window.location.reload();
             }
+        },
+        * setupInstructIDDict ( action, { select, call, put }) {
+            let instructorIDDict;
+            try {
+                yield call(fetchRequest("/v1/learner", "GET"))
+                .then(response => response.json())
+                .then(data => {
+                    let mentors = data.filter(learner => learner.isMentor)
+                    mentors.map((mentor) => instructorIDDict[mentor.name] = mentor.id)
+                })
+                .then(()=> {
+                    put({ type: "setField", name: "instructorIDDict", value: instructorIDDict })
+                })
+            } catch(e) {
+                console.log("没有获取instructorIDDict", e)
+            }
         }
     }
-
 }

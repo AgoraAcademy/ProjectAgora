@@ -26,6 +26,7 @@ const { Header, Footer, Sider, Content } = Layout;
 export interface IMainProps {
     location: any,
     dispatch: any,
+    main:any,
     newslist?: Array<{ title: string, content: 'string' }>;
     
 };
@@ -48,6 +49,10 @@ class Main extends React.Component<IMainProps> {
             dispatch({type: "main/redirect", path:"#/login?message=notlearner"})
         } else if (validated === "false"){
             dispatch({type: "main/redirect", path:"#/login?message=notvalidated"})
+        }
+        if (!this.props.main.instructorIDDict) {
+            console.log("加载导师字典")
+            dispatch({type: "main/setupInstructIDDict"})
         }
     }
 
