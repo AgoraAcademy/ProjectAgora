@@ -84,21 +84,21 @@ export default {
                 window.location.reload();
             }
         },
-        * setupInstructIDDict ( action, { select, call, put }) {
+        * setupInstructorIDDict ( action, { select, call, put }) {
             let instructorIDDict;
-            try {
-                yield call(fetchRequest("/v1/learner", "GET"))
+            const { data } = yield call(() => 
+                fetchRequest("/v1/learner", "GET")
                 .then(response => response.json())
-                .then(data => {
-                    let mentors = data.filter(learner => learner.isMentor)
-                    mentors.map((mentor) => instructorIDDict[mentor.name] = mentor.id)
+                .then(list => list.filter(learner => learner.isMentor))
+                .catch(e => ({ error: e}))
+            );
+            if (data) {
+                instructorIDDict = data.reduce((newDict, mentor) => {
+                    newDict[`${mentor.familyName}${mentor.givenName}`] = mentor.id
+                    return newDict
                 })
-                .then(()=> {
-                    put({ type: "setField", name: "instructorIDDict", value: instructorIDDict })
-                })
-            } catch(e) {
-                console.log("没有获取instructorIDDict", e)
             }
+            yield put({ type: "setField", name: "instructorIDDict", value: instructorIDDict })
         }
     }
 }

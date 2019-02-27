@@ -52,7 +52,7 @@ class Main extends React.Component<IMainProps> {
         }
         if (Object.keys(this.props.main.instructorIDDict).length === 0) {
             console.log("加载导师字典")
-            dispatch({type: "main/setupInstructIDDict"})
+            dispatch({type: "main/setupInstructorIDDict"})
         }
     }
 
