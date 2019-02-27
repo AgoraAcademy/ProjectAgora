@@ -88,8 +88,8 @@ export default {
             let instructorIDDict;
             const { data } = yield call(() => 
                 fetchRequest("/v1/learner", "GET")
-                .then(response => response.json())
                 .then(list => list.filter(learner => learner.isMentor))
+                .then(list => ({data: list}))
                 .catch(e => ({ error: e}))
             );
             if (data) {
