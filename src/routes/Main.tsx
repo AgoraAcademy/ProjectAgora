@@ -50,7 +50,7 @@ class Main extends React.Component<IMainProps> {
         } else if (validated === "false"){
             dispatch({type: "main/redirect", path:"#/login?message=notvalidated"})
         }
-        if (!this.props.main.instructorIDDict) {
+        if (Object.keys(this.props.main.instructorIDDict).length === 0) {
             console.log("加载导师字典")
             dispatch({type: "main/setupInstructIDDict"})
         }
