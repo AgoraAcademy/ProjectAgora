@@ -53,8 +53,11 @@ export default {
         * setupProjectList ( action, { select, call, put }) {
             const { projectList } = yield call(() => 
                 fetchRequest("/v1/project", "GET")
-                .then(list => list.filter(project => project.createdBy === localStorage.getItem("learnerId")))
-                .then(list => ({data: list}))
+                .then(list => list.filter(project => (
+                    project.createdByID.toString() === localStorage.getItem("learnerId")||
+                    project.projectMentorID.toString() === localStorage.getItem("learnerId")
+                    )))
+                .then(list => ({projectList: list}))
                 .catch(e => ({ error: e}))
             );
             yield put({ type: "setField", name: "projectList", value: projectList })
