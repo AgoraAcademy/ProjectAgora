@@ -54,6 +54,10 @@ class Main extends React.Component<IMainProps> {
             console.log("加载导师字典")
             dispatch({type: "main/setupInstructorIDDict"})
         }
+        if (Object.keys(this.props.main.projectList).length === 0) {
+            console.log("加载项目")
+            dispatch({type: "main/setupProjectList"})
+        }
     }
 
     public siderWidthMapper = () => {

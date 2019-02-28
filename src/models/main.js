@@ -7,57 +7,7 @@ export default {
         instructorIDDict: {
         },
         projectList: [
-            {
-                "name": "测试项目1",
-                "id": 1,
-                "createdTime": "创建时间1",
-                "createdBy": "创建人1",
-                "relatedCourse": "相关课程1",
-                "projectMentorID": 1,
-                "status": "已完成"
-            },
-            {
-                "name": "测试项目2",
-                "id": 1,
-                "createdTime": "创建时间1",
-                "createdBy": "创建人1",
-                "relatedCourse": "相关课程1",
-                "status": "已完成"
-            },
-            {
-                "name": "测试项目3",
-                "id": 1,
-                "createdTime": "创建时间1",
-                "createdBy": "创建人1",
-                "relatedCourse": "相关课程1",
-                "status": "已完成"
-            },
-            {
-                "name": "测试项目4",
-                "id": 1,
-                "createdTime": "创建时间1",
-                "createdBy": "创建人1",
-                "relatedCourse": "相关课程1",
-                "status": "已完成"
-            },
-            {
-                "name": "测试项目5",
-                "id": 1,
-                "createdTime": "创建时间1",
-                "createdBy": "创建人1",
-                "relatedCourse": "相关课程1",
-                "status": "已完成"
-            },
-            {
-                "name": "测试项目6",
-                "id": 1,
-                "createdTime": "创建时间1",
-                "createdBy": "创建人1",
-                "relatedCourse": "相关课程1",
-                "status": "已完成"
-            },
         ],
-        userlist: [],
     },
     reducers: {
         setField(state, action) {
@@ -99,6 +49,15 @@ export default {
                 },{})
             }
             yield put({ type: "setField", name: "instructorIDDict", value: instructorIDDict })
+        },
+        * setupProjectList ( action, { select, call, put }) {
+            const { projectList } = yield call(() => 
+                fetchRequest("/v1/project", "GET")
+                .then(list => list.filter(project => project.createdBy === localStorage.getItem("learnerId")))
+                .then(list => ({data: list}))
+                .catch(e => ({ error: e}))
+            );
+            yield put({ type: "setField", name: "projectList", value: projectList })
         }
     }
 }
