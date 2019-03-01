@@ -4,6 +4,7 @@ import main from './models/main';
 import learnerProfile from './models/learnerProfile';
 import projectDetail from './models/projectDetail';
 import course from './models/course';
+import createLoading from 'dva-loading';
 
 declare function require(path: string): any;
 
@@ -12,7 +13,7 @@ const app = dva({
 });
 
 app.router(require('./router').default);
-
+app.use(createLoading())
 app.model(main);
 app.model(learnerProfile)
 app.model(projectDetail)

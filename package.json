@@ -12,6 +12,7 @@
     "antd": "^3.10.9",
     "babel-plugin-import": "^1.11.0",
     "dva": "^2.4.1",
+    "dva-loading": "^2.0.6",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-simplemde-editor": "^3.6.22",

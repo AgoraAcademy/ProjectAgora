@@ -60,7 +60,7 @@ export default {
                 .then(list => ({projectList: list}))
                 .catch(e => ({ error: e}))
             );
-            yield put({ type: "setField", name: "projectList", value: projectList })
+            yield put({ type: "setField", name: "projectList", value: projectList || [] })
         }
     }
 }

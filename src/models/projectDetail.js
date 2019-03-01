@@ -1,3 +1,5 @@
+import { fetchRequest } from "../util";
+
 export default {
     namespace: 'projectDetail',
     state:
@@ -134,6 +136,36 @@ export default {
         }
     },
     effects: {
+        * loadProject ( action, { select, call, put }) {
+            const { projectId } = action
+            const { data } = yield call(() => 
+                fetchRequest(`/v1/project/${projectId}`, "GET")
+                .then(data => ({data: data}))
+                .catch(e => ({ error: e}))
+            );
+            const projectInfo = {
+                id: data.id,
+                name: data.name,
+                status: data.status,
+                createdTime: data.createdTime,
+                createdByID: data.createdByID,
+                createdBy: data.createdBy,
+                relatedCourseID: data.relatedCourseID,
+                relatedCourse: data.relatedCourse,
+                projectTerm: data.projectTerm,
+                projectTermLength: data.projectTermLength,
+                projectStartDate: data.projectStartDate, //时间处理 
+                averageIntendedCreditHourPerWeek: data.averageIntendedCreditHourPerWeek,
+                totalIntendedCreditHour: data.totalIntendedCreditHour,
+                projectMentorID: data.projectMentorID,
+                projectMentor: data.projectMentor,
+                averageGuidingHourPerWeek: data.averageGuidingHourPerWeek,
+                projectMeta: data.projectMeta,
+                projectApprovalInfo: data.projectApprovalInfo,
+                conclusionInfo: data.conclusionInfo,
+                lastUpdatedTime: data.lastUpdatedTime
+            }
+            yield put({ type: "setField", name: "projectInfo", value: projectInfo || [] })
+        }
     }
-
 }

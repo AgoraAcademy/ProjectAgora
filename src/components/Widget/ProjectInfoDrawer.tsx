@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
-import ReactUWP, { ContentDialog, TextBox, Button } from 'react-uwp'
+import ReactUWP, { ProgressRing, ContentDialog, TextBox, Button } from 'react-uwp'
 import Tabs, { Tab } from "react-uwp/Tabs";
 import { Layout, Drawer } from 'antd'
 import { connect } from 'dva'
@@ -8,6 +8,7 @@ const { Header, Footer, Sider, Content } = Layout;
 import './ProjectInfoDrawer.less'
 
 export interface IProjectInfoDrawerProps {
+    loading: any,
     dispatch: any,
     learnerProfile: any,
     projectDetail: any,
@@ -125,6 +126,20 @@ class ProjectInfoDrawer extends React.Component<IProjectInfoDrawerProps> {
             margin: "10px 0",
             height: 400
         };
+        if (this.props.loading.models.projectDetail) {
+            return (
+            <Drawer
+                title={<span style={theme.typographyStyles.title}>项目信息</span>}
+                width={520}
+                closable={false}
+                onClose={this.props.onClose}
+                visible={this.props.visible}
+                style={{ borderRadius: '0', padding: '0px 10px' }}
+            >
+                <ProgressRing style={{margin: "10px"}} size={75} dotsNumber={4} />
+            </Drawer>
+            )
+        }
         return (
             <Drawer
                 title={<span style={theme.typographyStyles.title}>项目信息</span>}
@@ -192,8 +207,8 @@ class ProjectInfoDrawer extends React.Component<IProjectInfoDrawerProps> {
     }
 }
 
-function mapStateToProps({main, projectDetail}) {
-    return { main, projectDetail }
+function mapStateToProps({main, projectDetail, loading}) {
+    return { main, projectDetail, loading }
 }
 
 export default connect(mapStateToProps)(ProjectInfoDrawer)
