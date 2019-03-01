@@ -97,10 +97,10 @@ class ProjectInfoDrawer extends React.Component<IProjectInfoDrawerProps> {
         const { theme } = this.context;
         const { projectInfo } = this.props.projectDetail
         const projectApprovalInfo = [
-            { label: "学术委员会审核结果", value: projectInfo.projectApprovalInfo.ApprovalCommitteeOfAcademics.result },
-            { label: "学术委员会审核建议", value: projectInfo.projectApprovalInfo.ApprovalCommitteeOfAcademics.advice },
-            { label: "导师审核结果", value: projectInfo.projectApprovalInfo.ApprovalMentor.result },
-            { label: "导师审核建议", value: projectInfo.projectApprovalInfo.ApprovalMentor.advice },
+            { label: "学术委员会审核结果", value: projectInfo.projectApprovalInfo.approvalCommitteeOfAcademics.result },
+            { label: "学术委员会审核建议", value: projectInfo.projectApprovalInfo.approvalCommitteeOfAcademics.advice },
+            { label: "导师审核结果", value: projectInfo.projectApprovalInfo.approvalMentor.result },
+            { label: "导师审核建议", value: projectInfo.projectApprovalInfo.approvalMentor.advice },
         ]
         return (
             projectApprovalInfo.map(

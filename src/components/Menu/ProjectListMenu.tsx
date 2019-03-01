@@ -31,11 +31,8 @@ class ProjectListMenu extends React.Component<IProjectListMenuProps> {
     
     public getListSource = () => {
         let projectList = [...this.props.main.projectList] || []
-        console.log("old projectList", projectList)
         projectList = projectList.filter(project => project.projectMentorID.toString() === localStorage.getItem("learnerId"))
-        console.log("mid projectList", projectList)
         projectList = projectList.filter(project => project.status === "审核中")
-        console.log("new projectList", projectList)
         const listSource: TreeItem[] = [{
             title: "项目管理",
             hidden: localStorage.getItem("isMentor") === "true",

@@ -28,11 +28,11 @@ export default {
                 projectPlan: "这是项目计划！"
             },
             projectApprovalInfo: {
-                ApprovalCommitteeOfAcademics: {
+                approvalCommitteeOfAcademics: {
                     result: "通过",
                     advice: "这是学术委员会审核建议！"
                 },
-                ApprovalMentor: {
+                approvalMentor: {
                     result: "通过",
                     advice: "这是导师审核建议！"
                 }
@@ -143,6 +143,24 @@ export default {
                 .then(data => ({data: data}))
                 .catch(e => ({ error: e}))
             );
+            const rawProjectMeta = JSON.parse(data.projectMeta.replace(/'/g, '"'))
+            const rawProjectApprovalInfo = JSON.parse(data.projectApprovalInfo.replace(/'/g, '"'))
+            const rawConclusionInfo = JSON.parse(data.conclusionInfo.replace(/'/g, '"'))
+            // 此处返回时，字段名被connexion变换了命名方式，需要重新手动构建
+            const projectMeta = {
+                projectIntro: rawProjectMeta.project_intro,
+                projectGoal: rawProjectMeta.project_goal,
+                evaluationSchema: rawProjectMeta.evaluation_schema,
+                projectPlan: rawProjectMeta.project_plan,
+            }
+            const projectApprovalInfo = {
+                approvalCommitteeOfAcademics: rawProjectApprovalInfo.approval_committee_of_academics,
+                approvalMentor: rawProjectApprovalInfo.approval_mentor
+            }
+            const conclusionInfo = {
+                mentorEvaluation: rawConclusionInfo.mentor_evaluation,
+                selfEvaluation: rawConclusionInfo.self_evaluation
+            }
             const projectInfo = {
                 id: data.id,
                 name: data.name,
@@ -160,11 +178,12 @@ export default {
                 projectMentorID: data.projectMentorID,
                 projectMentor: data.projectMentor,
                 averageGuidingHourPerWeek: data.averageGuidingHourPerWeek,
-                projectMeta: data.projectMeta,
-                projectApprovalInfo: data.projectApprovalInfo,
-                conclusionInfo: data.conclusionInfo,
+                projectMeta,
+                projectApprovalInfo,
+                conclusionInfo,
                 lastUpdatedTime: data.lastUpdatedTime
             }
+            console.log("新的projectInfo", projectInfo)
             yield put({ type: "setField", name: "projectInfo", value: projectInfo || [] })
         }
     }

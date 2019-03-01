@@ -53,7 +53,6 @@ class ProjectCard extends Component<IProjectCardProps> {
     }
     public render() {
         const { theme } = this.context;
-        console.log(theme, "theme")
         const style: React.CSSProperties = {
             fontSize: 24,
             color: "black",
@@ -112,7 +111,7 @@ class ProjectCard extends Component<IProjectCardProps> {
                 <Meta
                     title={
                         <Row type="flex" justify="space-between">
-                            <Col span={6}>
+                            <Col span={18}>
                                 <span>{this.props.name}</span>
                             </Col>
                             <Col style={{textAlign: "right"}} span={6}>
