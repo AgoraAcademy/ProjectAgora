@@ -60,7 +60,6 @@ class ProjectList extends React.Component<IProjectListProps> {
                         this.setState({showDrawer: true})
                     }}
                     toEdit={() => {
-                        dispatch({ type:"projectDetail/loadProject", projectId: item.id})
                         dispatch({type: "main/redirect", path:`#/project/${item.id}`})
                     }}
                 />

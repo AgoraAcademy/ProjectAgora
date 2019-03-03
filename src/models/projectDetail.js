@@ -6,71 +6,39 @@ export default {
     {
         editMode: false,
         projectInfo: {
-            id: 1,
-            name: "摄影",
-            createdTime: "8102年1月1日", //时间处理
-            createdByID: 1,
-            createdBy: "肖春腾",
+            id: 0,
+            name: "",
+            createdTime: "", //时间处理
+            createdByID: 0,
+            createdBy: "",
             relatedCourseID: 0,
-            relatedCourse: "自由项目",
-            projectTerm: "2018年冬",
-            projectTermLength: "3学期",
-            projectStartDate: "8102年1月1日", //时间处理 
-            averageIntendedCreditHourPerWeek: 1,
-            totalIntendedCreditHour: 1,
-            projectMentorID: 1,
-            projectMentor: "罗善文",
-            averageGuidingHourPerWeek: 1,
+            relatedCourse: "",
+            projectTerm: "",
+            projectTermLength: "",
+            projectStartDate: "", //时间处理 
+            averageIntendedCreditHourPerWeek: 0,
+            totalIntendedCreditHour: 0,
+            projectMentorID: 0,
+            projectMentor: "",
+            averageGuidingHourPerWeek: 0,
             projectMeta: {
-                projectIntro: "这是项目介绍！",
-                projectGoal: "这是项目目标！",
-                evaluationSchema: "这是项目评价标准！",
-                projectPlan: "这是项目计划！"
+                projectIntro: "",
+                projectGoal: "",
+                evaluationSchema: "",
+                projectPlan: ""
             },
             projectApprovalInfo: {
                 approvalCommitteeOfAcademics: {
-                    result: "通过",
-                    advice: "这是学术委员会审核建议！"
+                    result: "",
+                    advice: ""
                 },
                 approvalMentor: {
-                    result: "通过",
-                    advice: "这是导师审核建议！"
+                    result: "",
+                    advice: ""
                 }
             }
         },
         projectItems: [
-            {
-                itemTitle: "Item1",
-                itemStartDate: new Date().toLocaleDateString(),
-                itemEndDate: new Date().toLocaleDateString(),
-                itemContent: "chushi 1 content" ,
-                itemRecord: "chushi 1 record",
-                itemComment: "chushi 1 comment"
-            },
-            {
-                itemTitle: "Item2",
-                itemStartDate: new Date().toLocaleDateString(),
-                itemEndDate: new Date().toLocaleDateString(),
-                itemContent: "chushi 2 content",
-                itemRecord: "",
-                itemComment: ""
-            },
-            {
-                itemTitle: "Item3",
-                itemStartDate: new Date().toLocaleDateString(),
-                itemEndDate: new Date().toLocaleDateString(),
-                itemContent: "chushi 3 content",
-                itemRecord: "",
-                itemComment: ""
-            },
-            {
-                itemTitle: "Item4",
-                itemStartDate: new Date().toLocaleDateString(),
-                itemEndDate: new Date().toLocaleDateString(),
-                itemContent: "chushi 4 content",
-                itemRecord: "",
-                itemComment: ""
-            }
         ]
     },
     reducers: {
@@ -125,13 +93,19 @@ export default {
         setItemStartDate(state, action){
             const { index, value } = action
             let newState = {...state, dirty: true}
-            newState.projectItems[index].itemStartDate = value
+            newState.projectItems[index].itemStartDate = value.toLocaleDateString()
             return newState
         },
         setItemEndDate(state, action){
             const { index, value } = action
             let newState = {...state, dirty: true}
-            newState.projectItems[index].itemStartDate = value
+            newState.projectItems[index].itemStartDate = value.toLocaleDateString()
+            return newState
+        },
+        setItemTitle(state, action){
+            const { index, value } = action
+            let newState = {...state, dirty: true}
+            newState.projectItems[index].itemTitle = value
             return newState
         }
     },
@@ -146,6 +120,7 @@ export default {
             const rawProjectMeta = JSON.parse(data.projectMeta.replace(/'/g, '"'))
             const rawProjectApprovalInfo = JSON.parse(data.projectApprovalInfo.replace(/'/g, '"'))
             const rawConclusionInfo = JSON.parse(data.conclusionInfo.replace(/'/g, '"'))
+            const rawProjectItems = JSON.parse(data.content.replace(/'/g, '"'))
             // 此处返回时，字段名被connexion变换了命名方式，需要重新手动构建
             const projectMeta = {
                 projectIntro: rawProjectMeta.project_intro,
@@ -183,8 +158,19 @@ export default {
                 conclusionInfo,
                 lastUpdatedTime: data.lastUpdatedTime
             }
-            console.log("新的projectInfo", projectInfo)
+            const projectItems = rawProjectItems.map((item, index) => {
+                return {
+                    itemTitle: item.item_title,
+                    itemStartDate: item.item_start_date,
+                    itemEndDate: item.item_end_date,
+                    itemContent: item.item_content,
+                    itemRecord: item.item_record,
+                    itemComment: item.item_comment
+                }
+            })
+            
             yield put({ type: "setField", name: "projectInfo", value: projectInfo || [] })
+            yield put({ type: "setField", name: "projectItems", value: projectItems || [] })
         }
     }
 }

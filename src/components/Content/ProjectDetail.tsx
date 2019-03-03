@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
-import ReactUWP, { Toggle, Button, TextBox } from 'react-uwp'
+import ReactUWP, { Toggle, Button, TextBox, ProgressRing } from 'react-uwp'
 import { Drawer } from 'antd';
 import { Layout, Row, Col } from 'antd'
 import { connect } from 'dva'
@@ -10,13 +10,17 @@ import "simplemde/dist/simplemde.min.css";
 import "./ProjectDetail.less"
 import ProjectInfoDrawer from "../Widget/ProjectInfoDrawer";
 import { togglePreview } from "simplemde";
+import { fetchRequest } from "../../util";
+import swal from 'sweetalert';
 const { Header, Footer, Sider, Content } = Layout;
 
 
 export interface IProjectDetailProps {
     dispatch: any,
     learnerProfile: any,
-    projectDetail: any
+    projectDetail: any,
+    loading: any,
+    match: any
 }
 /**
  * 项目条目
@@ -95,28 +99,36 @@ class ProjectDetail extends React.Component<IProjectDetailProps> {
     }
 
     public componentDidMount = () => {
-        const { projectItems } = this.props.projectDetail
-        const itemContents = projectItems.map((item:IProjectItem) => {
-            return item.itemContent
-        })
-        const itemRecords = projectItems.map((item:IProjectItem) => {
-            return item.itemRecord
-        })
-        const itemComments = projectItems.map((item:IProjectItem) => {
-            return item.itemComment
-        })
-        const itemStartDates = projectItems.map((item:IProjectItem) => {
-            return item.itemStartDate
-        })
-        const itemEndDates = projectItems.map((item:IProjectItem) => {
-            return item.itemEndDate
-        })
-        this.setState({ 
-            itemContents: itemContents,
-            itemRecords: itemRecords,
-            itemComments: itemComments,
-            itemStartDates: itemStartDates,
-            itemEndDates: itemEndDates
+        const { dispatch } = this.props
+        dispatch({ type:"projectDetail/loadProject", projectId: this.props.match.params.id})
+        .then(() => {
+            const { projectItems } = this.props.projectDetail
+            const itemContents = projectItems.map((item:IProjectItem) => {
+                return item.itemContent
+            })
+            const itemRecords = projectItems.map((item:IProjectItem) => {
+                return item.itemRecord
+            })
+            const itemComments = projectItems.map((item:IProjectItem) => {
+                return item.itemComment
+            })
+            const itemStartDates = projectItems.map((item:IProjectItem) => {
+                return item.itemStartDate
+            })
+            const itemEndDates = projectItems.map((item:IProjectItem) => {
+                return item.itemEndDate
+            })
+            const itemTitles = projectItems.map((item:IProjectItem) => {
+                return item.itemTitle
+            })
+            this.setState({ 
+                itemContents: itemContents,
+                itemRecords: itemRecords,
+                itemComments: itemComments,
+                itemStartDates: itemStartDates,
+                itemEndDates: itemEndDates,
+                itemTitles: itemTitles
+            })
         })
     }
 
@@ -137,69 +149,9 @@ class ProjectDetail extends React.Component<IProjectDetailProps> {
         this.setState({itemContents: newItemContents})
         this.setState({itemRecords: newItemRecords})
         this.setState({itemComments: newItemComments})
-        }
-
-    public render(): JSX.Element {
-        const { theme } = this.context;
-        const { dispatch } = this.props;
-        
-
-        return (
-            <Layout>
-                <Header style={{height:"48px", marginBottom:"20px", padding:"0px"}}>
-                    <Row type="flex" justify="space-around" align="middle">
-                        <Col span={14}>
-                            <span style={{color: 'white', ...theme.typographyStyles.header }}>
-                                ProjectDetail
-                            </span>
-                        </Col>
-                        <Col span={3} >
-                            <Button style={{width:"100%", height:"32px", lineHeight: "normal"}} onClick={() => this.setState({showDrawer: true})}>
-                                编辑项目信息
-                            </Button>
-                        </Col>
-                        <Col span={3}>
-                            <Toggle
-                                label="编辑模式"
-                                size={20}
-                                defaultToggled={this.state.editMode}
-                                onToggle={this.toggleEditMode}
-                            />
-                        </Col>
-                        <Col span={2} >
-                            <Button style={{width:"100%", height:"32px", lineHeight: "normal"}}>
-                                保存
-                            </Button>
-                        </Col>
-                    </Row>
-                </Header>
-                <Content>
-                    {this.generateItem()}
-                    <Row>
-                        <Col span={8} />
-                        <Col span={8} style={{marginBottom: "20px", marginTop:"20px"}}>
-                            <Button
-                                style={{ width: "100%", height: "300px", marginLeft: "auto", marginRight: "auto" }}
-                                icon="Add"
-                                onClick={this.addProjectItem}
-                            />
-                        </Col>
-                        <Col span={8} />
-                    </Row>
-                    <ProjectInfoDrawer
-                        onClose={() => this.setState({showDrawer: false})}
-                        visible={this.state.showDrawer}
-                    />
-                </Content>
-                <Footer>
-                    <p>footer</p>
-                </Footer>
-            </Layout>
-        );
     }
 
-
-    private generateItem = () => {
+    public generateItem = () => {
         const { dispatch } = this.props
         const { itemTitles, itemComments, itemContents, itemRecords, itemStartDates, itemEndDates} = this.state
         return (
@@ -211,8 +163,8 @@ class ProjectDetail extends React.Component<IProjectDetailProps> {
                                 <p id={`item_${index}`}>标题</p>
                                 <TextBox
                                     style={this.formRowStyle}
-                                    placeholder="标题"
-                                    // defaultValue={item[index]}
+                                    placeholder={itemTitles[index]}
+                                    onChangeValue={(value)=> dispatch({type:"projectDetail/setItemTitle", index, value})}
                                 />
                             </Row>
                             <Row style={{marginBottom: "10px"}}>
@@ -264,10 +216,117 @@ class ProjectDetail extends React.Component<IProjectDetailProps> {
             })
         )
     }
+
+    public submitUpdate = () => {
+        const { 
+            itemContents,
+            itemRecords,
+            itemComments,
+        } = this.state
+        const projectItems = itemContents.map((item, index) => {
+            return (
+                {
+                    itemTitle: this.props.projectDetail.projectItems[index].itemTitle,
+                    itemStartDate: this.props.projectDetail.projectItems[index].itemStartDate,
+                    itemEndDate: this.props.projectDetail.projectItems[index].itemEndDate,
+                    itemContent: item,
+                    itemRecord: itemRecords[index],
+                    itemComment: itemComments[index]
+                }
+            )
+        })
+        const patchBody = {
+            content: projectItems
+        }
+        console.log(patchBody)
+        fetchRequest(`/v1/project/${this.props.projectDetail.projectInfo.createdByID}`, "PATCH", patchBody)
+        .then((response:any) => {
+            if (!response.error) {
+                swal("成功保存！")
+                location.reload()
+            }
+            else {
+                swal("出错！")
+            }
+        })
+    }
+
+    public render(): JSX.Element {
+        const { theme } = this.context;
+        const { dispatch } = this.props;
+        
+        if (this.props.loading.models.projectDetail) {
+            return (
+            <Layout>
+                <ProgressRing style={{margin: "10px"}} size={75} dotsNumber={4} />
+            </Layout>
+            )
+        }
+
+        return (
+            <Layout>
+                <Header style={{height:"48px", marginBottom:"20px", padding:"0px"}}>
+                    <Row type="flex" justify="space-around" align="middle">
+                        <Col span={14}>
+                            <span style={{color: 'white', ...theme.typographyStyles.header }}>
+                                {this.props.projectDetail.projectInfo.name}
+                            </span>
+                        </Col>
+                        <Col span={3} >
+                            <Button style={{width:"100%", height:"32px", lineHeight: "normal"}} onClick={() => this.setState({showDrawer: true})}>
+                                编辑项目信息
+                            </Button>
+                        </Col>
+                        <Col span={3}>
+                            <Toggle
+                                label="编辑模式"
+                                size={20}
+                                defaultToggled={this.state.editMode}
+                                onToggle={this.toggleEditMode}
+                            />
+                        </Col>
+                        <Col span={2} >
+                            <Button 
+                                style={{width:"100%", height:"32px", lineHeight: "normal"}}
+                                onClick={this.submitUpdate}
+                            >
+                                保存
+                            </Button>
+                        </Col>
+                    </Row>
+                </Header>
+                <Content>
+                    {this.generateItem()}
+                    <Row>
+                        <Col span={8} />
+                        <Col span={8} style={{marginBottom: "20px", marginTop:"20px"}}>
+                            <Button
+                                style={{ width: "100%", height: "300px", marginLeft: "auto", marginRight: "auto" }}
+                                icon="Add"
+                                onClick={this.addProjectItem}
+                            />
+                        </Col>
+                        <Col span={8} />
+                    </Row>
+                    <ProjectInfoDrawer
+                        onClose={() => this.setState({showDrawer: false})}
+                        visible={this.state.showDrawer}
+                    />
+                </Content>
+                <Footer>
+                    <p>footer</p>
+                </Footer>
+            </Layout>
+        );
+    }
+
+    
+
+    
 }
 
-function mapStateToProps({ main, learnerProfile, projectDetail }) {
-    return { main, learnerProfile, projectDetail }
+function mapStateToProps({ main, learnerProfile, projectDetail, loading }) {
+    return { main, learnerProfile, projectDetail, loading }
 }
 
 export default connect(mapStateToProps)(ProjectDetail)
