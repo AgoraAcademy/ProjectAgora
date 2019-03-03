@@ -16,7 +16,8 @@ interface IProjectCardProps {
     relatedCourse: string,
     projectMentor: string,
     status: string,
-    showDrawer: () => void
+    showDrawer: () => void,
+    toEdit: () => void
 }
 
 interface IProjectCardState {
@@ -39,7 +40,8 @@ class ProjectCard extends Component<IProjectCardProps> {
 
     public getStatusTag = () => {
         const colorMapper = {
-            "审核中": "blue"
+            "审核中": "blue",
+            "进行中": "green"
         }
         return (
             <Tag color={colorMapper[this.props.status]}>{this.props.status}</Tag>
@@ -53,11 +55,18 @@ class ProjectCard extends Component<IProjectCardProps> {
     }
     public render() {
         const { theme } = this.context;
-        const style: React.CSSProperties = {
+        const { status } = this.props
+        const regularStyle: React.CSSProperties = {
             fontSize: 24,
             color: "black",
             margin: 5,
-            cursor: "default"
+            cursor: "pointer"
+        };
+        const disabledStyle:React.CSSProperties = {
+            fontSize: 24,
+            color: theme.chromeDisabledLow,
+            margin: 5,
+            cursor: "not-allowed"
         };
         const hoverStyle: React.CSSProperties = {
             transform: "scale(1.25)",
@@ -71,19 +80,41 @@ class ProjectCard extends Component<IProjectCardProps> {
                     <Popover 
                         content={
                             <Row style={{width: 180, textAlign: "center"}}>
-                                <Col span={10}>
-                                    <Icon size={24} {...{ style, hoverStyle }}>Edit</Icon>
+                                <Col span={6}>
+                                    <Icon
+                                        size={24}
+                                        style={status === "审核中"?disabledStyle: regularStyle}
+                                        onClick={status === "审核中"? ()=>{}: this.props.toEdit}
+                                        hoverStyle={status === "审核中"? disabledStyle : hoverStyle}
+                                    >
+                                        Edit
+                                    </Icon>
+                                    
                                 </Col>
-                                <Col span={4}>
+                                <Col span={3}>
                                     <Divider style={{ margin: 5, height: 24}} type="vertical" />
                                 </Col>
-                                <Col span={10}>
+                                <Col span={6}>
                                     <Icon 
                                         size={24} 
-                                        {...{ style, hoverStyle }}
+                                        style={regularStyle}
+                                        hoverStyle={hoverStyle}
                                         onClick={this.props.showDrawer}
                                     >
                                         Info
+                                    </Icon>
+                                </Col>
+                                <Col span={3}>
+                                    <Divider style={{ margin: 5, height: 24}} type="vertical" />
+                                </Col>
+                                <Col span={6}>
+                                    <Icon 
+                                        size={24} 
+                                        style={status === "审核中"?disabledStyle: regularStyle}
+                                        onClick={status === "审核中"? ()=>{}: this.props.toEdit}
+                                        hoverStyle={status === "审核中"? disabledStyle : hoverStyle}
+                                    >
+                                        View
                                     </Icon>
                                 </Col>
                             </Row>
