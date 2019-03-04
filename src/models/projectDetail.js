@@ -120,7 +120,7 @@ export default {
             const rawProjectMeta = JSON.parse(data.projectMeta.replace(/'/g, '"'))
             const rawProjectApprovalInfo = JSON.parse(data.projectApprovalInfo.replace(/'/g, '"'))
             const rawConclusionInfo = JSON.parse(data.conclusionInfo.replace(/'/g, '"'))
-            const rawProjectItems = JSON.parse(data.content.replace(/'/g, '"'))
+            const rawProjectItems = JSON.parse(data.content.replace(/'/g, '"')) 
             // 此处返回时，字段名被connexion变换了命名方式，需要重新手动构建
             const projectMeta = {
                 projectIntro: rawProjectMeta.project_intro,

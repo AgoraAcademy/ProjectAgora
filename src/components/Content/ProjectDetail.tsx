@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
 import ReactUWP, { Toggle, Button, TextBox, ProgressRing } from 'react-uwp'
-import { Drawer } from 'antd';
+import { Drawer, Modal } from 'antd';
 import { Layout, Row, Col } from 'antd'
 import { connect } from 'dva'
 import MDEditor from "../Widget/MDEditor";
@@ -45,7 +45,9 @@ interface IProjectDetailState {
     itemEndDates: string[],
     dirty: boolean,
     showDrawer: boolean,
-    editMode: boolean
+    editMode: boolean,
+    submitting: boolean,
+    confirmLoading: boolean
 }
 /**
  * 项目详情
@@ -71,7 +73,9 @@ class ProjectDetail extends React.Component<IProjectDetailProps> {
         itemEndDates:[],
         dirty: false,
         showDrawer: false,
-        editMode: false
+        editMode: false,
+        submitting: false,
+        confirmLoading: false
     }
     
     public setProjectItem = (itemIndex:number, itemType:string, value:string) => {
@@ -218,6 +222,7 @@ class ProjectDetail extends React.Component<IProjectDetailProps> {
     }
 
     public submitUpdate = () => {
+        this.setState({ confirmLoading: true})
         const { 
             itemContents,
             itemRecords,
@@ -238,7 +243,6 @@ class ProjectDetail extends React.Component<IProjectDetailProps> {
         const patchBody = {
             content: projectItems
         }
-        console.log(patchBody)
         fetchRequest(`/v1/project/${this.props.projectDetail.projectInfo.createdByID}`, "PATCH", patchBody)
         .then((response:any) => {
             if (!response.error) {
@@ -288,7 +292,7 @@ class ProjectDetail extends React.Component<IProjectDetailProps> {
                         <Col span={2} >
                             <Button 
                                 style={{width:"100%", height:"32px", lineHeight: "normal"}}
-                                onClick={this.submitUpdate}
+                                onClick={() => this.setState({ submitting: true})}
                             >
                                 保存
                             </Button>
@@ -312,6 +316,17 @@ class ProjectDetail extends React.Component<IProjectDetailProps> {
                         onClose={() => this.setState({showDrawer: false})}
                         visible={this.state.showDrawer}
                     />
+                    <Modal
+                        title="新建自由项目"
+                        okText="创建"
+                        cancelText="取消"
+                        visible={this.state.submitting}
+                        onOk={this.submitUpdate}
+                        confirmLoading={this.state.confirmLoading}
+                        onCancel={() => this.setState({ submitting: false})}
+                    >
+                        确定保存项目记录吗？
+                    </Modal>
                 </Content>
                 <Footer>
                     <p>footer</p>

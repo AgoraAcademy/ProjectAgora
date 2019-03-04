@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
 import ReactUWP, { Toggle, Button, TextBox, CalendarDatePicker, DropDownMenu } from 'react-uwp'
-import { Layout, Row, Col, Card, Select, Divider, Slider, InputNumber } from 'antd'
+import { Layout, Row, Col, Card, Select, Divider, Slider, InputNumber, Modal } from 'antd'
 import { connect } from 'dva'
 import TextArea from '../Widget/TextArea'
 import { fetchRequest } from "../../util";
@@ -19,6 +19,8 @@ export interface INewFreeStyleProjectProps {
 }
 
 export interface INewFreeStyleProjectState {
+    submitting: boolean,
+    confirmLoading: boolean,
     name: string
     projectTerm: string,
     projectTermLength: number,
@@ -69,6 +71,8 @@ class NewFreeStyleProject extends React.Component<INewFreeStyleProjectProps> {
     public static contextTypes = { theme: PropTypes.object };
     public context: { theme: ReactUWP.ThemeType };
     public state: INewFreeStyleProjectState = {
+        submitting: false,
+        confirmLoading: false,
         name: "",
         projectTerm: "",
         projectTermLength: 0,
@@ -400,10 +404,22 @@ class NewFreeStyleProject extends React.Component<INewFreeStyleProjectProps> {
                             orientation="right"
                             style={{ color: 'white', ...theme.typographyStyles.subHeader }}
                         >
-                            <Button onClick={this.submitNewFreeStyleProject}>确认</Button>
+                            <Button onClick={() => this.setState({submitting: true})}>提交</Button>
                         </Divider>
                     </Col>
                 </Row>
+                    <Modal
+                        title="新建自由项目"
+                        okText="创建"
+                        cancelText="取消"
+                        visible={this.state.submitting}
+                        onOk={this.submitNewFreeStyleProject}
+                        confirmLoading={this.state.confirmLoading}
+                        onCancel={() => this.setState({ submitting: false})}
+                    >
+                        确定创建自由项目吗？
+                        (成功提交项目后，请等待审核结果！)
+                    </Modal>
                 </Content>
                 <Footer>
                     <p>footer</p>
@@ -413,6 +429,8 @@ class NewFreeStyleProject extends React.Component<INewFreeStyleProjectProps> {
     }
 
     public submitNewFreeStyleProject = () => {
+        const { dispatch } = this.props
+        this.setState({confirmLoading: true})
         const postBody = {
             ...this.state,
             relatedCourseId: 0,
@@ -432,11 +450,11 @@ class NewFreeStyleProject extends React.Component<INewFreeStyleProjectProps> {
                 mentorEvaluation: ""
             }
         }
-        console.log(postBody)
         fetchRequest("/v1/project", "POST", postBody)
         .then((response:any) => {
             if (!response.error) {
-                swal("成功提交项目，请等待审核结果！")
+                this.setState({submitting: false, confirmLoading: false})
+                dispatch({type: "main/redirect", path:"#/project", reload: true})
             }
             else {
                 swal("出错！")
