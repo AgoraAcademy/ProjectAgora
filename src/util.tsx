@@ -25,9 +25,10 @@ export function fetchRequest(url, method, params: any = '') {
             })
             .then((response) => {
                 try{
-                    window.localStorage.setItem("access_token", response.headers.get("Authorization"))
-                    window.localStorage.setItem("refresh_token", response.headers.get("refresh_token"))}
-                catch(err){
+                    console.log("response", response)
+                    // window.localStorage.setItem("access_token", response.headers.get("Authorization"))
+                    // window.localStorage.setItem("refresh_token", response.headers.get("refresh_token"))
+                }catch(err){
                     console.log(err)
                 }
                 return response.json()
