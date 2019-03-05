@@ -433,7 +433,7 @@ class NewFreeStyleProject extends React.Component<INewFreeStyleProjectProps> {
         const postBody = {
             ...this.state,
             relatedCourseId: 0,
-            relatedCourse: "",
+            relatedCourse: "自由项目",
             projectApprovalInfo: {
                 approvalCommitteeOfAcademics: {
                     result: "",
