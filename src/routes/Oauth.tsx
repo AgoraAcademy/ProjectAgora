@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Layout, Row, Col, Divider, Card } from 'antd' 
+import { Layout, Row, Col, Divider, Card, Modal } from 'antd' 
 import * as PropTypes from "prop-types";
 import TextBox from "react-uwp/TextBox";
 import Icon from "react-uwp/Icon";
@@ -26,7 +26,9 @@ export interface IOauthProps {
 };
 
 export interface IOauthState {
+    submitting: boolean,
     loginResult: string,
+    confirmLoading: boolean,
     givenName: string,
     familyName: string,
     nickname: string,
@@ -97,6 +99,8 @@ class Oauth extends React.Component<IOauthProps> {
     public static contextTypes = { theme: PropTypes.object };
     public context: { theme: ReactUWP.ThemeType };
     public state: IOauthState = {
+        submitting: false,
+        confirmLoading: false,
         loginResult: "waiting",
         givenName: "",
         familyName: "",
@@ -1257,21 +1261,37 @@ class Oauth extends React.Component<IOauthProps> {
                             orientation="right"
                             style={{ color: 'white', ...theme.typographyStyles.subHeader }}
                         >
-                            <Button onClick={this.submitNewLearner}>确认</Button>
+                            <Button onClick={() => this.setState({submitting: true})}>确认</Button>
                         </Divider>
                     </Col>
                 </Row>
+                <Modal
+                    title="创建新学习者"
+                    okText="创建"
+                    cancelText="取消"
+                    visible={this.state.submitting}
+                    onOk={this.submitNewLearner}
+                    confirmLoading={this.state.confirmLoading}
+                    onCancel={() => this.setState({ submitting: false})}
+                >
+                    确定创建新学习者吗？
+                    (成功提交创建申请后，请等待审核结果！)
+                </Modal>
             </Content>
         )
     }
 
     public submitNewLearner = () => {
-        const postBody = {...this.state}
-        console.log(postBody)
+        this.setState({confirmLoading: true})
+        const { submitting, loginResult, ...postBody } = this.state
         fetchRequest("/v1/learner", "POST", postBody)
         .then((response) => {
             console.log(response)
             swal("成功注册，请等待管理员认证!")
+            this.setState({submitting: false})
+        })
+        .catch(() => {
+            swal("出错！请联系管理员")
         })
     }
 

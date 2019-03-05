@@ -183,7 +183,6 @@ class NewFreeStyleProject extends React.Component<INewFreeStyleProjectProps> {
                                 style={this.DropdownMenuStyle}
                                 itemWidth={120}
                                 values={["1903", "1909", " 2003", "2009", "2103", "2109"]}
-                                defaultValue={this.state.projectTerm}
                                 onChangeValue={(projectTerm)=> this.setState({projectTerm})}
                             />
                         </Col>
@@ -407,7 +406,7 @@ class NewFreeStyleProject extends React.Component<INewFreeStyleProjectProps> {
                             <Button onClick={() => this.setState({submitting: true})}>提交</Button>
                         </Divider>
                     </Col>
-                </Row>
+                    </Row>
                     <Modal
                         title="新建自由项目"
                         okText="创建"

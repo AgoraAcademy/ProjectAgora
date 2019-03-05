@@ -117,10 +117,16 @@ export default {
                 .then(data => ({data: data}))
                 .catch(e => ({ error: e}))
             );
-            const rawProjectMeta = JSON.parse(data.projectMeta.replace(/'/g, '"'))
-            const rawProjectApprovalInfo = JSON.parse(data.projectApprovalInfo.replace(/'/g, '"'))
-            const rawConclusionInfo = JSON.parse(data.conclusionInfo.replace(/'/g, '"'))
-            const rawProjectItems = JSON.parse(data.content.replace(/'/g, '"')) 
+            let rawProjectMeta, rawProjectApprovalInfo, rawConclusionInfo, rawProjectItems
+            try {
+                rawProjectMeta = JSON.parse(data.projectMeta.replace(/'/g, '"'))
+                rawProjectApprovalInfo = JSON.parse(data.projectApprovalInfo.replace(/'/g, '"'))
+                rawConclusionInfo = JSON.parse(data.conclusionInfo.replace(/'/g, '"'))
+                rawProjectItems = JSON.parse(data.content.replace(/'/g, '"')) 
+            console.log(rawProjectItems)
+            } catch(e) {
+                console.log("发生错误", e)
+            }
             // 此处返回时，字段名被connexion变换了命名方式，需要重新手动构建
             const projectMeta = {
                 projectIntro: rawProjectMeta.project_intro,
@@ -168,7 +174,6 @@ export default {
                     itemComment: item.item_comment
                 }
             })
-            
             yield put({ type: "setField", name: "projectInfo", value: projectInfo || [] })
             yield put({ type: "setField", name: "projectItems", value: projectItems || [] })
         }
