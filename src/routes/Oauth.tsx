@@ -627,8 +627,7 @@ class Oauth extends React.Component<IOauthProps> {
                         <DropDownMenu
                             style={this.DropdownMenuStyle}
                             itemWidth={120}
-                            values={["在读", "在读（游学）", " 在读（试读）", "毕业", "导师", "其他"]}
-                            defaultValue={this.state.previousStatus}
+                            values={["在读", "在读（游学）", "先锋其他校区在读", "毕业", "导师", "公立学校在读", "其他学校在读"]}
                             onChangeValue={(previousStatus)=> this.setState({previousStatus})}
                         />
                     </Col>
