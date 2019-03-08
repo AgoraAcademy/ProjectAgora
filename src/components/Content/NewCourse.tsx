@@ -1,7 +1,8 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
 import ReactUWP, { Toggle, Button, TextBox, Tabs, CalendarDatePicker, Slider } from 'react-uwp'
-import { Layout, Row, Col, Card } from 'antd'
+import { Layout, Row, Col, Card, DatePicker } from 'antd'
+import moment from 'moment'
 const { Header, Footer, Sider, Content } = Layout;
 const { Meta } = Card;
 
@@ -317,18 +318,16 @@ class NewCourse extends React.Component<INewCourseProps> {
                             </Row>
                             <Row style={{ marginBottom: "10px" }}>
                                 <p>开始日期</p>
-                                <CalendarDatePicker
-                                    width={"100%"}
-                                    placeholder={instructionStartDates[index]}
-                                    onChangeDate={(value) => dispatch({ type: "projectDetail/setItemStartDate", index, value })}
+                                <DatePicker
+                                    placeholder={"开始日期"}
+                                    onChange={(date, dateString) => dispatch({ type: "projectDetail/setItemStartDate", index, value:dateString })}
                                 />
                             </Row>
                             <Row>
                                 <p>结束日期</p>
-                                <CalendarDatePicker
-                                    width={"100%"}
-                                    placeholder={instructionEndDates[index]}
-                                    onChangeDate={(value) => dispatch({ type: "projectDetail/setItemEndDate", index, value })}
+                                <DatePicker
+                                    placeholder={"结束日期"}
+                                    onChange={(date, dateString) => dispatch({ type: "projectDetail/setItemEndDate", index, value:dateString })}
                                 />
                             </Row>
                         </Col>

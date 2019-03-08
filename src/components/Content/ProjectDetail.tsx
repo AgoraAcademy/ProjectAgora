@@ -1,17 +1,17 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
 import ReactUWP, { Toggle, Button, TextBox, ProgressRing } from 'react-uwp'
-import { Drawer, Modal } from 'antd';
+import { Drawer, Modal, DatePicker } from 'antd';
 import { Layout, Row, Col } from 'antd'
 import { connect } from 'dva'
 import MDEditor from "../Widget/MDEditor";
-import CalendarDatePicker from "react-uwp/CalendarDatePicker";
 import "simplemde/dist/simplemde.min.css";
 import "./ProjectDetail.less"
 import ProjectInfoDrawer from "../Widget/ProjectInfoDrawer";
 import { togglePreview } from "simplemde";
 import { fetchRequest } from "../../util";
 import swal from 'sweetalert';
+import moment = require("moment");
 const { Header, Footer, Sider, Content } = Layout;
 
 
@@ -173,18 +173,16 @@ class ProjectDetail extends React.Component<IProjectDetailProps> {
                             </Row>
                             <Row style={{marginBottom: "10px"}}>
                                 <p>开始日期</p>
-                                <CalendarDatePicker 
-                                    width={"100%"} 
-                                    placeholder={itemStartDates[index]}
-                                    onChangeDate={(value)=> dispatch({type:"projectDetail/setItemStartDate", index, value})}
+                                <DatePicker
+                                    defaultValue={moment(itemStartDates[index])}
+                                    onChange={(date, dateString) => dispatch({ type: "projectDetail/setItemStartDate", index, value:dateString })}
                                 />
                             </Row>
                             <Row>
                                 <p>结束日期</p>
-                                <CalendarDatePicker 
-                                    width={"100%"}
-                                    placeholder={itemEndDates[index]}
-                                    onChangeDate={(value)=> dispatch({type:"projectDetail/setItemEndDate", index, value})}
+                                <DatePicker
+                                    defaultValue={moment(itemEndDates[index])}
+                                    onChange={(date, dateString) => dispatch({ type: "projectDetail/setItemEndDate", index, value:dateString })}
                                 />
                             </Row>
                         </Col>

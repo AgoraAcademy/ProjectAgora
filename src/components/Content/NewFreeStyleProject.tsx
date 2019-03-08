@@ -1,11 +1,12 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
-import ReactUWP, { Toggle, Button, TextBox, CalendarDatePicker, DropDownMenu } from 'react-uwp'
-import { Layout, Row, Col, Card, Select, Divider, Slider, InputNumber, Modal } from 'antd'
+import ReactUWP, { Toggle, Button, TextBox,  DropDownMenu } from 'react-uwp'
+import { Layout, Row, Col, Card, Select, Divider, Slider, InputNumber, Modal, DatePicker } from 'antd'
 import { connect } from 'dva'
 import TextArea from '../Widget/TextArea'
 import { fetchRequest } from "../../util";
 import swal from 'sweetalert';
+import moment = require("moment");
 const { Header, Footer, Sider, Content } = Layout;
 const { Meta } = Card;
 const Option = Select.Option;
@@ -166,10 +167,9 @@ class NewFreeStyleProject extends React.Component<INewFreeStyleProjectProps> {
                             <span>开始时间</span>
                         </Col>
                         <Col span={6}>
-                            <CalendarDatePicker
-                            width={"75%"}
-                            placeholder={"开始时间"}
-                            onChangeDate={(projectStartDate) => this.setState({projectStartDate: projectStartDate.toLocaleDateString()})}
+                            <DatePicker
+                                placeholder={"开始时间"}
+                                onChange={(date, dateString) => this.setState({projectStartDate: dateString})}
                             />
                         </Col>
                     </Row>

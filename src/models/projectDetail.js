@@ -93,13 +93,13 @@ export default {
         setItemStartDate(state, action){
             const { index, value } = action
             let newState = {...state, dirty: true}
-            newState.projectItems[index].itemStartDate = value.toLocaleDateString()
+            newState.projectItems[index].itemStartDate = value
             return newState
         },
         setItemEndDate(state, action){
             const { index, value } = action
             let newState = {...state, dirty: true}
-            newState.projectItems[index].itemStartDate = value.toLocaleDateString()
+            newState.projectItems[index].itemStartDate = value
             return newState
         },
         setItemTitle(state, action){

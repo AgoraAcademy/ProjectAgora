@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { Layout, Row, Col, Divider, Card, Modal } from 'antd' 
+import { Layout, Row, Col, Divider, Card, Modal, DatePicker } from 'antd' 
 import * as PropTypes from "prop-types";
 import TextBox from "react-uwp/TextBox";
 import Icon from "react-uwp/Icon";
-import ReactUWP, { CheckBox, DropDownMenu, CalendarDatePicker } from 'react-uwp'
+import ReactUWP, { CheckBox, DropDownMenu } from 'react-uwp'
 import Button from "react-uwp/Button";
 import './Oauth.less'
 import WxLogin from '../components/Widget/WxLogin';
@@ -567,10 +567,9 @@ class Oauth extends React.Component<IOauthProps> {
                         <span>生日</span>
                     </Col>
                     <Col span={3}>
-                        <CalendarDatePicker
-                            width={"75%"}
+                        <DatePicker
                             placeholder={"生日"}
-                            onChangeDate={(birthday) => this.setState({birthday: birthday.toLocaleDateString()})}
+                            onChange={(date, dateString) => this.setState({birthday: dateString})}
                         />
                     </Col>
                     <Col span={1} />
@@ -640,10 +639,9 @@ class Oauth extends React.Component<IOauthProps> {
                         <span>加入时间</span>
                     </Col>
                     <Col span={3} className='DropDownMenu'>
-                        <CalendarDatePicker
-                            width={"75%"}
+                        <DatePicker
                             placeholder={"加入时间"}
-                            onChangeDate={(dateOfRegistration) => this.setState({dateOfRegistration: dateOfRegistration.toLocaleDateString()})}
+                            onChange={(date, dateString) => this.setState({dateOfRegistration: dateString})}
                         />
                     </Col>
                     <Col span={2} style={this.labelStyle}>
@@ -867,13 +865,9 @@ class Oauth extends React.Component<IOauthProps> {
                         <span>最近一次体检时间</span>
                     </Col>
                     <Col span={3}>
-                        <CalendarDatePicker
-                            width={"100%"}
-                            placeholder={""}
-                            onChangeDate={(lastPhysicalExam) => {
-                                const dateString = lastPhysicalExam.toLocaleDateString()
-                                this.setState({medicalInfo: {...this.state.medicalInfo, lastPhysicalExam: dateString }})
-                            }}
+                        <DatePicker
+                            placeholder={"最近一次体检时间"}
+                            onChange={(date, dateString) => this.setState({medicalInfo: {...this.state.medicalInfo, lastPhysicalExam: dateString }})}
                         />
                     </Col>
                 </Row>

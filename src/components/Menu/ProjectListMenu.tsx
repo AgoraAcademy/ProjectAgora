@@ -85,7 +85,8 @@ class ProjectListMenu extends React.Component<IProjectListMenuProps> {
             }]
         }, {
             title: "课程管理（导师）",
-            hidden: !(localStorage.getItem("isMentor") === "true"),
+            hidden: true,
+            // hidden: !(localStorage.getItem("isMentor") === "true"),
             expanded: true,
             children: [{
                 title: "创建新课程（引导项目）",
