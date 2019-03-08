@@ -676,13 +676,8 @@ class Oauth extends React.Component<IOauthProps> {
                     </Col>
                     <Col span={2} />
                     <Col span={2} style={this.labelStyle}>
-                        <span>占位</span>
                     </Col>
                     <Col span={6}>
-                        <TextBox
-                            style={this.formRowStyle}
-                            placeholder="占位"
-                        />
                     </Col>
                 </Row>
                 <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
@@ -709,13 +704,8 @@ class Oauth extends React.Component<IOauthProps> {
                     </Col>
                     <Col span={2} />
                     <Col span={2} style={this.labelStyle}>
-                        <span>占位</span>
                     </Col>
                     <Col span={6}>
-                        <TextBox
-                            style={this.formRowStyle}
-                            placeholder="占位"
-                        />
                     </Col>
                 </Row>
                 <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
