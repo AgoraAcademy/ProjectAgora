@@ -241,7 +241,7 @@ class ProjectDetail extends React.Component<IProjectDetailProps> {
         const patchBody = {
             content: projectItems
         }
-        fetchRequest(`/v1/project/${this.props.projectDetail.projectInfo.createdByID}`, "PATCH", patchBody)
+        fetchRequest(`/v1/project/${this.props.projectDetail.projectInfo.id}`, "PATCH", patchBody)
         .then((response:any) => {
             if (!response.error) {
                 swal("成功保存！")

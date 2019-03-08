@@ -592,7 +592,6 @@ class Oauth extends React.Component<IOauthProps> {
                             style={this.DropdownMenuStyle}
                             itemWidth={120}
                             values={["在读", "在读（游学）", " 在读（试读）", "毕业", "导师"]}
-                            defaultValue={this.state.status}
                             onChangeValue={(status)=> this.setState({status})}
                         />
                     </Col>
@@ -604,8 +603,7 @@ class Oauth extends React.Component<IOauthProps> {
                         <DropDownMenu
                             style={this.DropdownMenuStyle}
                             itemWidth={120}
-                            values={["身份证", "护照"]}
-                            defaultValue={this.state.mainPersonalIdType}
+                            values={["身份证", "护照", "回乡证"]}
                             onChangeValue={(mainPersonalIdType)=> this.setState({mainPersonalIdType})}
                         />
                     </Col>
@@ -1277,13 +1275,17 @@ class Oauth extends React.Component<IOauthProps> {
     }
 
     public submitNewLearner = () => {
+        const { dispatch } = this.props
         this.setState({confirmLoading: true})
         const { submitting, loginResult, ...postBody } = this.state
         fetchRequest("/v1/learner", "POST", postBody)
         .then((response) => {
             console.log(response)
-            swal("成功注册，请等待管理员认证!")
             this.setState({submitting: false})
+            setTimeout(()=> dispatch({type: "main/redirect", path:"#/"}), 5000)
+            localStorage.clear()
+            swal("成功注册，请等待管理员认证!")
+            
         })
         .catch(() => {
             swal("出错！请联系管理员")
