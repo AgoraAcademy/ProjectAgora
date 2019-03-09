@@ -28,10 +28,10 @@ export default {
                 projectPlan: ""
             },
             projectApprovalInfo: {
-                approvalCommitteeOfAcademics: {
-                    result: "",
-                    advice: ""
-                },
+                // approvalCommitteeOfAcademics: {
+                //     result: "",
+                //     advice: ""
+                // },
                 approvalMentor: {
                     result: "",
                     advice: ""
@@ -135,7 +135,7 @@ export default {
                 projectPlan: rawProjectMeta.project_plan,
             }
             const projectApprovalInfo = {
-                approvalCommitteeOfAcademics: rawProjectApprovalInfo.approval_committee_of_academics,
+                // approvalCommitteeOfAcademics: rawProjectApprovalInfo.approval_committee_of_academics,
                 approvalMentor: rawProjectApprovalInfo.approval_mentor
             }
             const conclusionInfo = {

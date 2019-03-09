@@ -6,7 +6,7 @@ import { connect } from 'dva'
 import TextArea from '../Widget/TextArea'
 import { fetchRequest } from "../../util";
 import swal from 'sweetalert';
-import moment = require("moment");
+import moment from 'moment'
 const { Header, Footer, Sider, Content } = Layout;
 const { Meta } = Card;
 const Option = Select.Option;
@@ -435,10 +435,10 @@ class NewFreeStyleProject extends React.Component<INewFreeStyleProjectProps> {
             relatedCourseId: 0,
             relatedCourse: "自由项目",
             projectApprovalInfo: {
-                approvalCommitteeOfAcademics: {
-                    result: "",
-                    advice: ""
-                },
+                // approvalCommitteeOfAcademics: {
+                //     result: "",
+                //     advice: ""
+                // },
                 approvalMentor:{
                     result: "",
                     advice: ""
