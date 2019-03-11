@@ -68,13 +68,13 @@ class NewProject extends React.Component<INewProjectProps> {
                                 hoverable
                                 style={{ width: "80%" }}
                                 cover={<img alt="example" src="asset/Logo.png" />}
-                                onClick={()=> this.props.dispatch(
-                                    {type: "main/redirect", path:"#/project/create/guided"}
-                                )}
+                                // onClick={()=> this.props.dispatch(
+                                //     {type: "main/redirect", path:"#/project/create/guided"}
+                                // )}
                             >
                                 <Meta
-                                    title="引导项目"
-                                    description="由课程导师设计结构"
+                                    title="引导项目(暂未开放)"
+                                    description="由课程导师设计结构 (暂未开放)"
                                 />
                             </Card>
                         </Col>

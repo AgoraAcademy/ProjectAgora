@@ -11,7 +11,7 @@ import ProjectInfoDrawer from "../Widget/ProjectInfoDrawer";
 import { togglePreview } from "simplemde";
 import { fetchRequest } from "../../util";
 import swal from 'sweetalert';
-import moment = require("moment");
+import moment from 'moment'
 const { Header, Footer, Sider, Content } = Layout;
 
 
@@ -147,12 +147,21 @@ class ProjectDetail extends React.Component<IProjectDetailProps> {
         let newItemContents = [...this.state.itemContents]
         let newItemRecords = [...this.state.itemRecords]
         let newItemComments = [...this.state.itemComments]
+        let newitemEndDates = [...this.state.itemEndDates]
+        let newitemStartDates = [...this.state.itemStartDates]
+        let newitemTitles = [...this.state.itemTitles]
         newItemContents.push("")
         newItemRecords.push("")
         newItemComments.push("")
+        newitemEndDates.push(new Date().toISOString().substr(0, 10))
+        newitemStartDates.push(new Date().toISOString().substr(0, 10))
+        newitemTitles.push("")
         this.setState({itemContents: newItemContents})
         this.setState({itemRecords: newItemRecords})
         this.setState({itemComments: newItemComments})
+        this.setState({itemEndDates: newitemEndDates})
+        this.setState({itemStartDates: newitemStartDates})
+        this.setState({itemTitles: newitemTitles})
     }
 
     public generateItem = () => {
@@ -168,21 +177,33 @@ class ProjectDetail extends React.Component<IProjectDetailProps> {
                                 <TextBox
                                     style={this.formRowStyle}
                                     placeholder={itemTitles[index]}
-                                    onChangeValue={(value)=> dispatch({type:"projectDetail/setItemTitle", index, value})}
+                                    onChangeValue={(value)=> {
+                                        let newitemTitles = [...itemTitles]
+                                        newitemTitles[index] = value
+                                        this.setState({itemTitles: newitemTitles}) 
+                                    }}
                                 />
                             </Row>
                             <Row style={{marginBottom: "10px"}}>
                                 <p>开始日期</p>
                                 <DatePicker
                                     defaultValue={moment(itemStartDates[index])}
-                                    onChange={(date, dateString) => dispatch({ type: "projectDetail/setItemStartDate", index, value:dateString })}
+                                    onChange={(date, dateString) => {
+                                        let newItemStartDates = [...itemStartDates]
+                                        newItemStartDates[index] = dateString
+                                        this.setState({itemStartDates: newItemStartDates}) 
+                                    }}
                                 />
                             </Row>
                             <Row>
                                 <p>结束日期</p>
                                 <DatePicker
                                     defaultValue={moment(itemEndDates[index])}
-                                    onChange={(date, dateString) => dispatch({ type: "projectDetail/setItemEndDate", index, value:dateString })}
+                                    onChange={(date, dateString) =>{
+                                        let newItemEndDates = [...itemEndDates]
+                                        newItemEndDates[index] = dateString
+                                        this.setState({itemEndDates: newItemEndDates}) 
+                                    }}
                                 />
                             </Row>
                         </Col>
@@ -225,13 +246,16 @@ class ProjectDetail extends React.Component<IProjectDetailProps> {
             itemContents,
             itemRecords,
             itemComments,
+            itemTitles,
+            itemEndDates,
+            itemStartDates
         } = this.state
         const projectItems = itemContents.map((item, index) => {
             return (
                 {
-                    itemTitle: this.props.projectDetail.projectItems[index].itemTitle,
-                    itemStartDate: this.props.projectDetail.projectItems[index].itemStartDate,
-                    itemEndDate: this.props.projectDetail.projectItems[index].itemEndDate,
+                    itemTitle: itemTitles[index],
+                    itemStartDate: itemStartDates[index],
+                    itemEndDate: itemEndDates[index],
                     itemContent: item,
                     itemRecord: itemRecords[index],
                     itemComment: itemComments[index]

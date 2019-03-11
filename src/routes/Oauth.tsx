@@ -591,7 +591,7 @@ class Oauth extends React.Component<IOauthProps> {
                         <DropDownMenu
                             style={this.DropdownMenuStyle}
                             itemWidth={120}
-                            values={["在读", "在读（游学）", " 在读（试读）", "毕业", "导师"]}
+                            values={["请选择..."," 在读", "在读（游学）", " 在读（试读）", "毕业", "导师"]}
                             onChangeValue={(status)=> this.setState({status})}
                         />
                     </Col>
@@ -603,7 +603,7 @@ class Oauth extends React.Component<IOauthProps> {
                         <DropDownMenu
                             style={this.DropdownMenuStyle}
                             itemWidth={120}
-                            values={["身份证", "护照", "回乡证"]}
+                            values={["请选择...", "身份证", "护照", "回乡证"]}
                             onChangeValue={(mainPersonalIdType)=> this.setState({mainPersonalIdType})}
                         />
                     </Col>
@@ -627,7 +627,7 @@ class Oauth extends React.Component<IOauthProps> {
                         <DropDownMenu
                             style={this.DropdownMenuStyle}
                             itemWidth={120}
-                            values={["在读", "先锋其他校区在读", "先锋毕业", "公立学校在读", "公立学校毕业", "其他学校在读", "其他学校毕业", "就职前毕业", "他处在职", "其他"]}
+                            values={["请选择...", "在读", "先锋其他校区在读", "先锋毕业", "公立学校在读", "公立学校毕业", "其他学校在读", "其他学校毕业", "就职前毕业", "他处在职", "其他"]}
                             onChangeValue={(previousStatus)=> this.setState({previousStatus})}
                         />
                     </Col>
@@ -828,6 +828,7 @@ class Oauth extends React.Component<IOauthProps> {
                             style={this.DropdownMenuStyle}
                             itemWidth={250}
                             values={[
+                                "请选择...",
                                 "很好（基本不生病，从不住院）", 
                                 "一般（偶尔生病住院）", 
                                 " 欠佳（每个季度都曾生病住院）"
