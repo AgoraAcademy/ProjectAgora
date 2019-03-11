@@ -7,8 +7,10 @@ import { Card, Row, Col, Popover, Tag, Divider } from "antd";
 import { Meta } from "antd/lib/list/Item";
 import { Icon } from "react-uwp"
 import * as PropTypes from "prop-types";
+import { fetchRequest } from "../../util";
 
 interface IProjectCardProps {
+    dispatch: any,
     name: string,
     id: number,
     createdTime: string,
@@ -41,7 +43,8 @@ class ProjectCard extends Component<IProjectCardProps> {
     public getStatusTag = () => {
         const colorMapper = {
             "审核中": "blue",
-            "进行中": "green"
+            "已通过": "green",
+            "进行中": "orange"
         }
         return (
             <Tag color={colorMapper[this.props.status]}>{this.props.status}</Tag>
@@ -52,6 +55,17 @@ class ProjectCard extends Component<IProjectCardProps> {
         return (
             <Tag color="cyan">ProjectTag</Tag>
         )
+    }
+
+    public launchProject = () => {
+        const patchBody = {
+            status: "进行中"
+        }
+        fetchRequest(`/v1/project/${this.props.id}`, "PATCH", patchBody)
+        .then(() => {
+            this.props.dispatch({type: "main/redirect", path:`#/project/${this.props.id}`, reload: true})
+        })
+        .catch(e => ({ error: e}))
     }
     public render() {
         const { theme } = this.context;
@@ -84,12 +98,22 @@ class ProjectCard extends Component<IProjectCardProps> {
                                     <Icon
                                         size={24}
                                         style={status === "审核中"?disabledStyle: regularStyle}
-                                        onClick={status === "审核中"? ()=>{}: this.props.toEdit}
+                                        onClick={() => {
+                                            switch (status) {
+                                                case "审核中":
+                                                    break
+                                                case "已通过":
+                                                    this.launchProject()
+                                                    break
+                                                case "进行中":
+                                                    this.props.toEdit()
+                                                    break
+                                            }
+                                        }}
                                         hoverStyle={status === "审核中"? disabledStyle : hoverStyle}
                                     >
-                                        Edit
+                                        {status === "进行中" ? "Edit" : "Play"}
                                     </Icon>
-                                    
                                 </Col>
                                 <Col span={3}>
                                     <Divider style={{ margin: 5, height: 24}} type="vertical" />
@@ -111,7 +135,6 @@ class ProjectCard extends Component<IProjectCardProps> {
                                     <Icon 
                                         size={24} 
                                         style={status === "审核中"?disabledStyle: regularStyle}
-                                        onClick={status === "审核中"? ()=>{}: this.props.toEdit}
                                         hoverStyle={status === "审核中"? disabledStyle : hoverStyle}
                                     >
                                         View
@@ -166,7 +189,10 @@ class ProjectCard extends Component<IProjectCardProps> {
     }
 }
 
+function mapStateToProps({main}) {
+    return {main}
+}
 
-export default ProjectCard;
+export default connect(mapStateToProps)(ProjectCard);
 
 

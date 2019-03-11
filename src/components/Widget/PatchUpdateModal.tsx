@@ -167,6 +167,9 @@ class PatchUpdateModal extends Component<IPatchUpdateModalProps> {
                         }
                     }
                 }
+                if (this.state.patchTargetNewValue === "已通过") {
+                    patchBody.status = "已通过"
+                }
                 break;
             case "导师审核建议": 
                 patchBody = {
@@ -365,30 +368,6 @@ class PatchUpdateModal extends Component<IPatchUpdateModalProps> {
                         onChangeValue={(projectPlan) => this.setState({ patchTargetNewValue: projectPlan })}
                     />
                 )
-            // case "学术委员会审核结果":
-            //     return (
-            //         <Row className='DropDownMenu'>
-            //             <DropDownMenu
-            //                 style={this.DropdownMenuStyle}
-            //                 itemWidth={120}
-            //                 values={["未通过", "已通过", "待修改"]}
-            //                 key="approvalCommitteeOfAcademics_result"
-            //                 defaultValue={this.state.patchTargetNewValue || this.props.patchTargetOldValue || "未通过"}
-            //                 onChangeValue={(result)=> this.setState({patchTargetNewValue: result})}
-            //             />
-            //         </Row>
-            //     )
-            // case "学术委员会审核建议": 
-            //     return (
-            //         <TextArea
-            //             style={this.formRowStyle}
-            //             textBoxStyle={this.textAreaStyle}
-            //             key="approvalCommitteeOfAcademics_advice"
-            //             placeholder="学术委员会审核建议"
-            //             defaultValue={this.props.patchTargetOldValue}
-            //             onChangeValue={(advice) => this.setState({ patchTargetNewValue: advice })}
-            //         />
-            //     )
             case "导师审核结果": 
                 return (
                     <Row className='DropDownMenu'>
@@ -397,7 +376,7 @@ class PatchUpdateModal extends Component<IPatchUpdateModalProps> {
                             style={this.DropdownMenuStyle}
                             key="approvalMentor_result"
                             itemWidth={120}
-                            values={["未通过", "已通过", "待修改"]}
+                            values={["请选择...", "未通过", "已通过", "待修改"]}
                             defaultValue={this.state.patchTargetNewValue}
                             onChangeValue={(result)=> this.setState({patchTargetNewValue: result})}
                         />
