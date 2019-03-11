@@ -590,6 +590,7 @@ class Oauth extends React.Component<IOauthProps> {
                     <Col span={2} className='DropDownMenu'>
                         <DropDownMenu
                             style={this.DropdownMenuStyle}
+                            defaultValue={this.state.status}
                             itemWidth={120}
                             values={["请选择..."," 在读", "在读（游学）", " 在读（试读）", "毕业", "导师"]}
                             onChangeValue={(status)=> this.setState({status})}
@@ -604,6 +605,7 @@ class Oauth extends React.Component<IOauthProps> {
                             style={this.DropdownMenuStyle}
                             itemWidth={120}
                             values={["请选择...", "身份证", "护照", "回乡证"]}
+                            defaultValue={this.state.mainPersonalIdType}
                             onChangeValue={(mainPersonalIdType)=> this.setState({mainPersonalIdType})}
                         />
                     </Col>
@@ -627,6 +629,7 @@ class Oauth extends React.Component<IOauthProps> {
                         <DropDownMenu
                             style={this.DropdownMenuStyle}
                             itemWidth={120}
+                            defaultValue={this.state.previousStatus}
                             values={["请选择...", "在读", "先锋其他校区在读", "先锋毕业", "公立学校在读", "公立学校毕业", "其他学校在读", "其他学校毕业", "就职前毕业", "他处在职", "其他"]}
                             onChangeValue={(previousStatus)=> this.setState({previousStatus})}
                         />
@@ -831,7 +834,7 @@ class Oauth extends React.Component<IOauthProps> {
                                 "请选择...",
                                 "很好（基本不生病，从不住院）", 
                                 "一般（偶尔生病住院）", 
-                                " 欠佳（每个季度都曾生病住院）"
+                                "欠佳（每个季度都曾生病住院）"
                             ]}
                             defaultValue={this.state.medicalInfo.generalHealthStatus}
                             onChangeValue={(generalHealthStatus)=> this.setState({medicalInfo: {...this.state.medicalInfo, generalHealthStatus}})}
