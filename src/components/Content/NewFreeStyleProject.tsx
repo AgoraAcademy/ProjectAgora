@@ -182,7 +182,8 @@ class NewFreeStyleProject extends React.Component<INewFreeStyleProjectProps> {
                             <DropDownMenu
                                 style={this.DropdownMenuStyle}
                                 itemWidth={120}
-                                values={["请选择...", "1903", "1909", " 2003", "2009", "2103", "2109"]}
+                                defaultValue={this.state.projectTerm}
+                                values={["请选择...", "1903", "1909", "2003", "2009", "2103", "2109"]}
                                 onChangeValue={(projectTerm)=> this.setState({projectTerm})}
                             />
                         </Col>
