@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
-import ReactUWP, { ProgressRing } from 'react-uwp'
-import { Layout } from 'antd'
+import ReactUWP, { ProgressRing, Button } from 'react-uwp'
+import { Layout, Row, Col } from 'antd'
 const { Header, Footer, Sider, Content } = Layout;
 
 import { connect } from 'dva'
@@ -72,7 +72,7 @@ class ProjectList extends React.Component<IProjectListProps> {
     }
 
     public getHeader = () => {
-        const { loading } = this.props;
+        const { loading, dispatch } = this.props;
         if (loading.models.main) {
             return (
                 <Header>
@@ -81,7 +81,21 @@ class ProjectList extends React.Component<IProjectListProps> {
             )
         } else {
             return (
-                <Header/>
+                <Header>
+                    <Row type="flex" justify="space-around" align="middle">
+                        <Col span={18}>
+                        </Col>
+                        <Col span={4} >
+                            <Button 
+                                style={{width:"100%", height:"32px", lineHeight: "normal"}}
+                                onClick={() => dispatch({type: "main/redirect", path:"#/project/create"}) }
+                            >
+                                创建新项目
+                            </Button>
+                        </Col>
+                    </Row>
+                </Header>
+                
             )
         }
     }
