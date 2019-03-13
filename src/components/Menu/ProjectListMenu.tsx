@@ -80,7 +80,7 @@ class ProjectListMenu extends React.Component<IProjectListMenuProps> {
             }, {
                 titleNode: <div><span>待审核项目  </span><Badge count={projectList.length} /></div>,
                 onClick: () => this.props.dispatch(
-                    {type: "main/redirect", path:"#/project?status=waitingForAprroval"}
+                    {type: "main/redirect", path:"#/project?status=waitingForApproval"}
                 )
             }]
         }, {
