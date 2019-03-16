@@ -1,7 +1,7 @@
 server {
     listen 80;
     server_name localhost;
-    root /var/jenkins_home/workspace/AgoraKiosk/client/dist;
+    root /var/jenkins_home/workspace/ProjectAgora/dist;
     index index.html index.htm;
     location / {
     }
