@@ -14,15 +14,18 @@ pipeline {
     stages {
         stage('Install') {
             steps {
-                sh 'cnpm cache clean --force'
-                sh 'cnpm cache verify'
-                sh 'cnpm install'
-                // sh 'cnpm install'   2018/9/5 有报告cnpm会在这里出错  暂时用回npm
+                dir("${JENKINS_HOME}/workspace"){
+                    sh 'cnpm cache clean --force'
+                    sh 'cnpm cache verify'
+                    sh 'cnpm install'
+                }
             }
         }
         stage('Build'){
             steps {
-                sh 'npm run build'
+                dir("${JENKINS_HOME}/workspace") {
+                    sh 'npm run build'
+                }
             }
         }
         stage('Deliver'){
