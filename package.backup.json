@@ -1,0 +1,40 @@
+{
+  "private": true,
+  "scripts": {
+    "start": "node ./scripts/create-env.js && roadhog server",
+    "build": "node ./scripts/create-env.js && roadhog build",
+    "lint": "eslint --ext .js src test",
+    "precommit": "npm run lint"
+  },
+  "dependencies": {
+    "@types/codemirror": "0.0.70",
+    "@types/simplemde": "^1.11.7",
+    "antd": "^3.10.9",
+    "babel-plugin-import": "^1.11.0",
+    "dva": "^2.4.1",
+    "dva-loading": "^2.0.6",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-simplemde-editor": "^3.6.22",
+    "react-uwp": "^1.2.2",
+    "sweetalert": "^2.1.2"
+  },
+  "devDependencies": {
+    "@types/react": "^16.7.11",
+    "@types/react-dom": "^16.0.11",
+    "babel-plugin-dva-hmr": "^0.3.2",
+    "eslint": "^4.14.0",
+    "eslint-config-umi": "^0.1.1",
+    "eslint-plugin-flowtype": "^2.34.1",
+    "eslint-plugin-import": "^2.6.0",
+    "eslint-plugin-jsx-a11y": "^5.1.1",
+    "eslint-plugin-react": "^7.1.0",
+    "husky": "^0.12.0",
+    "redbox-react": "^1.4.3",
+    "roadhog": "^2.0.0",
+    "ts-lint": "^4.5.1",
+    "ts-loader": "^5.3.1",
+    "tslint": "^5.12.0",
+    "tslint-react": "^3.6.0"
+  }
+}
