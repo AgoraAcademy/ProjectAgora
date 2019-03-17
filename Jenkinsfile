@@ -13,11 +13,17 @@ pipeline {
         PROXYURL = credentials('PROXYURL')
     }
     stages {
+        stage('Initialize') {
+            steps {
+                sh 'npm install yarn yrm -g'
+                sh 'yrm use taobao'
+            }
+        }
         stage('Install') {
             steps {
                     sh 'export http_proxy=$PROXYURL'
                     sh 'npm cache clean --force'
-                    sh 'npm install'
+                    sh 'yarn'
             }
         }
         stage('Build'){
