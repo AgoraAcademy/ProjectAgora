@@ -14,18 +14,14 @@ pipeline {
     stages {
         stage('Install') {
             steps {
-                dir("${JENKINS_HOME}/workspace"){
                     sh 'cnpm cache clean --force'
                     sh 'cnpm cache verify'
                     sh 'cnpm install'
-                }
             }
         }
         stage('Build'){
             steps {
-                dir("${JENKINS_HOME}/workspace") {
                     sh 'npm run build'
-                }
             }
         }
         stage('Deliver'){
@@ -35,7 +31,6 @@ pipeline {
                 input message: 'Finished using the web site? (Click "Proceed" to continue)'
             }
         }
-            
     }
     post { 
         always { 
