@@ -14,9 +14,9 @@ pipeline {
     stages {
         stage('Install') {
             steps {
-                    sh 'cnpm cache clean --force'
-                    sh 'cnpm cache verify'
-                    sh 'cnpm install'
+                    sh 'npm cache clean --force'
+                    sh 'npm cache verify'
+                    sh 'npm install'
             }
         }
         stage('Build'){
