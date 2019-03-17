@@ -1,12 +1,13 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
-import ReactUWP, { Toggle, Button, TextBox,  DropDownMenu } from 'react-uwp'
+import ReactUWP, { Toggle, Button, TextBox,  DropDownMenu, Tabs } from 'react-uwp'
 import { Layout, Row, Col, Card, Select, Divider, Slider, InputNumber, Modal, DatePicker } from 'antd'
 import { connect } from 'dva'
 import TextArea from '../Widget/TextArea'
 import { fetchRequest } from "../../util";
 import swal from 'sweetalert';
 import moment from 'moment'
+import { Tab } from "react-uwp/Tabs";
 const { Header, Footer, Sider, Content } = Layout;
 const { Meta } = Card;
 const Option = Select.Option;
@@ -118,6 +119,12 @@ class NewFreeStyleProject extends React.Component<INewFreeStyleProjectProps> {
         width: "75%"
     };
 
+    public tabStyle: React.CSSProperties = {
+        display: "block",
+        height: "100%",
+        overflowY: "scroll"
+    };
+
     public generateProjectMentorOptions = () => {
         const { instructorIDDict } = this.props.main 
         const projectMentorOptions = Object.keys(instructorIDDict).map(item => {
@@ -149,265 +156,290 @@ class NewFreeStyleProject extends React.Component<INewFreeStyleProjectProps> {
                         </Col>
                     </Row>
                 </Header>
-                <Content style={{ display: "flex", top: "74px", bottom: "0px", width: "auto", flexWrap: "wrap" }}>
-                    <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
-                        {/* 此处的width可能有兼容性问题 */}
-                        <Col span={2} style={this.labelStyle}>
-                            <span>项目名称</span>
-                        </Col>
-                        <Col span={6}>
-                            <TextBox
-                                style={this.formRowStyle}
-                                placeholder="项目名称"
-                                onChangeValue={(name) => this.setState({ name })}
-                            />
-                        </Col>
-                        <Col span={2} />
-                        <Col span={2} style={this.labelStyle}>
-                            <span>开始时间</span>
-                        </Col>
-                        <Col span={6}>
-                            <DatePicker
-                                placeholder={"开始时间"}
-                                onChange={(date, dateString) => this.setState({projectStartDate: dateString})}
-                            />
-                        </Col>
-                    </Row>
-                    <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
-                        {/* 此处的width可能有兼容性问题 */}
-                        <Col span={2} style={this.labelStyle}>
-                            <span>项目开始学期</span>
-                        </Col>
-                        <Col span={6} className='DropDownMenu'>
-                            <DropDownMenu
-                                style={this.DropdownMenuStyle}
-                                itemWidth={120}
-                                defaultValue={this.state.projectTerm}
-                                values={["请选择...", "1903", "1909", "2003", "2009", "2103", "2109"]}
-                                onChangeValue={(projectTerm)=> this.setState({projectTerm})}
-                            />
-                        </Col>
-                        <Col span={2} />
-                        <Col span={2} style={this.labelStyle}>
-                            <span>持续学期数</span>
-                        </Col>
-                        <Col span={6}>
-                            <Row>
-                                <Col span={16}>
-                                    <Slider
-                                        min={0}
-                                        max={8}
-                                        step={0.5}
-                                        onChange={(projectTermLength) => this.setState({projectTermLength})}
-                                        value={typeof this.state.projectTermLength === 'number' ? this.state.projectTermLength : 0}
-                                    />
+                <Tabs style={this.tabStyle}>
+                    <Tab title="基本信息">
+                        <Content style={{ display: "flex", top: "74px", bottom: "0px", width: "auto", flexWrap: "wrap" }}>
+                            <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
+                                {/* 此处的width可能有兼容性问题 */}
+                                <Col span={2} style={this.labelStyle}>
+                                    <span>项目名称</span>
                                 </Col>
                                 <Col span={6}>
-                                    <InputNumber
-                                        min={1}
-                                        max={8}
-                                        style={{ marginLeft: 16, width: "100%" }}
-                                        value={this.state.projectTermLength}
-                                        onChange={(projectTermLength) => this.setState({projectTermLength})}
+                                    <TextBox
+                                        style={this.formRowStyle}
+                                        placeholder="项目名称"
+                                        onChangeValue={(name) => this.setState({ name })}
+                                    />
+                                </Col>
+                                <Col span={2} />
+                                <Col span={2} style={this.labelStyle}>
+                                    <span>开始时间</span>
+                                </Col>
+                                <Col span={6}>
+                                    <DatePicker
+                                        placeholder={"开始时间"}
+                                        onChange={(date, dateString) => this.setState({ projectStartDate: dateString })}
                                     />
                                 </Col>
                             </Row>
-                        </Col>
-                    </Row>
-                    <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
-                        {/* 此处的width可能有兼容性问题 */}
-                        <Col span={2} style={this.labelStyle}>
-                            <span>预期周均学时</span>
-                        </Col>
-                        <Col span={6}>
+                            <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
+                                {/* 此处的width可能有兼容性问题 */}
+                                <Col span={2} style={this.labelStyle}>
+                                    <span>项目开始学期</span>
+                                </Col>
+                                <Col span={6} className='DropDownMenu'>
+                                    <DropDownMenu
+                                        style={this.DropdownMenuStyle}
+                                        itemWidth={120}
+                                        defaultValue={this.state.projectTerm}
+                                        values={["请选择...", "1903", "1909", "2003", "2009", "2103", "2109"]}
+                                        onChangeValue={(projectTerm) => this.setState({ projectTerm })}
+                                    />
+                                </Col>
+                                <Col span={2} />
+                                <Col span={2} style={this.labelStyle}>
+                                    <span>持续学期数</span>
+                                </Col>
+                                <Col span={6}>
+                                    <Row>
+                                        <Col span={16}>
+                                            <Slider
+                                                min={0}
+                                                max={8}
+                                                step={0.5}
+                                                onChange={(projectTermLength) => this.setState({ projectTermLength })}
+                                                value={typeof this.state.projectTermLength === 'number' ? this.state.projectTermLength : 0}
+                                            />
+                                        </Col>
+                                        <Col span={6}>
+                                            <InputNumber
+                                                min={1}
+                                                max={8}
+                                                style={{ marginLeft: 16, width: "100%" }}
+                                                value={this.state.projectTermLength}
+                                                onChange={(projectTermLength) => this.setState({ projectTermLength })}
+                                            />
+                                        </Col>
+                                    </Row>
+                                </Col>
+                            </Row>
+                            <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
+                                {/* 此处的width可能有兼容性问题 */}
+                                <Col span={2} style={this.labelStyle}>
+                                    <span>预期周均学时</span>
+                                </Col>
+                                <Col span={6}>
+                                    <Col span={16}>
+                                        <Slider
+                                            min={0}
+                                            max={40}
+                                            step={0.1}
+                                            onChange={(averageIntendedCreditHourPerWeek) => this.setState({ averageIntendedCreditHourPerWeek })}
+                                            value={typeof this.state.averageIntendedCreditHourPerWeek === 'number' ? this.state.averageIntendedCreditHourPerWeek : 0}
+                                        />
+                                    </Col>
+                                    <Col span={6}>
+                                        <InputNumber
+                                            min={0}
+                                            max={40}
+                                            style={{ marginLeft: 16, width: "100%" }}
+                                            value={this.state.averageIntendedCreditHourPerWeek}
+                                            step={0.1}
+                                            onChange={(averageIntendedCreditHourPerWeek) => this.setState({ averageIntendedCreditHourPerWeek })}
+                                        />
+                                    </Col>
+                                </Col>
+                                <Col span={2} />
+                                <Col span={2} style={this.labelStyle}>
+                                    <span>预期总学时</span>
+                                </Col>
+                                <Col span={6}>
+                                    <Col span={16}>
+                                        <Slider
+                                            min={0}
+                                            max={1000}
+                                            step={0.1}
+                                            onChange={(totalIntendedCreditHour) => this.setState({ totalIntendedCreditHour })}
+                                            value={typeof this.state.totalIntendedCreditHour === 'number' ? this.state.totalIntendedCreditHour : 0}
+                                        />
+                                    </Col>
+                                    <Col span={6}>
+                                        <InputNumber
+                                            min={0}
+                                            max={1000}
+                                            style={{ marginLeft: 16, width: "100%" }}
+                                            step={0.1}
+                                            value={this.state.totalIntendedCreditHour}
+                                            onChange={(totalIntendedCreditHour) => this.setState({ totalIntendedCreditHour })}
+                                        />
+                                    </Col>
+                                </Col>
+                            </Row>
+                            <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available", margin: "10px 0 0 0" }}>
+                                {/* 此处的width可能有兼容性问题 */}
+                                <Col span={2} style={this.labelStyle}>
+                                    <span>项目导师</span>
+                                </Col>
+                                <Col span={6}>
+                                    <Select
+                                        showSearch
+                                        style={{ width: 200 }}
+                                        placeholder="Select a person"
+                                        optionFilterProp="children"
+                                        onChange={(projectMentor) => {
+                                            console.log(projectMentor)
+                                            const projectMentorID = this.props.main.instructorIDDict[projectMentor.toString()]
+                                            this.setState({
+                                                projectMentor,
+                                                projectMentorID
+                                            })
+                                        }}
+                                        filterOption={(input, option) => {
+                                            return option.props.children.toString().toLowerCase().indexOf(input.toLowerCase()) >= 0
+                                        }}
+                                    >
+                                        {this.generateProjectMentorOptions()}
+                                    </Select>
+                                </Col>
+                                <Col span={2} />
+                                <Col span={2} style={this.labelStyle}>
+                                    <span>周均指导时间</span>
+                                </Col>
+                                <Col span={6}>
+                                    <Col span={16}>
+                                        <Slider
+                                            min={0}
+                                            max={40}
+                                            step={0.1}
+                                            onChange={(averageGuidingHourPerWeek) => this.setState({ averageGuidingHourPerWeek })}
+                                            value={typeof this.state.averageGuidingHourPerWeek === 'number' ? this.state.averageGuidingHourPerWeek : 0}
+                                        />
+                                    </Col>
+                                    <Col span={6}>
+                                        <InputNumber
+                                            min={0}
+                                            max={40}
+                                            step={0.1}
+                                            style={{ marginLeft: 16, width: "100%" }}
+                                            value={this.state.averageGuidingHourPerWeek}
+                                            onChange={(averageGuidingHourPerWeek) => this.setState({ averageGuidingHourPerWeek })}
+                                        />
+                                    </Col>
+                                </Col>
+                            </Row>
+                        </Content>
+                    </Tab>
+                <Tab>
+                    <Content>
+                        <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
+                            {/* 此处的width可能有兼容性问题 */}
+                            <Col span={2} style={this.labelStyle}>
+                                <span>项目简介</span>
+                            </Col>
                             <Col span={16}>
-                                <Slider
-                                    min={0}
-                                    max={40}
-                                    step={0.1}
-                                    onChange={(averageIntendedCreditHourPerWeek) => this.setState({ averageIntendedCreditHourPerWeek })}
-                                    value={typeof this.state.averageIntendedCreditHourPerWeek === 'number' ? this.state.averageIntendedCreditHourPerWeek : 0}
+                                <TextArea
+                                    style={this.formRowStyle}
+                                    textBoxStyle={this.textAreaStyle}
+                                    placeholder="项目简介"
+                                    onChangeValue={(projectIntro) => this.setState({
+                                        projectMeta: { ...this.state.projectMeta, projectIntro }
+                                    })}
                                 />
                             </Col>
-                            <Col span={6}>
-                                <InputNumber
-                                    min={0}
-                                    max={40}
-                                    style={{ marginLeft: 16, width: "100%" }}
-                                    value={this.state.averageIntendedCreditHourPerWeek}
-                                    step={0.1}
-                                    onChange={(averageIntendedCreditHourPerWeek) => this.setState({ averageIntendedCreditHourPerWeek })}
-                                />
+                        </Row>
+                    </Content>
+                </Tab>
+                <Tab>
+                    <Content>
+                        <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
+                            {/* 此处的width可能有兼容性问题 */}
+                            <Col span={2} style={this.labelStyle}>
+                                <span>项目目标</span>
                             </Col>
-                        </Col>
-                        <Col span={2} />
-                        <Col span={2} style={this.labelStyle}>
-                            <span>预期总学时</span>
-                        </Col>
-                        <Col span={6}>
                             <Col span={16}>
-                                <Slider
-                                    min={0}
-                                    max={1000}
-                                    step={0.1}
-                                    onChange={(totalIntendedCreditHour) => this.setState({ totalIntendedCreditHour })}
-                                    value={typeof this.state.totalIntendedCreditHour === 'number' ? this.state.totalIntendedCreditHour : 0}
+                                <TextArea
+                                    style={this.formRowStyle}
+                                    textBoxStyle={this.textAreaStyle}
+                                    placeholder="项目目标"
+                                    onChangeValue={(projectGoal) => this.setState({
+                                        projectMeta: { ...this.state.projectMeta, projectGoal }
+                                    })}
                                 />
                             </Col>
-                            <Col span={6}>
-                                <InputNumber
-                                    min={0}
-                                    max={1000}
-                                    style={{ marginLeft: 16, width: "100%" }}
-                                    step={0.1}
-                                    value={this.state.totalIntendedCreditHour}
-                                    onChange={(totalIntendedCreditHour) => this.setState({ totalIntendedCreditHour })}
-                                />
+                        </Row>
+                    </Content>
+                </Tab>
+                <Tab>
+                    <Content>
+                        <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
+                            {/* 此处的width可能有兼容性问题 */}
+                            <Col span={2} style={this.labelStyle}>
+                                <span>评价标准</span>
                             </Col>
-                        </Col>
-                    </Row>
-                    <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available", margin: "10px 0 0 0" }}>
-                        {/* 此处的width可能有兼容性问题 */}
-                        <Col span={2} style={this.labelStyle}>
-                            <span>项目导师</span>
-                        </Col>
-                        <Col span={6}>
-                            <Select
-                                showSearch
-                                style={{ width: 200 }}
-                                placeholder="Select a person"
-                                optionFilterProp="children"
-                                onChange={(projectMentor) => {
-                                    console.log(projectMentor)
-                                    const projectMentorID = this.props.main.instructorIDDict[projectMentor.toString()]
-                                    this.setState({
-                                        projectMentor,
-                                        projectMentorID
-                                    })
-                                }}
-                                filterOption={(input, option) => {
-                                    return option.props.children.toString().toLowerCase().indexOf(input.toLowerCase()) >= 0
-                                }}
-                            >
-                                {this.generateProjectMentorOptions()}
-                            </Select>
-                        </Col>
-                        <Col span={2} />
-                        <Col span={2} style={this.labelStyle}>
-                            <span>周均指导时间</span>
-                        </Col>
-                        <Col span={6}>
                             <Col span={16}>
-                                <Slider
-                                    min={0}
-                                    max={40}
-                                    step={0.1}
-                                    onChange={(averageGuidingHourPerWeek) => this.setState({ averageGuidingHourPerWeek })}
-                                    value={typeof this.state.averageGuidingHourPerWeek === 'number' ? this.state.averageGuidingHourPerWeek : 0}
+                                <TextArea
+                                    style={this.formRowStyle}
+                                    textBoxStyle={this.textAreaStyle}
+                                    placeholder="评价标准"
+                                    onChangeValue={(evaluationSchema) => this.setState({
+                                        projectMeta: { ...this.state.projectMeta, evaluationSchema }
+                                    })}
                                 />
                             </Col>
-                            <Col span={6}>
-                                <InputNumber
-                                    min={0}
-                                    max={40}
-                                    step={0.1}
-                                    style={{ marginLeft: 16, width: "100%" }}
-                                    value={this.state.averageGuidingHourPerWeek}
-                                    onChange={(averageGuidingHourPerWeek) => this.setState({ averageGuidingHourPerWeek })}
+                        </Row>
+                    </Content>
+                </Tab>
+                <Tab>
+                    <Content>
+                        <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
+                            {/* 此处的width可能有兼容性问题 */}
+                            <Col span={2} style={this.labelStyle}>
+                                <span>项目计划</span>
+                            </Col>
+                            <Col span={16}>
+                                <TextArea
+                                    style={this.formRowStyle}
+                                    textBoxStyle={this.textAreaStyle}
+                                    placeholder="项目计划"
+                                    onChangeValue={(projectPlan) => this.setState({
+                                        projectMeta: { ...this.state.projectMeta, projectPlan }
+                                    })}
                                 />
                             </Col>
-                        </Col>
-                    </Row>
-                    <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
-                        {/* 此处的width可能有兼容性问题 */}
-                        <Col span={2} style={this.labelStyle}>
-                            <span>项目简介</span>
-                        </Col>
-                        <Col span={16}>
-                            <TextArea
-                                style={this.formRowStyle}
-                                textBoxStyle={this.textAreaStyle}
-                                placeholder="项目简介"
-                                onChangeValue={(projectIntro) => this.setState({
-                                    projectMeta: { ...this.state.projectMeta, projectIntro }
-                                })}
-                            />
-                        </Col>
-                    </Row>
-                    <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
-                        {/* 此处的width可能有兼容性问题 */}
-                        <Col span={2} style={this.labelStyle}>
-                            <span>项目目标</span>
-                        </Col>
-                        <Col span={16}>
-                            <TextArea
-                                style={this.formRowStyle}
-                                textBoxStyle={this.textAreaStyle}
-                                placeholder="项目目标"
-                                onChangeValue={(projectGoal) => this.setState({
-                                    projectMeta: { ...this.state.projectMeta, projectGoal }
-                                })}
-                            />
-                        </Col>
-                    </Row>
-                    <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
-                        {/* 此处的width可能有兼容性问题 */}
-                        <Col span={2} style={this.labelStyle}>
-                            <span>评价标准</span>
-                        </Col>
-                        <Col span={16}>
-                            <TextArea
-                                style={this.formRowStyle}
-                                textBoxStyle={this.textAreaStyle}
-                                placeholder="评价标准"
-                                onChangeValue={(evaluationSchema) => this.setState({
-                                    projectMeta: { ...this.state.projectMeta, evaluationSchema }
-                                })}
-                            />
-                        </Col>
-                    </Row>
-                    <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
-                        {/* 此处的width可能有兼容性问题 */}
-                        <Col span={2} style={this.labelStyle}>
-                            <span>项目计划</span>
-                        </Col>
-                        <Col span={16}>
-                            <TextArea
-                                style={this.formRowStyle}
-                                textBoxStyle={this.textAreaStyle}
-                                placeholder="项目计划"
-                                onChangeValue={(projectPlan) => this.setState({
-                                    projectMeta: { ...this.state.projectMeta, projectPlan }
-                                })}
-                            />
-                        </Col>
-                    </Row>
-                    <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
-                        {/* 此处的width可能有兼容性问题 */}
-                        <Col span={2} style={this.labelStyle}>
-                            <span>项目指导计划</span>
-                        </Col>
-                        <Col span={16}>
-                            <TextArea
-                                style={this.formRowStyle}
-                                textBoxStyle={this.textAreaStyle}
-                                placeholder="项目指导计划"
-                                onChangeValue={(instructionPlan) => this.setState({
-                                    projectMeta: { ...this.state.projectMeta, instructionPlan }
-                                })}
-                            />
-                        </Col>
-                    </Row>
-                    <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available", display: "flex"}}>
-                    <Col span={18} style={this.labelStyle}>
-                        <Divider
-                            orientation="right"
-                            style={{ color: 'white', ...theme.typographyStyles.subHeader }}
-                        >
-                            <Button onClick={() => this.setState({submitting: true})}>提交</Button>
-                        </Divider>
-                    </Col>
-                    </Row>
+                        </Row>
+                    </Content>
+                </Tab>
+                <Tab>
+                    <Content>
+                        <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
+                            {/* 此处的width可能有兼容性问题 */}
+                            <Col span={2} style={this.labelStyle}>
+                                <span>项目指导计划</span>
+                            </Col>
+                            <Col span={16}>
+                                <TextArea
+                                    style={this.formRowStyle}
+                                    textBoxStyle={this.textAreaStyle}
+                                    placeholder="项目指导计划"
+                                    onChangeValue={(instructionPlan) => this.setState({
+                                        projectMeta: { ...this.state.projectMeta, instructionPlan }
+                                    })}
+                                />
+                            </Col>
+                        </Row>
+                        <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available", display: "flex" }}>
+                            <Col span={18} style={this.labelStyle}>
+                                <Divider
+                                    orientation="right"
+                                    style={{ color: 'white', ...theme.typographyStyles.subHeader }}
+                                >
+                                    <Button onClick={() => this.setState({ submitting: true })}>提交</Button>
+                                </Divider>
+                            </Col>
+                        </Row>
+                    </Content>
+                </Tab>
+                </Tabs>
                     <Modal
                         title="新建自由项目"
                         okText="创建"
@@ -420,7 +452,6 @@ class NewFreeStyleProject extends React.Component<INewFreeStyleProjectProps> {
                         确定创建自由项目吗？
                         (成功提交项目后，请等待审核结果！)
                     </Modal>
-                </Content>
                 <Footer>
                     <p>footer</p>
                 </Footer>
