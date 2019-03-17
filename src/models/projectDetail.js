@@ -117,31 +117,6 @@ export default {
                 .then(data => ({data: data}))
                 .catch(e => ({ error: e}))
             );
-            let rawProjectMeta, rawProjectApprovalInfo, rawConclusionInfo, rawProjectItems
-            try {
-                rawProjectMeta = JSON.parse(data.projectMeta.replace(/'/g, '"'))
-                rawProjectApprovalInfo = JSON.parse(data.projectApprovalInfo.replace(/'/g, '"'))
-                rawConclusionInfo = JSON.parse(data.conclusionInfo.replace(/'/g, '"'))
-                rawProjectItems = JSON.parse(data.content.replace(/'/g, '"')) 
-            console.log(rawProjectItems)
-            } catch(e) {
-                console.log("发生错误", e)
-            }
-            // 此处返回时，字段名被connexion变换了命名方式，需要重新手动构建
-            const projectMeta = {
-                projectIntro: rawProjectMeta.project_intro,
-                projectGoal: rawProjectMeta.project_goal,
-                evaluationSchema: rawProjectMeta.evaluation_schema,
-                projectPlan: rawProjectMeta.project_plan,
-            }
-            const projectApprovalInfo = {
-                // approvalCommitteeOfAcademics: rawProjectApprovalInfo.approval_committee_of_academics,
-                approvalMentor: rawProjectApprovalInfo.approval_mentor
-            }
-            const conclusionInfo = {
-                mentorEvaluation: rawConclusionInfo.mentor_evaluation,
-                selfEvaluation: rawConclusionInfo.self_evaluation
-            }
             const projectInfo = {
                 id: data.id,
                 name: data.name,
@@ -159,21 +134,12 @@ export default {
                 projectMentorID: data.projectMentorID,
                 projectMentor: data.projectMentor,
                 averageGuidingHourPerWeek: data.averageGuidingHourPerWeek,
-                projectMeta,
-                projectApprovalInfo,
-                conclusionInfo,
+                projectMeta:data.projectMeta,
+                projectApprovalInfo:data.projectApprovalInfo,
+                conclusionInfo:data.conclusionInfo,
                 lastUpdatedTime: data.lastUpdatedTime
             }
-            const projectItems = rawProjectItems.map((item, index) => {
-                return {
-                    itemTitle: item.item_title,
-                    itemStartDate: item.item_start_date,
-                    itemEndDate: item.item_end_date,
-                    itemContent: item.item_content,
-                    itemRecord: item.item_record,
-                    itemComment: item.item_comment
-                }
-            })
+            const projectItems = data.content
             yield put({ type: "setField", name: "projectInfo", value: projectInfo || [] })
             yield put({ type: "setField", name: "projectItems", value: projectItems || [] })
         }

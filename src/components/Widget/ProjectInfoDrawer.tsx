@@ -133,6 +133,7 @@ class ProjectInfoDrawer extends React.Component<IProjectInfoDrawerProps> {
             { label: "项目目标", value: projectInfo.projectMeta.projectGoal, editable: true },
             { label: "项目评价标准", value: projectInfo.projectMeta.evaluationSchema, editable: true },
             { label: "项目计划", value: projectInfo.projectMeta.projectPlan, editable: true },
+            { label: "项目指导计划", value: projectInfo.projectMeta.instructionPlan, editable: true }
         ]
         return (
             projectMeta.map(
@@ -170,6 +171,7 @@ class ProjectInfoDrawer extends React.Component<IProjectInfoDrawerProps> {
         const { projectInfo } = this.props.projectDetail
         // const isCommitteeOfAcademics = localStorage.getItem("isCommitteeOfAcademics") === "true"
         const learnerId = localStorage.getItem("learnerId")
+        console.log(projectInfo)
         const projectApprovalInfo = [
             // { label: "学术委员会审核结果", value: projectInfo.projectApprovalInfo.approvalCommitteeOfAcademics.result },
             // { label: "学术委员会审核建议", value: projectInfo.projectApprovalInfo.approvalCommitteeOfAcademics.advice },
@@ -280,15 +282,6 @@ class ProjectInfoDrawer extends React.Component<IProjectInfoDrawerProps> {
                         Submit
                     </Button> */}
                 </div>
-                <Drawer
-                    title={<span style={theme.typographyStyles.title}>二级抽屉</span>}
-                    width={320}
-                    closable={false}
-                    onClose={() => this.setState({showChildDrawer: false})}
-                    visible={this.state.showChildDrawer}
-                >
-                    This is two-level drawer
-                </Drawer>
                 <PatchUpdateModal
                     projectID={this.props.projectDetail.projectInfo.id}
                     setState={this.setState}

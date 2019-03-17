@@ -70,6 +70,7 @@ class PatchUpdateModal extends Component<IPatchUpdateModalProps> {
         "项目目标": "修改项目目标",
         "项目评价标准": "修改项目评价标准",
         "项目计划":"修改项目计划",
+        "项目指导计划":"修改指导项目计划",
         // "学术委员会审核结果":"学术委员会审核结果",
         // "学术委员会审核建议": "学术委员会审核建议",
         "导师审核结果": "修改导师审核结果",
@@ -133,6 +134,11 @@ class PatchUpdateModal extends Component<IPatchUpdateModalProps> {
             case "项目计划":
                 patchBody = {
                     projectMeta: { ...this.props.projectDetail.projectInfo.projectMeta, projectPlan: this.state.patchTargetNewValue }
+                }
+                break;
+            case "项目指导计划":
+                patchBody = {
+                    projectMeta: { ...this.props.projectDetail.projectInfo.projectMeta, instructionPlan: this.state.patchTargetNewValue }
                 }
                 break;
             // case "学术委员会审核结果":
@@ -366,6 +372,16 @@ class PatchUpdateModal extends Component<IPatchUpdateModalProps> {
                         placeholder="项目计划"
                         defaultValue={this.props.patchTargetOldValue}
                         onChangeValue={(projectPlan) => this.setState({ patchTargetNewValue: projectPlan })}
+                    />
+                )
+            case "项目指导计划":
+                return (
+                    <TextArea
+                        style={this.formRowStyle}
+                        textBoxStyle={this.textAreaStyle}
+                        placeholder="项目指导计划"
+                        defaultValue={this.props.patchTargetOldValue}
+                        onChangeValue={(instructionPlan) => this.setState({ patchTargetNewValue: instructionPlan })}
                     />
                 )
             case "导师审核结果": 
