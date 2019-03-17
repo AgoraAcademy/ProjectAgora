@@ -10,10 +10,12 @@ pipeline {
     environment {
         WXLOGINAPPID = credentials('WXLOGINAPPID')
         SERVERURL = credentials('SERVERURL')
+        PROXYURL = credentials('PROXYURL')
     }
     stages {
         stage('Install') {
             steps {
+                    sh 'export http_proxy=$PROXYURL'
                     sh 'npm cache clean --force'
                     sh 'npm install'
             }
