@@ -80,7 +80,7 @@ class Login extends React.Component<ILoginProps, ILoginState> {
                         appid="wxbadf910ec2b32d3c"
                         scope="snsapi_login"
                         state="lalala"
-                        redirect_uri="https://projectagora.agoraacademy.cn/#/oauth2"
+                        redirect_uri="http://agora.mynetgear.com:10080/#/oauth2"
                     />
                 </Content>
                 <Footer>
