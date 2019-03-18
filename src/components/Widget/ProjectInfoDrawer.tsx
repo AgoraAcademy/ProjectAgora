@@ -75,12 +75,12 @@ class ProjectInfoDrawer extends React.Component<IProjectInfoDrawerProps> {
         return (
             projectBasicInfo.map(
                 (item) => {
-                    if (typeof (item.value) === "string") {
+                    if (typeof (item.value) === "string" || item.value === null) {
                         return (
                             <div key={Math.random()}>
                                 <p style={{...theme.typographyStyles.caption, color:'white'}}>{item.label}</p>
                                 <p style={{...theme.typographyStyles.subTitle, color: 'white'}}>
-                                    {item.value}
+                                    {item.value || ""}
                                     <Icon 
                                         style={item.editable? this.IconRegularStyle: {display: "None"}}
                                         hoverStyle={this.IconHoverStyle}
