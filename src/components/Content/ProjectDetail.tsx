@@ -176,7 +176,8 @@ class ProjectDetail extends React.Component<IProjectDetailProps> {
                                 <p id={`item_${index}`}>标题</p>
                                 <TextBox
                                     style={this.formRowStyle}
-                                    placeholder={itemTitles[index]}
+                                    placeholder="标题"
+                                    defaultValue={itemTitles[index]}
                                     onChangeValue={(value)=> {
                                         let newitemTitles = [...itemTitles]
                                         newitemTitles[index] = value

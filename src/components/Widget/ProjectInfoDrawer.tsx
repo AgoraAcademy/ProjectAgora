@@ -67,7 +67,7 @@ class ProjectInfoDrawer extends React.Component<IProjectInfoDrawerProps> {
             { label: "项目开始时间", value: projectInfo.projectStartDate, editable: true },
             { label: "预期周均学时", value: projectInfo.averageIntendedCreditHourPerWeek, editable: true, unit:"小时" },
             { label: "预期总学时", value: projectInfo.totalIntendedCreditHour, editable: true, unit:"小时" },
-            { label: "项目导师", value: projectInfo.projectMentor, editable: false },
+            { label: "项目导师", value: projectInfo.projectMentor, editable: true },
             { label: "导师周均指导时间", value: projectInfo.averageGuidingHourPerWeek, editable: true, unit:"小时" },
             { label: "创建时间", value: projectInfo.createdTime, editable: false },
             { label: "上次更新时间", value: projectInfo.lastUpdatedTime, editable: false },

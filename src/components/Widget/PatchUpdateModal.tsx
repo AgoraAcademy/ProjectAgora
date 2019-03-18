@@ -1,15 +1,17 @@
 import React, { Component } from "react";
 import * as PropTypes from "prop-types";
 import { connect } from "dva";
-import { Modal, Slider, Row, Col, InputNumber, DatePicker } from "antd";
+import { Modal, Slider, Row, Col, InputNumber, DatePicker, Select } from "antd";
 import { TextBox, DropDownMenu } from "react-uwp";
 import './PatchUpdateModal.less'
 import { fetchRequest } from "../../util";
 import moment from "moment"
 import TextArea from "./TextArea";
+const Option = Select.Option;
 
 interface IPatchUpdateModalProps {
     dispatch: any,
+    main: any,
     projectDetail: any,
     visible: boolean,
     closeModal: () => void,
@@ -65,6 +67,7 @@ class PatchUpdateModal extends Component<IPatchUpdateModalProps> {
         "项目开始时间": "修改项目开始时间",
         "预期周均学时": "修改预期周均学时",
         "预期总学时": "修改预期总学时",
+        "项目导师": "修改项目",
         "导师周均指导时间": "修改导师周均指导时间",
         "项目简介": "修改项目简介",
         "项目目标": "修改项目目标",
@@ -109,6 +112,13 @@ class PatchUpdateModal extends Component<IPatchUpdateModalProps> {
             case "预期总学时":
                 patchBody = {
                     totalIntendedCreditHour: this.state.patchTargetNewValue
+                }
+                break;
+            case "项目导师":
+                const projectMentorID = this.props.main.instructorIDDict[this.state.patchTargetNewValue.toString()]
+                patchBody = {
+                    projectMentor: this.state.patchTargetNewValue,
+                    projectMentorID
                 }
                 break;
             case "导师周均指导时间":
@@ -308,6 +318,29 @@ class PatchUpdateModal extends Component<IPatchUpdateModalProps> {
                         </Col>
                     </Row>
                 )
+            case "项目导师":
+                return (
+                    <Row>
+                        <Col span={6}>
+                            <Select
+                                showSearch
+                                style={{ width: 200 }}
+                                placeholder="Select a person"
+                                optionFilterProp="children"
+                                onChange={(projectMentor) => {
+                                    this.setState({
+                                        patchTargetNewValue: projectMentor,
+                                    })
+                                }}
+                                filterOption={(input, option) => {
+                                    return option.props.children.toString().toLowerCase().indexOf(input.toLowerCase()) >= 0
+                                }}
+                            >
+                                {this.generateProjectMentorOptions()}
+                            </Select>
+                        </Col>
+                    </Row>
+                )
             case "导师周均指导时间":
                 return (
                     <Row>
@@ -411,6 +444,15 @@ class PatchUpdateModal extends Component<IPatchUpdateModalProps> {
                 )
         }
     }
+
+    public generateProjectMentorOptions = () => {
+        const { instructorIDDict } = this.props.main 
+        const projectMentorOptions = Object.keys(instructorIDDict).map(item => {
+            return <Option key={item} value={item}>{item}</Option>
+        })
+        return projectMentorOptions
+    }
+
     public render() {
         return (
             <Modal
@@ -430,8 +472,8 @@ class PatchUpdateModal extends Component<IPatchUpdateModalProps> {
     }
 }
 
-function mapStateToProps({projectDetail}) {
-    return {projectDetail}
+function mapStateToProps({main, projectDetail}) {
+    return {main, projectDetail}
 }
 
 export default connect(mapStateToProps)(PatchUpdateModal);
