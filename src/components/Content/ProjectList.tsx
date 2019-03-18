@@ -34,6 +34,7 @@ class ProjectList extends React.Component<IProjectListProps> {
         let projectList = [...this.props.main.projectList] || []
         if (localStorage.getItem("isMentor") === "true") {
             projectList = projectList.filter(project => project.projectMentorID.toString() === localStorage.getItem("learnerId"))
+            projectList = projectList.filter(project => project.status !== "未提交")
         } else {
             projectList = projectList.filter(project => project.createdByID.toString() === localStorage.getItem("learnerId"))
         }

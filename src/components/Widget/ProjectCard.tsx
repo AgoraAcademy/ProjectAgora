@@ -42,6 +42,7 @@ class ProjectCard extends Component<IProjectCardProps> {
 
     public getStatusTag = () => {
         const colorMapper = {
+            "未提交": "geekblue",
             "审核中": "blue",
             "已通过": "green",
             "进行中": "orange"
@@ -67,6 +68,18 @@ class ProjectCard extends Component<IProjectCardProps> {
         })
         .catch(e => ({ error: e}))
     }
+    
+    public submitProject = () => {
+        const patchBody = {
+            status: "审核中"
+        }
+        fetchRequest(`/v1/project/${this.props.id}`, "PATCH", patchBody)
+        .then(() => {
+            this.props.dispatch({type: "main/redirect", path:`#/project`, reload: true})
+        })
+        .catch(e => ({ error: e}))
+    }
+    
     public render() {
         const { theme } = this.context;
         const { status } = this.props
@@ -100,6 +113,9 @@ class ProjectCard extends Component<IProjectCardProps> {
                                         style={status === "审核中"?disabledStyle: regularStyle}
                                         onClick={() => {
                                             switch (status) {
+                                                case "未提交":
+                                                    this.submitProject()
+                                                    break
                                                 case "审核中":
                                                     break
                                                 case "已通过":
@@ -112,7 +128,7 @@ class ProjectCard extends Component<IProjectCardProps> {
                                         }}
                                         hoverStyle={status === "审核中"? disabledStyle : hoverStyle}
                                     >
-                                        {status === "进行中" ? "Edit" : "Play"}
+                                        {status === "进行中" ? "Edit" : status === "未提交" || status === "未通过" ? "Upload": "Play"}
                                     </Icon>
                                 </Col>
                                 <Col span={3}>
@@ -134,8 +150,8 @@ class ProjectCard extends Component<IProjectCardProps> {
                                 <Col span={6}>
                                     <Icon 
                                         size={24} 
-                                        style={status === "审核中"?disabledStyle: regularStyle}
-                                        hoverStyle={status === "审核中"? disabledStyle : hoverStyle}
+                                        style={status === "审核中" || status === "未提交" ?disabledStyle: regularStyle}
+                                        hoverStyle={status === "审核中" || status === "未提交" ? disabledStyle : hoverStyle}
                                     >
                                         View
                                     </Icon>
