@@ -14,7 +14,6 @@
     "moment": "^2.24.0",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
-    "react-router-dom": "^4.4.0",
     "react-simplemde-editor": "^4.0.0",
     "react-uwp": "^1.2.31",
     "simplemde": "^1.11.2",
