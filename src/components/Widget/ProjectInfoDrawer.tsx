@@ -142,7 +142,7 @@ class ProjectInfoDrawer extends React.Component<IProjectInfoDrawerProps> {
                         return (
                             <div key={Math.random()}>
                                 <p style={{...theme.typographyStyles.caption, color:'white'}}>{item.label}</p>
-                                <p style={{...theme.typographyStyles.subTitle, color: 'white'}}>
+                                <p style={{...theme.typographyStyles.subTitle, color: 'white', whiteSpace: "pre-wrap"}}>
                                     {item.value}
                                     <Icon 
                                         style={item.editable ? this.IconRegularStyle: {display: "None"}}
@@ -185,7 +185,7 @@ class ProjectInfoDrawer extends React.Component<IProjectInfoDrawerProps> {
                         return (
                             <div key={Math.random()}>
                                 <p style={{...theme.typographyStyles.caption, color:'white'}}>{item.label}</p>
-                                <p style={{...theme.typographyStyles.title, color: 'white'}}>
+                                <p style={{...theme.typographyStyles.title, color: 'white', whiteSpace: "pre-wrap"}}>
                                     {item.value}
                                     <Icon 
                                         style={ projectInfo.projectMentorID.toString() === learnerId ? this.IconRegularStyle: {display: "None"}}
