@@ -138,7 +138,7 @@ class ProjectInfoDrawer extends React.Component<IProjectInfoDrawerProps> {
         return (
             projectMeta.map(
                 (item) => {
-                    if (typeof (item.value) === "string") {
+                    if (typeof (item.value) === "string" || item.value === null) {
                         return (
                             <div key={Math.random()}>
                                 <p style={{...theme.typographyStyles.caption, color:'white'}}>{item.label}</p>
@@ -181,7 +181,7 @@ class ProjectInfoDrawer extends React.Component<IProjectInfoDrawerProps> {
         return (
             projectApprovalInfo.map(
                 (item) => {
-                    if (typeof (item.value) === "string") {
+                    if (typeof (item.value) === "string" || item.value === null) {
                         return (
                             <div key={Math.random()}>
                                 <p style={{...theme.typographyStyles.caption, color:'white'}}>{item.label}</p>
