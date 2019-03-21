@@ -82,6 +82,11 @@ class ProjectListMenu extends React.Component<IProjectListMenuProps> {
                 onClick: () => this.props.dispatch(
                     {type: "main/redirect", path:"#/project?status=waitingForApproval"}
                 )
+            }, {
+                title: "全部项目",
+                onClick: () => this.props.dispatch(
+                    {type: "main/redirect", path:"#/project"}
+                )
             }]
         }, {
             title: "课程管理（导师）",
