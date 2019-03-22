@@ -1,13 +1,15 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
-import ReactUWP, { Toggle, Button, TextBox,  DropDownMenu, Tabs } from 'react-uwp'
-import { Layout, Row, Col, Card, Select, Divider, Slider, InputNumber, Modal, DatePicker, Steps } from 'antd'
+import ReactUWP, { Toggle, Button, TextBox,  DropDownMenu, Tabs, ProgressRing, Icon } from 'react-uwp'
+import { Layout, Row, Col, Card, Select, Divider, Slider, InputNumber, Modal, DatePicker, Steps, Upload } from 'antd'
 import { connect } from 'dva'
 import TextArea from '../Widget/TextArea'
 import { fetchRequest } from "../../util";
 import swal from 'sweetalert';
 import moment from 'moment'
 import { Tab } from "react-uwp/Tabs";
+import './NewFreeStyleProject.less'
+import { resolve } from "path";
 const { Header, Footer, Sider, Content } = Layout;
 const { Meta } = Card;
 const Option = Select.Option;
@@ -22,6 +24,9 @@ export interface INewFreeStyleProjectProps {
 }
 
 export interface INewFreeStyleProjectState {
+    coverImageURL?: string,
+    coverImageData?: string,
+    uploadingImage: boolean,
     submitting: boolean,
     confirmLoading: boolean,
     currentStep: number,
@@ -76,6 +81,7 @@ class NewFreeStyleProject extends React.Component<INewFreeStyleProjectProps> {
     public context: { theme: ReactUWP.ThemeType };
     public state: INewFreeStyleProjectState = {
         submitting: false,
+        uploadingImage: false,
         confirmLoading: false,
         currentStep: 0,
         name: "",
@@ -128,6 +134,63 @@ class NewFreeStyleProject extends React.Component<INewFreeStyleProjectProps> {
         overflowY: "scroll"
     };
 
+    public getBase64 = (img, callback) => {
+        const reader = new FileReader();
+        reader.addEventListener('load', () => callback(reader.result));
+        reader.readAsDataURL(img);
+    }
+
+    public customUploadRequest = (files) => {
+        const { file } = files
+        let formData = new FormData()
+        formData.append("project_cover", file)
+
+        let headers = {
+            'Access-Control-Allow-Origin': '*',
+            "Authorization": window.localStorage.getItem("access_token"),
+            "refresh_token": window.localStorage.getItem("refresh_token"),
+            "openid": window.localStorage.getItem("openid"), //用户登陆后返回的token，某些涉及用户数据的接口需要在header中加上token
+        };
+        let result = fetch("http://localhost:8080/v1/utilities/project_cover", {
+            headers,
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(responseData => {
+            this.setState({coverImageURL: responseData.url})
+        })
+        .then(() => {
+            fetchRequest(`/v1/utilities/project_cover?learnerId=${window.localStorage.getItem("learnerId")}&uid=${this.state.coverImageURL}`, "GET")
+            .then((data: any) => {
+                this.setState({coverImageData: data.projectCover})
+            })
+        })
+        
+    }
+    public handleUpload = (info) => {
+        console.log(info)
+        // this.getBase64(info.file.originFileObj, coverImage => {
+        //     console.log(coverImage)
+        //     this.setState({
+        //         coverImage,
+        //         uploadingImage: false
+        //     })
+        // })
+    }
+    
+    public beforeUpload = (file) => {
+        const isJPG = file.type === 'image/jpeg';
+        const isPNG = file.type === 'image/png'
+        if (!isJPG && !isPNG) {
+            swal("只支持JPEG和PNG格式");
+        }
+        const isLt10M = file.size / 1024 / 1024 < 10;
+        if (!isLt10M) {
+            swal('上传的图片不可超过10MB! 请压缩文件');
+        }
+        return (isJPG || isPNG) && isLt10M;
+    }
     public generateProjectMentorOptions = () => {
         const { instructorIDDict } = this.props.main 
         const projectMentorOptions = Object.keys(instructorIDDict).map(item => {
@@ -438,8 +501,42 @@ class NewFreeStyleProject extends React.Component<INewFreeStyleProjectProps> {
                         </Row>
                     </Content>
                 )
+            case 6:
+                const uploadButton = (
+                    <div>
+                        {this.state.uploadingImage === true ? <ProgressRing size={50}/> : (<Icon size={24}>Add</Icon>) }
+                        <div className="ant-upload-text">上传图片</div>
+                    </div>
+                );
+                const { coverImageData } = this.state
+                return (
+                    <Content
+                        key="项目封面图"
+                        style={{ display: "flex", top: "74px", bottom: "0px", width: "auto", flexWrap: "wrap" }}
+                    >
+                        <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
+                            {/* 此处的width可能有兼容性问题 */}
+                            <Col span={2} style={this.labelStyle}>
+                                <span>项目封面图</span>
+                            </Col>
+                            <Col span={16}>
+                                <Upload
+                                    name="avatar"
+                                    listType="picture-card"
+                                    className="avatar-uploader"
+                                    customRequest={this.customUploadRequest}
+                                    showUploadList={false}
+                                    beforeUpload={this.beforeUpload}
+                                >
+                                    {coverImageData ? <img style={{maxWidth: "298px"}} src={"data:img/jpg;base64," + coverImageData} alt="avatar" /> : uploadButton}
+                                </Upload>
+                            </Col>
+                        </Row>
+                    </Content>
+                );
+            }
         }
-    }
+    
 
     public steps = [{
         title: '基本信息',
@@ -459,6 +556,9 @@ class NewFreeStyleProject extends React.Component<INewFreeStyleProjectProps> {
     }, {
         title: '项目指导计划',
         description: "占位用项目指导计划说明",
+    }, {
+        title: '项目封面图',
+        description: "占位用项目封面图"
     }]
 
 
@@ -574,8 +674,9 @@ class NewFreeStyleProject extends React.Component<INewFreeStyleProjectProps> {
     public submitNewFreeStyleProject = () => {
         const { dispatch } = this.props
         this.setState({confirmLoading: true})
+        const { coverImageData, ...rest} = this.state
         const postBody = {
-            ...this.state,
+            ...rest,
             relatedCourseId: 0,
             relatedCourse: "自由项目",
             projectApprovalInfo: {

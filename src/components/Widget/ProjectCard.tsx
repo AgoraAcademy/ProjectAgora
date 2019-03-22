@@ -18,6 +18,7 @@ interface IProjectCardProps {
     relatedCourse: string,
     projectMentor: string,
     status: string,
+    coverImageData: string,
     showDrawer: () => void,
     toEdit: () => void
 }
@@ -82,7 +83,8 @@ class ProjectCard extends Component<IProjectCardProps> {
     
     public render() {
         const { theme } = this.context;
-        const { status } = this.props
+        const { status, coverImageData } = this.props
+        const img = coverImageData? `data:img/jpg;base64,${coverImageData}` : "asset/ProjectCover-PlaceHolder.png" 
         const regularStyle: React.CSSProperties = {
             fontSize: 24,
             color: "black",
@@ -165,7 +167,7 @@ class ProjectCard extends Component<IProjectCardProps> {
                     >
                         <img 
                             alt="example" 
-                            src="asset/ProjectCover-PlaceHolder.png" 
+                            src={img}
                         />
                     </Popover>
                 }
