@@ -44,6 +44,8 @@ class ProjectList extends React.Component<IProjectListProps> {
             projectList = projectList.filter(project => project.status === "已完成")
         } else if ( status === "waitingForApproval") {
             projectList = projectList.filter(project => project.status === "审核中")
+        } else if ( status === "notSubmitted") {
+            projectList = projectList.filter(project => project.status === "未提交")
         }
         let list = projectList.map((item, index) => {
             return (
