@@ -7,6 +7,7 @@ const { Header, Footer, Sider, Content } = Layout;
 import { connect } from 'dva'
 import ProjectCard from "../Widget/ProjectCard";
 import ProjectInfoDrawer from "../Widget/ProjectInfoDrawer";
+import { fetchRequest } from "../../util";
 
 export interface IProjectListProps {
     dispatch: any,
@@ -48,9 +49,11 @@ class ProjectList extends React.Component<IProjectListProps> {
             projectList = projectList.filter(project => project.status === "未提交")
         }
         let list = projectList.map((item, index) => {
+            const coverImageData = fetchRequest(`/v1/utilities/project_cover?learnerId=${window.localStorage.getItem("learnerId")}&uid=${item.CoverImageURL}`, "GET").projectCover
             return (
                 <ProjectCard
                     key={`ProjectCard_${index}`}
+                    coverImageData
                     name={item.name}
                     id={item.id}
                     createdTime={item.createdTime}
