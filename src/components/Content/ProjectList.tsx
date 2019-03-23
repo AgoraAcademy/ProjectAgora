@@ -49,15 +49,10 @@ class ProjectList extends React.Component<IProjectListProps> {
             projectList = projectList.filter(project => project.status === "未提交")
         }
         let list = projectList.map((item, index) => {
-            if (item.CoverImageURL) {
-                const coverImageData = fetchRequest(`/v1/utilities/project_cover?learnerId=${window.localStorage.getItem("learnerId")}&uid=${item.CoverImageURL}`, "GET").then((response: any) => response.projectCover)
-            } else {
-                const coverImageData = ""
-            }
             return (
                 <ProjectCard
                     key={`ProjectCard_${index}`}
-                    coverImageData
+                    coverImageURL={item.coverImageURL}
                     name={item.name}
                     id={item.id}
                     createdTime={item.createdTime}

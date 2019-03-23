@@ -18,13 +18,14 @@ interface IProjectCardProps {
     relatedCourse: string,
     projectMentor: string,
     status: string,
-    coverImageData: string,
+    coverImageURL: string,
     showDrawer: () => void,
     toEdit: () => void
 }
 
 interface IProjectCardState {
-    popover: boolean
+    popover: boolean,
+    coverImageData?: string
 }
 /**
  *
@@ -80,11 +81,19 @@ class ProjectCard extends Component<IProjectCardProps> {
         })
         .catch(e => ({ error: e}))
     }
-    
+
+    public componentDidMount = () => {
+        fetchRequest(`/v1/utilities/project_cover?learnerId=${window.localStorage.getItem("learnerId")}&uid=${this.props.coverImageURL}`, "GET")
+            .then((data: any) => {
+                this.setState({coverImageData: data.projectCover})
+        })
+    }
+
     public render() {
         const { theme } = this.context;
-        const { status, coverImageData } = this.props
-        const img = coverImageData? `data:img/jpg;base64,${coverImageData}` : "asset/ProjectCover-PlaceHolder.png" 
+        const { status } = this.props
+        const { coverImageData } = this.state 
+        const img = coverImageData ? `data:img/jpg;base64,${coverImageData}` : "asset/ProjectCover-PlaceHolder.png"
         const regularStyle: React.CSSProperties = {
             fontSize: 24,
             color: "black",
