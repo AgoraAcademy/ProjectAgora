@@ -56,6 +56,7 @@ class ProjectList extends React.Component<IProjectListProps> {
                     name={item.name}
                     id={item.id}
                     createdTime={item.createdTime}
+                    createdByID={item.createdByID}
                     createdBy={item.createdBy}
                     relatedCourse={item.relatedCourse}
                     projectMentor={item.projectMentor}

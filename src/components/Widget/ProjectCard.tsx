@@ -15,6 +15,7 @@ interface IProjectCardProps {
     id: number,
     createdTime: string,
     createdBy: string,
+    createdByID: number,
     relatedCourse: string,
     projectMentor: string,
     status: string,
@@ -83,7 +84,7 @@ class ProjectCard extends Component<IProjectCardProps> {
     }
 
     public componentDidMount = () => {
-        fetchRequest(`/v1/utilities/project_cover?learnerId=${window.localStorage.getItem("learnerId")}&uid=${this.props.coverImageURL}`, "GET")
+        fetchRequest(`/v1/utilities/project_cover?learnerId=${this.props.createdByID}&uid=${this.props.coverImageURL}`, "GET")
             .then((data: any) => {
                 this.setState({coverImageData: data.projectCover})
         })
