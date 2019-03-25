@@ -26,6 +26,7 @@ export interface IOauthProps {
 };
 
 export interface IOauthState {
+    extraInfoExpanded: boolean
     submitting: boolean,
     loginResult: string,
     confirmLoading: boolean,
@@ -99,6 +100,7 @@ class Oauth extends React.Component<IOauthProps> {
     public static contextTypes = { theme: PropTypes.object };
     public context: { theme: ReactUWP.ThemeType };
     public state: IOauthState = {
+        extraInfoExpanded: false,
         submitting: false,
         confirmLoading: false,
         loginResult: "waiting",
@@ -213,7 +215,7 @@ class Oauth extends React.Component<IOauthProps> {
         return (
             emergentContact.map((item, index) => {
                 return (
-                    <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
+                    <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available", display: this.state.extraInfoExpanded? "flex": "None" }}>
                         {/* 此处的width可能有兼容性问题 */}
                         <Col span={2} style={this.labelStyle}>
                             <span>紧急联系人姓名</span>
@@ -259,7 +261,7 @@ class Oauth extends React.Component<IOauthProps> {
         return (
             custodianInfo.map((item, index) => {
                 return (
-                    <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
+                    <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available", display: this.state.extraInfoExpanded? "flex": "None" }}>
                         {/* 此处的width可能有兼容性问题 */}
                         <Col span={2} style={this.labelStyle}>
                             <span>姓名</span>
@@ -305,7 +307,7 @@ class Oauth extends React.Component<IOauthProps> {
         return (
             previousDiagnosis.map((item, index) => {
                 return (
-                    <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
+                    <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available", display: this.state.extraInfoExpanded? "flex": "None" }}>
                         {/* 此处的width可能有兼容性问题 */}
                         <Col span={2} style={this.labelStyle}>
                             <span style={this.spanStyle}>疾病名称</span>
@@ -362,7 +364,7 @@ class Oauth extends React.Component<IOauthProps> {
         return (
             regularMedication.map((item, index) => {
                 return (
-                    <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
+                    <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available", display: this.state.extraInfoExpanded? "flex": "None" }}>
                         {/* 此处的width可能有兼容性问题 */}
                         <Col span={2} style={this.labelStyle}>
                             <span style={this.spanStyle}>药品名称</span>
@@ -811,7 +813,14 @@ class Oauth extends React.Component<IOauthProps> {
                     </Col>
                     <Col span={15}/>
                 </Row>
-                <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
+                <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available", display: this.state.extraInfoExpanded? "None": "flex" }}>
+                    <Col span={3}>
+                        <Button onClick={()=> {
+                            this.setState({extraInfoExpanded: true})}}>填写更多信息</Button>
+                    </Col>
+                    <Col span={15}/>
+                </Row>
+                <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available", display: this.state.extraInfoExpanded? "flex": "None" }}>
                     <Col span={18} style={this.labelStyle}>
                         <Divider
                             orientation="left"
@@ -821,7 +830,7 @@ class Oauth extends React.Component<IOauthProps> {
                         </Divider>
                     </Col>
                 </Row>
-                <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
+                <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available", display: this.state.extraInfoExpanded? "flex": "None" }}>
                     {/* 此处的width可能有兼容性问题 */}
                     <Col span={2} style={this.labelStyle}>
                         <span>整体健康状况</span>
@@ -862,7 +871,7 @@ class Oauth extends React.Component<IOauthProps> {
                         />
                     </Col>
                 </Row>
-                <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
+                <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available", display: this.state.extraInfoExpanded? "flex": "None" }}>
                     {/* 此处的width可能有兼容性问题 */}
                     <Col span={18} style={this.labelStyle}>
                         <Divider
@@ -873,7 +882,7 @@ class Oauth extends React.Component<IOauthProps> {
                     </Col>
                 </Row>
                 {this.generatePreviousDiagnosisRows()}
-                <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
+                <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available", display: this.state.extraInfoExpanded? "flex": "None" }}>
                     <Col span={3}>
                         <Button onClick={()=> {
                             let newPreviousDiagnosis = [...this.state.medicalInfo.previousDiagnosis]
@@ -888,7 +897,7 @@ class Oauth extends React.Component<IOauthProps> {
                     </Col>
                     <Col span={15}/>
                 </Row>
-                <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
+                <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available", display: this.state.extraInfoExpanded? "flex": "None" }}>
                     {/* 此处的width可能有兼容性问题 */}
                     <Col span={18} style={this.labelStyle}>
                         <Divider
@@ -899,7 +908,7 @@ class Oauth extends React.Component<IOauthProps> {
                     </Col>
                 </Row>
                 {this.generateRegularMedicationRows()}
-                <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
+                <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available", display: this.state.extraInfoExpanded? "flex": "None" }}>
                     <Col span={3}>
                         <Button onClick={()=> {
                             let newRegularMedication = [...this.state.medicalInfo.regularMedication]
@@ -914,7 +923,7 @@ class Oauth extends React.Component<IOauthProps> {
                     </Col>
                     <Col span={15}/>
                 </Row>
-                <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
+                <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available", display: this.state.extraInfoExpanded? "flex": "None" }}>
                     {/* 此处的width可能有兼容性问题 */}
                     <Col span={8} style={this.labelStyle}>
                         <Divider
@@ -932,7 +941,7 @@ class Oauth extends React.Component<IOauthProps> {
                         </Divider>
                     </Col>
                 </Row>
-                <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
+                <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available", display: this.state.extraInfoExpanded? "flex": "None" }}>
                     {/* 此处的width可能有兼容性问题 */}
                     <Col span={8} style={this.labelStyle}>
                         <Col span={10} style={this.labelStyle}>
@@ -1010,7 +1019,7 @@ class Oauth extends React.Component<IOauthProps> {
                         </Col>
                     </Col>
                 </Row>
-                <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
+                <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available", display: this.state.extraInfoExpanded? "flex": "None" }}>
                     {/* 此处的width可能有兼容性问题 */}
                     <Col span={8} style={this.labelStyle}>
                         <Col span={10} style={this.labelStyle}>
@@ -1088,7 +1097,7 @@ class Oauth extends React.Component<IOauthProps> {
                         </Col>
                     </Col>
                 </Row>
-                <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
+                <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available", display: this.state.extraInfoExpanded? "flex": "None" }}>
                     {/* 此处的width可能有兼容性问题 */}
                     <Col span={8} style={this.labelStyle}>
                         <Col span={10} style={this.labelStyle}>
@@ -1167,7 +1176,7 @@ class Oauth extends React.Component<IOauthProps> {
                         </Col>
                     </Col>
                 </Row>
-                <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
+                <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available", display: this.state.extraInfoExpanded? "flex": "None" }}>
                     {/* 此处的width可能有兼容性问题 */}
                     <Col span={8} style={this.labelStyle}>
                         <Col span={10} style={this.labelStyle}>
@@ -1211,7 +1220,7 @@ class Oauth extends React.Component<IOauthProps> {
                         
                     </Col>
                 </Row>
-                <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available" }}>
+                <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available", display: this.state.extraInfoExpanded? "flex": "None" }}>
                     {/* 此处的width可能有兼容性问题 */}
                     <Col span={8} style={this.labelStyle}>
                         <Col span={4} style={this.labelStyle}>
@@ -1241,7 +1250,7 @@ class Oauth extends React.Component<IOauthProps> {
                     <Col span={8} style={this.labelStyle}>
                     </Col>
                 </Row>
-                <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available", display: "flex"}}>
+                <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available", display: this.state.extraInfoExpanded? "flex": "None"}}>
                     <Col span={18} style={this.labelStyle}>
                         <Divider
                             orientation="right"
