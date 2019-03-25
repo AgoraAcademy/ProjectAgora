@@ -10,6 +10,7 @@ import moment from 'moment'
 import { Tab } from "react-uwp/Tabs";
 import './NewFreeStyleProject.less'
 import { resolve } from "path";
+import { SERVERURL } from "../../../env";
 const { Header, Footer, Sider, Content } = Layout;
 const { Meta } = Card;
 const Option = Select.Option;
@@ -151,7 +152,7 @@ class NewFreeStyleProject extends React.Component<INewFreeStyleProjectProps> {
             "refresh_token": window.localStorage.getItem("refresh_token"),
             "openid": window.localStorage.getItem("openid"), //用户登陆后返回的token，某些涉及用户数据的接口需要在header中加上token
         };
-        let result = fetch("http://localhost:8080/v1/utilities/project_cover", {
+        fetch(`${SERVERURL}/v1/utilities/project_cover`, {
             headers,
             method: 'POST',
             body: formData

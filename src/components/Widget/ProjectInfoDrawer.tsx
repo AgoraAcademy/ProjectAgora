@@ -2,11 +2,14 @@ import * as React from "react";
 import * as PropTypes from "prop-types";
 import ReactUWP, { ProgressRing, ContentDialog, TextBox, Button, Icon } from 'react-uwp'
 import Tabs, { Tab } from "react-uwp/Tabs";
-import { Layout, Drawer } from 'antd'
+import { Layout, Drawer, Row, Col, Upload } from 'antd'
 import { connect } from 'dva'
 const { Header, Footer, Sider, Content } = Layout;
 import './ProjectInfoDrawer.less'
 import PatchUpdateModal from "./PatchUpdateModal";
+import { SERVERURL } from "../../../env";
+import { fetchRequest } from "../../util";
+import swal from 'sweetalert';
 
 export interface IProjectInfoDrawerProps {
     loading: any,
@@ -21,7 +24,10 @@ export interface IProjectInfoDrawerState {
     showChildDrawer: boolean,
     patchTarget: string,
     showPatchModal: boolean,
-    patchTargetOldValue: any
+    patchTargetOldValue: any,
+    coverImageData: string,
+    coverImageURL: string,
+    uploadingImage: boolean
 }
 
 /**
@@ -38,8 +44,16 @@ class ProjectInfoDrawer extends React.Component<IProjectInfoDrawerProps> {
         showChildDrawer: false,
         showPatchModal: false,
         patchTarget: "",
-        patchTargetOldValue: ""
+        patchTargetOldValue: "",
+        uploadingImage: false,
+        coverImageData: "",
+        coverImageURL: "",
     }
+
+    public labelStyle: React.CSSProperties = {
+        textAlign: "left",
+        margin: "0px"
+    };
 
     public IconRegularStyle: React.CSSProperties = {
         fontSize: 16,
@@ -53,6 +67,57 @@ class ProjectInfoDrawer extends React.Component<IProjectInfoDrawerProps> {
         transform: "scale(1.25)",
         color: this.context.theme.accent
     };
+
+    public customUploadRequest = (files) => {
+        if (this.props.projectDetail.projectInfo.createdByID.toString() !== window.localStorage.getItem("learnerId")) {
+            swal("只有项目创建人可以修改项目封面")
+            return
+        }
+        const { file } = files
+        let formData = new FormData()
+        formData.append("project_cover", file)
+
+        let headers = {
+            'Access-Control-Allow-Origin': '*',
+            "Authorization": window.localStorage.getItem("access_token"),
+            "refresh_token": window.localStorage.getItem("refresh_token"),
+            "openid": window.localStorage.getItem("openid"), //用户登陆后返回的token，某些涉及用户数据的接口需要在header中加上token
+        };
+        fetch(`${SERVERURL}/v1/utilities/project_cover`, {
+            headers,
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(responseData => {
+            this.setState({coverImageURL: responseData.url})
+        })
+        .then(() => {
+            const patchBody = {
+                coverImageURL: this.state.coverImageURL
+            }
+            fetchRequest(`/v1/project/${this.props.projectDetail.projectInfo.id}`, "PATCH", patchBody)
+        })
+        .then(() => {
+            fetchRequest(`/v1/utilities/project_cover?learnerId=${this.props.projectDetail.projectInfo.createdByID}&uid=${this.state.coverImageURL}`, "GET")
+            .then((data: any) => {
+                this.setState({coverImageData: data.projectCover})
+            })
+        })
+    }
+
+    public beforeUpload = (file) => {
+        const isJPG = file.type === 'image/jpeg';
+        const isPNG = file.type === 'image/png'
+        if (!isJPG && !isPNG) {
+            swal("只支持JPEG和PNG格式");
+        }
+        const isLt10M = file.size / 1024 / 1024 < 10;
+        if (!isLt10M) {
+            swal('上传的图片不可超过10MB! 请压缩文件');
+        }
+        return (isJPG || isPNG) && isLt10M;
+    }
 
     public generateProjectBasicInfo = () => {
         const { theme } = this.context;
@@ -210,6 +275,12 @@ class ProjectInfoDrawer extends React.Component<IProjectInfoDrawerProps> {
     }
 
     public render(): JSX.Element {
+        if (this.props.projectDetail.projectInfo.coverImageURL && this.props.projectDetail.projectInfo.coverImageURL != null && this.state.coverImageData == "") {
+            fetchRequest(`/v1/utilities/project_cover?learnerId=${this.props.projectDetail.projectInfo.createdByID}&uid=${this.props.projectDetail.projectInfo.coverImageURL}`, "GET")
+                .then((data: any) => {
+                    this.setState({ coverImageData: data.projectCover })
+            })
+        }
         const { theme } = this.context;
         const { learnerProfile } = this.props;
         const baseStyle: React.CSSProperties = {
@@ -217,6 +288,13 @@ class ProjectInfoDrawer extends React.Component<IProjectInfoDrawerProps> {
             margin: "10px 0",
             height: 400
         };
+        const uploadButton = (
+            <div>
+                {this.state.uploadingImage === true ? <ProgressRing size={50}/> : (<Icon size={24}>Add</Icon>) }
+                <div className="ant-upload-text">上传图片</div>
+            </div>
+        );
+
         const isMentor = localStorage.getItem("isMentor") === "true"
         // const isCommitteeOfAcademics = localStorage.getItem("isCommitteeOfAcademics") === "true"
         if (this.props.loading.models.projectDetail) {
@@ -245,9 +323,20 @@ class ProjectInfoDrawer extends React.Component<IProjectInfoDrawerProps> {
                 <Tabs 
                     style={{...baseStyle, height: "auto"}}
                     tabTitleStyle={{...theme.typographyStyles.base, width: '50%', textAlign: 'center'}}
-                    tabStyle={{padding: "5px 5px", height: "auto"}}
+                    tabStyle={{ padding: "5px 5px", height: "auto" }}
                 >
                     <Tab title="基本信息">
+                        <p style={{...theme.typographyStyles.caption, color:'white'}}>项目封面图</p>
+                        <Upload
+                            name="avatar"
+                            listType="picture-card"
+                            className="avatar-uploader"
+                            customRequest={this.customUploadRequest}
+                            showUploadList={false}
+                            beforeUpload={this.beforeUpload}
+                        >
+                            {(this.state.coverImageData && this.props.projectDetail.projectInfo.coverImageURL) ? <img style={{ maxWidth: "298px" }} src={"data:img/jpg;base64," + this.state.coverImageData} alt="avatar" /> : uploadButton}
+                        </Upload>
                         {this.generateProjectBasicInfo()}
                     </Tab>
                     <Tab title="项目详情">

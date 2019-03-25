@@ -54,8 +54,15 @@ export function fetchRequest(url, method, params: any = '') {
             })
             .then((response) => {
                 try{
-                    window.localStorage.setItem("access_token", response.headers.get("Authorization"))
-                    window.localStorage.setItem("refresh_token", response.headers.get("refresh_token"))}
+                    const access_token = response.headers.get("Authorization")
+                    const refresh_token = response.headers.get("refresh_token")
+                    if (access_token) {
+                        window.localStorage.setItem("access_token", access_token)
+                    }
+                    if (refresh_token) {
+                        window.localStorage.setItem("refresh_token", refresh_token)
+                    }
+                }
                 catch(err){
                     console.log(err)
                 }

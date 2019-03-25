@@ -84,10 +84,12 @@ class ProjectCard extends Component<IProjectCardProps> {
     }
 
     public componentDidMount = () => {
-        fetchRequest(`/v1/utilities/project_cover?learnerId=${this.props.createdByID}&uid=${this.props.coverImageURL}`, "GET")
-            .then((data: any) => {
-                this.setState({coverImageData: data.projectCover})
-        })
+        if (this.props.coverImageURL) {
+            fetchRequest(`/v1/utilities/project_cover?learnerId=${this.props.createdByID}&uid=${this.props.coverImageURL}`, "GET")
+                .then((data: any) => {
+                    this.setState({ coverImageData: data.projectCover })
+                })
+        }
     }
 
     public render() {

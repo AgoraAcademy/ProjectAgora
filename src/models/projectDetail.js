@@ -36,7 +36,8 @@ export default {
                     result: "",
                     advice: ""
                 }
-            }
+            },
+            coverImageURL: ""
         },
         projectItems: [
         ]
@@ -137,7 +138,8 @@ export default {
                 projectMeta:data.projectMeta,
                 projectApprovalInfo:data.projectApprovalInfo,
                 conclusionInfo:data.conclusionInfo,
-                lastUpdatedTime: data.lastUpdatedTime
+                lastUpdatedTime: data.lastUpdatedTime,
+                coverImageURL: data.coverImageURL
             }
             const projectItems = data.content
             yield put({ type: "setField", name: "projectInfo", value: projectInfo || [] })
