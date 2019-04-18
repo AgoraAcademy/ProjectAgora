@@ -42,6 +42,7 @@ export function fetchRequest(url, method, params: any = '') {
                 resolve(responseData);
             })
             .catch((err) => {
+                window.location.href = "#/login?noid"
                 reject(err);
             });
         });
@@ -72,6 +73,7 @@ export function fetchRequest(url, method, params: any = '') {
                 resolve(responseData);
             })
             .catch((err) => {
+                window.location.href = "#/login?noid"
                 reject(err);
             });
         });
