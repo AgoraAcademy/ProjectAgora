@@ -67,6 +67,14 @@ class NavMenu extends React.Component<INavMenuProps> {
                     onClick={()=> {this.props.dispatch({type:'main/redirect', path:'#/project'})}}
                 />
             ),
+            (
+                <SplitViewCommand 
+                    label="房间预约" 
+                    icon="DateTime" 
+                    key={Math.random()} 
+                    onClick={()=> {this.props.dispatch({type:'main/redirect', path:'#/booking'})}}
+                />
+            ),
             // (
             //     <SplitViewCommand 
             //         label="学时管理" 
