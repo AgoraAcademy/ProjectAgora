@@ -5,6 +5,7 @@ import learnerProfile from './models/learnerProfile';
 import projectDetail from './models/projectDetail';
 import course from './models/course';
 import createLoading from 'dva-loading';
+import booking from './models/booking';
 
 declare function require(path: string): any;
 
@@ -18,6 +19,7 @@ app.model(main);
 app.model(learnerProfile)
 app.model(projectDetail)
 app.model(course)
+app.model(booking)
 
 
 

@@ -19,6 +19,7 @@ import NewGuidedProject from '../components/Content/NewGuidedProject';
 import NewCourse from '../components/Content/NewCourse';
 import CreditHourMenu from '../components/Menu/CreditHourMenu';
 import { connect } from 'dva';
+import Booking from '../components/Content/Booking';
 
 
 const { Header, Footer, Sider, Content } = Layout;
@@ -89,6 +90,7 @@ class Main extends React.Component<IMainProps> {
                     <Content id='global_content'>
                         <Switch>
                             <Route exact path="/" component={Home}/>
+                            <Route exact path="/booking" component={Booking}/>
                             <Route exact path="/learner/:id" component={LearnerProfile} />
                             <Route exact path="/project" component={ProjectList}/>
                             <Route exact path="/project/create" component={NewProject} />
