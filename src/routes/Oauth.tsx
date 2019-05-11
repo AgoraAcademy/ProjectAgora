@@ -1284,7 +1284,7 @@ class Oauth extends React.Component<IOauthProps> {
         .then((response) => {
             console.log(response)
             this.setState({submitting: false})
-            setTimeout(()=> dispatch({type: "main/redirect", path:"#/"}), 5000)
+            setTimeout(()=> dispatch({type: "main/redirect", path:"#/", reload: true}), 5000)
             localStorage.clear()
             swal("成功注册，请等待管理员认证!")
             
@@ -1298,16 +1298,16 @@ class Oauth extends React.Component<IOauthProps> {
         const { dispatch } = this.props
         const { loginResult } = this.state
         if (loginResult === "success") {
-            setTimeout(()=> dispatch({type: "main/redirect", path:"#/"}), 5000)
+            setTimeout(()=> dispatch({type: "main/redirect", path:"#/", reload: true}), 5000)
             return (
                 <Layout>
                     <div>加载中</div>
-                    <div>若5秒内未跳转请点击<Button onClick={()=> dispatch({type: "main/redirect", path:"#/"})} >跳转</Button></div>
+                    <div>若5秒内未跳转请点击<Button onClick={()=> dispatch({type: "main/redirect", path:"#/", reload: true})} >跳转</Button></div>
                 </Layout>
             )
         }
         if (loginResult === "waitForValidation") {
-            setTimeout(()=> dispatch({type: "main/redirect", path:"#/"}), 5000)
+            setTimeout(()=> dispatch({type: "main/redirect", path:"#/", reload: true}), 5000)
             return (
                 <Layout>
                     <div>请等待验证</div>
