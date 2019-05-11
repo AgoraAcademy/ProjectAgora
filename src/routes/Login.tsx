@@ -6,6 +6,7 @@ import Icon from "react-uwp/Icon";
 import ReactUWP, { Toast } from 'react-uwp'
 import Button from "react-uwp/Button";
 import './Login.less'
+import { CLIENTURL } from '../../env'
 import WxLogin from '../components/Widget/WxLogin';
 
 const { Header, Content, Footer } = Layout;
@@ -80,7 +81,7 @@ class Login extends React.Component<ILoginProps, ILoginState> {
                         appid="wxbadf910ec2b32d3c"
                         scope="snsapi_login"
                         state="lalala"
-                        redirect_uri="http://agora.mynetgear.com:10080/#/oauth2"
+                        redirect_uri={`${CLIENTURL}/#/oauth2`}
                     />
                 </Content>
                 <Footer>
