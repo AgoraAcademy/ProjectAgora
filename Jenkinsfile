@@ -11,6 +11,7 @@ pipeline {
         WXLOGINAPPID = credentials('WXLOGINAPPID')
         SERVERURL = credentials('SERVERURL')
         PROXYURL = credentials('PROXYURL')
+        CLIENTURL = credentials('CLIENTURL')
     }
     stages {
         stage('Initialize') {
