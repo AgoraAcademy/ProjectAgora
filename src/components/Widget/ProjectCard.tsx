@@ -195,20 +195,20 @@ class ProjectCard extends Component<IProjectCardProps> {
                 <Meta
                     title={
                         <Row type="flex" justify="space-between">
-                            <Col span={18}>
+                            <Col span={18} style={{color: "black"}}>
                                 <span>{this.props.name}</span>
                             </Col>
-                            <Col style={{textAlign: "right"}} span={6}>
+                            <Col style={{textAlign: "right", color: "black"}} span={6}>
                                 <span>{this.props.createdBy}</span>
                             </Col>
                         </Row>
                     }
                     description={
                         <Row type="flex" justify="space-between">
-                            <Col span={8}>
+                            <Col span={8} style={{color: "black"}}>
                                 <span>{this.props.relatedCourse||"自由项目"}</span>
                             </Col>
-                            <Col style={{textAlign: "right"}} span={14}>
+                            <Col style={{textAlign: "right", color: "black"}} span={14}>
                                 <span>项目导师:{this.props.projectMentor}</span>
                             </Col>
                         </Row>

@@ -40,7 +40,12 @@ class RoomList extends React.Component<IRoomListProps> {
     public getSelectedListItemStyle = (roomCode: string) => {
         if (this.props.selectedRoomCode === roomCode) {
             return {
-                background: "#0078D7"
+                background: "#0078D7",
+                color: "white"
+            } as React.CSSProperties
+        } else {
+            return {
+                color: "white"
             } as React.CSSProperties
         }
     }
