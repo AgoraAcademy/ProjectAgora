@@ -20,7 +20,7 @@ import NewCourse from '../components/Content/NewCourse';
 import CreditHourMenu from '../components/Menu/CreditHourMenu';
 import { connect } from 'dva';
 import Booking from '../components/Content/Booking';
-
+import { DEVMODE } from '../../env'
 
 const { Header, Footer, Sider, Content } = Layout;
 
@@ -44,6 +44,9 @@ class Main extends React.Component<IMainProps> {
         const isLearner = localStorage.getItem("isLearner")
         const validated = localStorage.getItem("validated")
         const openid = localStorage.getItem("openid") || "undefined"
+        if (DEVMODE === true){
+            return
+        }
         if ( openid === "undefined" ) {
             dispatch({type: "main/redirect", path:"#/login?message=noid"})
         } else if (isLearner === "false"){
