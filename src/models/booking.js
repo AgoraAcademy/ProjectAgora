@@ -24,7 +24,9 @@ export default {
                 .catch(e => ({ error: e}))
             );
             yield put({ type: "setField", name: "loadedEvents", value: data || [] })
+        },
+        * clearEvents (action, { select, call, put}) {
+            yield put({ type: "setField", name: "loadedEvents", value: [] })
         }
-        
     }
 }

@@ -94,6 +94,7 @@ class BookingCalendar extends React.Component<IBookingCalendarProps> {
     }
 
     public onPanelChange = (date: moment.Moment, mode: string) => {
+        this.props.dispatch({ type:"booking/clearEvents"})
         this.setState({activeMonth: date.month(), activeYear: date.year()})
         this.props.dispatch({ type:"booking/loadEvents", monthToLoad:date.format().substr(0,7), roomCode: this.props.selectedRoomCode})
         
