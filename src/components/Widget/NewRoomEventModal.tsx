@@ -122,15 +122,16 @@ class NewRoomEventModal extends Component<INewRoomEventModalProps> {
                     </Col>
                     <Col span={8}>
                         <TimePicker
+                            allowClear={false}
                             minuteStep={15}
                             format="HH:mm"
                             value={moment(this.state.appointment.startTime, "HH:mm")}
                             onChange={(time, timestring) => {
-                                console.log("ts",timestring)
                                 this.setState({
                                     appointment: {
                                         ...this.state.appointment,
-                                        startTime: timestring
+                                        startTime: timestring,
+                                        endTime: timestring
                                     }
                                 })
                             }}
@@ -140,7 +141,8 @@ class NewRoomEventModal extends Component<INewRoomEventModalProps> {
                         ~
                     </Col>
                     <Col span={8} style={{textAlign: "right"}}>
-                        <TimePicker 
+                        <TimePicker
+                            allowClear={false} 
                             minuteStep={15} 
                             format="HH:mm" 
                             value={moment(this.state.appointment.endTime, "HH:mm")}
