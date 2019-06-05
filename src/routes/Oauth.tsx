@@ -464,6 +464,7 @@ class Oauth extends React.Component<IOauthProps> {
                 this.setState({ loginResult: "waitForValidation"})
             }
             else {
+                // 此处对错误的处理有不足
                 this.setState({ loginResult: "register"})
             }
         })
@@ -1250,7 +1251,7 @@ class Oauth extends React.Component<IOauthProps> {
                     <Col span={8} style={this.labelStyle}>
                     </Col>
                 </Row>
-                <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available", display: this.state.extraInfoExpanded? "flex": "None"}}>
+                <Row type="flex" justify="center" align="middle" style={{ width: "-webkit-fill-available", display: "flex"}}>
                     <Col span={18} style={this.labelStyle}>
                         <Divider
                             orientation="right"
@@ -1286,11 +1287,11 @@ class Oauth extends React.Component<IOauthProps> {
             this.setState({submitting: false})
             setTimeout(()=> dispatch({type: "main/redirect", path:"#/", reload: true}), 5000)
             localStorage.clear()
-            swal("成功注册，请等待管理员认证!")
+            swal("成功注册，请联系管理员PP为你通过审核!")
             
         })
         .catch(() => {
-            swal("出错！请联系管理员")
+            swal("出错！请联系管理员PP")
         })
     }
 
