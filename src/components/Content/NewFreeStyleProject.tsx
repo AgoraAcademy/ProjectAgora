@@ -25,7 +25,7 @@ export interface INewFreeStyleProjectProps {
 }
 
 export interface INewFreeStyleProjectState {
-    coverImageURL?: string,
+    coverImageURL: string,
     coverImageData?: string,
     uploadingImage: boolean,
     submitting: boolean,
@@ -81,6 +81,7 @@ class NewFreeStyleProject extends React.Component<INewFreeStyleProjectProps> {
     public static contextTypes = { theme: PropTypes.object };
     public context: { theme: ReactUWP.ThemeType };
     public state: INewFreeStyleProjectState = {
+        coverImageURL: "",
         submitting: false,
         uploadingImage: false,
         confirmLoading: false,
