@@ -16,7 +16,7 @@ pipeline {
     stages {
         stage('Initialize') {
             steps {
-                sh 'npm install yarn yrm -g'
+                sh 'npm install yarn yrm -g --registry=https://registry.npm.taobao.org'
                 sh 'yrm use taobao'
             }
         }
