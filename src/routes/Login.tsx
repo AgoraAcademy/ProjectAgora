@@ -42,6 +42,12 @@ class Login extends React.Component<ILoginProps, ILoginState> {
         message: this.message
     }
 
+    public componentDidMount() {
+        if (this.state.message == "loggedout") {
+            localStorage.clear()
+        }
+    }
+
     public render(): JSX.Element {
         const toastMessageMapper = {
             noid: "未登录",
