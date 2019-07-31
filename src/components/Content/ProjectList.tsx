@@ -66,7 +66,7 @@ class ProjectList extends React.Component<IProjectListProps> {
                         this.setState({showDrawer: true})
                     }}
                     toEdit={() => {
-                        dispatch({type: "main/redirect", path:`#/project/${item.id}`})
+                        dispatch({type: "main/redirect", path:`/project/${item.id}`})
                     }}
                 />
             )
@@ -94,7 +94,7 @@ class ProjectList extends React.Component<IProjectListProps> {
                         <Col span={4} >
                             <Button 
                                 style={{width:"100%", height:"32px", lineHeight: "normal"}}
-                                onClick={() => dispatch({type: "main/redirect", path:"#/project/create"}) }
+                                onClick={() => dispatch({type: "main/redirect", path:"/project/create"}) }
                             >
                                 创建新项目
                             </Button>

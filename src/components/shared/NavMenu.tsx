@@ -28,17 +28,17 @@ class NavMenu extends React.Component<INavMenuProps> {
         let navigationBottomNode = [
             <SplitViewCommand label="注销" icon="Clear" key={Math.random()} onClick={() => {
                 localStorage.clear()
-                this.props.dispatch({type: "main/redirect", path:"#/login?message=loggedout"})
+                this.props.dispatch({type: "main/redirect", path:"/login?message=loggedout"})
             }}/>,
             <SplitViewCommand label="用户中心" icon="Contact" key={Math.random()}/>,
-            <SplitViewCommand label="设置" icon="Settings" key={Math.random()}/>,
+            <SplitViewCommand label="设置" icon="Settings" key={Math.random()} onClick={()=> {this.props.dispatch({type:'main/redirect', path:'/connectToMicrosoft'})}}/>,
         ]
         if (localStorage.getItem("isAdmin") === "true") {
             navigationBottomNode.unshift(<SplitViewCommand 
                 label="管理员入口" 
                 icon="Admin" 
                 key={Math.random()} 
-                onClick={()=> {this.props.dispatch({type:'main/redirect', path:'#/admin'})}}
+                onClick={()=> {this.props.dispatch({type:'main/redirect', path:'/admin'})}}
             />)
         }
         return navigationBottomNode
@@ -56,7 +56,7 @@ class NavMenu extends React.Component<INavMenuProps> {
                     label="主页" 
                     key={Math.random()} 
                     icon="Home" 
-                    onClick={()=> {this.props.dispatch({type:'main/redirect', path:'#/'})}}
+                    onClick={()=> {this.props.dispatch({type:'main/redirect', path:'/'})}}
                 />
             ),
             (
@@ -64,7 +64,7 @@ class NavMenu extends React.Component<INavMenuProps> {
                     label="项目式学习" 
                     icon="Project" 
                     key={Math.random()} 
-                    onClick={()=> {this.props.dispatch({type:'main/redirect', path:'#/project'})}}
+                    onClick={()=> {this.props.dispatch({type:'main/redirect', path:'/project'})}}
                 />
             ),
             (
@@ -72,7 +72,7 @@ class NavMenu extends React.Component<INavMenuProps> {
                     label="房间预约" 
                     icon="DateTime" 
                     key={Math.random()} 
-                    onClick={()=> {this.props.dispatch({type:'main/redirect', path:'#/booking'})}}
+                    onClick={()=> {this.props.dispatch({type:'main/redirect', path:'/booking'})}}
                 />
             ),
             // (
@@ -80,7 +80,7 @@ class NavMenu extends React.Component<INavMenuProps> {
             //         label="学时管理" 
             //         key={Math.random()} 
             //         icon="DateTime"
-            //         onClick={()=> {this.props.dispatch({type:'main/redirect', path:'#/credithour'})}}
+            //         onClick={()=> {this.props.dispatch({type:'main/redirect', path:'/credithour'})}}
             //     />
             // )
         ];

@@ -87,7 +87,7 @@ class Login extends React.Component<ILoginProps, ILoginState> {
                         appid="wxbadf910ec2b32d3c"
                         scope="snsapi_login"
                         state="lalala"
-                        redirect_uri={`${CLIENTURL}/#/oauth2`}
+                        redirect_uri={`${CLIENTURL}/oauth2`}
                     />
                 </Content>
                 <Footer>

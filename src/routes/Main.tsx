@@ -21,6 +21,7 @@ import CreditHourMenu from '../components/Menu/CreditHourMenu';
 import { connect } from 'dva';
 import Booking from '../components/Content/Booking';
 import { DEVMODE } from '../../env'
+import ConnectToMicrosoft from '../components/Content/ConnectToMicrosoft';
 
 const { Header, Footer, Sider, Content } = Layout;
 
@@ -48,11 +49,11 @@ class Main extends React.Component<IMainProps> {
             return
         }
         if ( openid === "undefined" ) {
-            dispatch({type: "main/redirect", path:"#/login?message=noid"})
+            dispatch({type: "main/redirect", path:"/login?message=noid"})
         } else if (isLearner === "false"){
-            dispatch({type: "main/redirect", path:"#/login?message=notlearner"})
+            dispatch({type: "main/redirect", path:"/login?message=notlearner"})
         } else if (validated === "false"){
-            dispatch({type: "main/redirect", path:"#/login?message=notvalidated"})
+            dispatch({type: "main/redirect", path:"/login?message=notvalidated"})
         }
         if (Object.keys(this.props.main.instructorIDDict).length === 0) {
             console.log("加载导师字典")
@@ -62,6 +63,15 @@ class Main extends React.Component<IMainProps> {
             console.log("加载项目")
             dispatch({type: "main/setupProjectList"})
         }
+        console.log("props", this.props)
+        try{
+            const query = this.props.location.pathname
+            const arr = query.split('&')
+            console.log("queryarray", arr)
+        } catch{
+            console.log("no query")
+        }
+
     }
 
     public siderWidthMapper = () => {
@@ -93,6 +103,7 @@ class Main extends React.Component<IMainProps> {
                     <Content id='global_content'>
                         <Switch>
                             <Route exact path="/" component={Home}/>
+                            <Route exact path="/connectToMicrosoft" component={ConnectToMicrosoft}/>
                             <Route exact path="/booking" component={Booking}/>
                             <Route exact path="/learner/:id" component={LearnerProfile} />
                             <Route exact path="/project" component={ProjectList}/>

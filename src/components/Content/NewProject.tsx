@@ -54,7 +54,7 @@ class NewProject extends React.Component<INewProjectProps> {
                                 style={{ width: "80%" }}
                                 cover={<img alt="example" src="asset/Logo.png" />}
                                 onClick={()=> this.props.dispatch(
-                                    {type: "main/redirect", path:"#/project/create/freestyle"}
+                                    {type: "main/redirect", path:"/project/create/freestyle"}
                                 )}
                             >
                                 <Meta
@@ -69,7 +69,7 @@ class NewProject extends React.Component<INewProjectProps> {
                                 style={{ width: "80%" }}
                                 cover={<img alt="example" src="asset/Logo.png" />}
                                 // onClick={()=> this.props.dispatch(
-                                //     {type: "main/redirect", path:"#/project/create/guided"}
+                                //     {type: "main/redirect", path:"/project/create/guided"}
                                 // )}
                             >
                                 <Meta

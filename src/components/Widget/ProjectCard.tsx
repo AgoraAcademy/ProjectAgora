@@ -67,7 +67,7 @@ class ProjectCard extends Component<IProjectCardProps> {
         }
         fetchRequest(`/v1/project/${this.props.id}`, "PATCH", patchBody)
         .then(() => {
-            this.props.dispatch({type: "main/redirect", path:`#/project/${this.props.id}`, reload: true})
+            this.props.dispatch({type: "main/redirect", path:`/project/${this.props.id}`, reload: true})
         })
         .catch(e => ({ error: e}))
     }
@@ -78,7 +78,7 @@ class ProjectCard extends Component<IProjectCardProps> {
         }
         fetchRequest(`/v1/project/${this.props.id}`, "PATCH", patchBody)
         .then(() => {
-            this.props.dispatch({type: "main/redirect", path:`#/project`, reload: true})
+            this.props.dispatch({type: "main/redirect", path:`/project`, reload: true})
         })
         .catch(e => ({ error: e}))
     }

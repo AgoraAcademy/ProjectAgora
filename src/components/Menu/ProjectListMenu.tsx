@@ -40,32 +40,32 @@ class ProjectListMenu extends React.Component<IProjectListMenuProps> {
             children: [{
                 title: "创建新项目",
                 onClick: () => this.props.dispatch(
-                    {type: "main/redirect", path:"#/project/create"}
+                    {type: "main/redirect", path:"/project/create"}
                 )
             }, {
                 title: "进行中项目",
                 onClick: () => this.props.dispatch(
-                    {type: "main/redirect", path:"#/project?status=ongoing"}
+                    {type: "main/redirect", path:"/project?status=ongoing"}
                 )
             }, {
                 title: "已完成项目",
                 onClick: () => this.props.dispatch(
-                    {type: "main/redirect", path:"#/project?status=finished"}
+                    {type: "main/redirect", path:"/project?status=finished"}
                 )
             }, {
                 title: "待审核项目",
                 onClick: () => this.props.dispatch(
-                    {type: "main/redirect", path:"#/project?status=waitingForApproval"}
+                    {type: "main/redirect", path:"/project?status=waitingForApproval"}
                 )
             }, {
                 title: "未提交项目",
                 onClick: () => this.props.dispatch(
-                    {type: "main/redirect", path:"#/project?status=notSubmitted"}
+                    {type: "main/redirect", path:"/project?status=notSubmitted"}
                 )
             }, {
                 title: "全部项目",
                 onClick: () => this.props.dispatch(
-                    {type: "main/redirect", path:"#/project"}
+                    {type: "main/redirect", path:"/project"}
                 )
             }]
         }, {
@@ -75,22 +75,22 @@ class ProjectListMenu extends React.Component<IProjectListMenuProps> {
             children: [{
                 title: "指导中项目",
                 onClick: () => this.props.dispatch(
-                    {type: "main/redirect", path:"#/project?status=ongoing"}
+                    {type: "main/redirect", path:"/project?status=ongoing"}
                 )
             }, {
                 title: "已完成项目",
                 onClick: () => this.props.dispatch(
-                    {type: "main/redirect", path:"#/project?status=finished"}
+                    {type: "main/redirect", path:"/project?status=finished"}
                 )
             }, {
                 titleNode: <div><span>待审核项目  </span><Badge count={projectList.length} /></div>,
                 onClick: () => this.props.dispatch(
-                    {type: "main/redirect", path:"#/project?status=waitingForApproval"}
+                    {type: "main/redirect", path:"/project?status=waitingForApproval"}
                 )
             }, {
                 title: "全部项目",
                 onClick: () => this.props.dispatch(
-                    {type: "main/redirect", path:"#/project"}
+                    {type: "main/redirect", path:"/project"}
                 )
             }]
         }, {
@@ -101,7 +101,7 @@ class ProjectListMenu extends React.Component<IProjectListMenuProps> {
             children: [{
                 title: "创建新课程（引导项目）",
                 onClick: () => this.props.dispatch(
-                    {type: "main/redirect", path:"#/course/create"}
+                    {type: "main/redirect", path:"/course/create"}
                 )
             }, {
                 title: "进行中课程",
