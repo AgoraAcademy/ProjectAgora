@@ -456,7 +456,8 @@ class Oauth extends React.Component<IOauthProps> {
             localStorage.setItem("isAdmin",data.isAdmin || "false")
             localStorage.setItem("learnerId",data.learnerId || "false")
             localStorage.setItem("fullname",data.fullname || "false")
-            // localStorage.setItem("isCommitteeOfAcademics", data.isCommitteeOfAcademics || "false")
+            localStorage.setItem("microsoftId", data.microsoftId || "")
+            localStorage.setItem("microsoftUserPrincipalName", data.microsoftUserPrincipalName || "")
             if (data.validated === true) {
                 this.setState({ loginResult: "success"})
             }
