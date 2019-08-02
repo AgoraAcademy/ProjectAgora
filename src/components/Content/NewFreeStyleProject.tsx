@@ -700,7 +700,7 @@ class NewFreeStyleProject extends React.Component<INewFreeStyleProjectProps> {
         .then((response:any) => {
             if (!response.error) {
                 this.setState({submitting: false, confirmLoading: false})
-                dispatch({type: "main/redirect", path:"/project", reload: true})
+                dispatch({type: "main/redirect", path:"/project"})
             }
             else {
                 swal("出错！")
