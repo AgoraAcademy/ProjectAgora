@@ -56,7 +56,7 @@ class NavMenu extends React.Component<INavMenuProps> {
                     label="主页" 
                     key={Math.random()} 
                     icon="Home" 
-                    onClick={()=> {this.props.dispatch({type:'main/redirect', path:'/'})}}
+                    onClick={()=> {this.props.dispatch({type:'main/redirect', path:'/home'})}}
                 />
             ),
             (

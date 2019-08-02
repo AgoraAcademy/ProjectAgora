@@ -36,15 +36,18 @@ class ConnectToMicrosoft extends React.Component<IConnectToMicrosoftProps> {
         if (code) {
             console.log("获得code,尝试录入")
             const connectToMicrosoftBody = {code}
-            const connectToMicrosoftResponse = await fetch(`${SERVERURL}/v1/utilities/connectToMicrosoft`, {
+            const connectToMicrosoftResponse  = await fetch(`${SERVERURL}/v1/utilities/connectToMicrosoft`, {
                 headers: {
-                    'content-type': 'application/json',
-                    'Access-Control-Allow-Origin': '*'
+                    "Content-Type": "application/json;charset=UTF-8",
+                    'Access-Control-Allow-Origin': '*',
+                    "Authorization": window.localStorage.getItem("access_token"),
+                    "refresh_token": window.localStorage.getItem("refresh_token"),
+                    "openid": window.localStorage.getItem("openid")
                 },
                 method: "POST",
                 body: JSON.stringify(connectToMicrosoftBody)
-            })
-            console.log(connectToMicrosoftResponse)
+            }).then(response => response.json())
+            localStorage.setItem("microsoftId", connectToMicrosoftResponse.microsoftId || "")
         }
     }
 

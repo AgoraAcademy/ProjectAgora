@@ -90,7 +90,7 @@ class Main extends React.Component<IMainProps> {
                 <NavMenu/>
                 <Sider width={this.siderWidthMapper()} className={"global-sider"} collapsible collapsedWidth={50}>
                     <Switch >
-                        <Route exact path="/" component={HomeMenu} />
+                        <Route exact path="/home" component={HomeMenu} />
                         <Route path="/admin" component={AdminMenu} />
                         <Route path="/learner" component={LearnerMenu} />
                         <Route exact path="/project" component={ProjectListMenu}/>
@@ -102,7 +102,7 @@ class Main extends React.Component<IMainProps> {
                 <Layout>
                     <Content id='global_content'>
                         <Switch>
-                            <Route exact path="/" component={Home}/>
+                            <Route exact path="/home" component={Home}/>
                             <Route exact path="/connectToMicrosoft" component={ConnectToMicrosoft}/>
                             <Route exact path="/booking" component={Booking}/>
                             <Route exact path="/learner/:id" component={LearnerProfile} />
