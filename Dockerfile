@@ -1,4 +1,6 @@
 FROM ubuntu
+RUN mv /etc/apt/sources.list /etc/apt/sources.list.bak
+ADD sources.list /etc/apt
 RUN apt-get clean
 RUN apt-get update
 RUN apt-get install

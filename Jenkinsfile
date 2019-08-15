@@ -4,7 +4,7 @@ pipeline {
             filename 'Dockerfile'
             registryUrl 'https://registry.docker-cn.com'
             additionalBuildArgs '--no-cache'
-            args '-p 80:80 --restart=always --security-opt apparmor=unconfined'
+            args '-p 10080:80 --restart=always --security-opt apparmor=unconfined'
         }
     }
     environment {
