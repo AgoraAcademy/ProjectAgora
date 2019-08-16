@@ -1,5 +1,3 @@
-import { fetchRequest } from "../util";
-
 export default {
     namespace: 'learnerProfile',
     state:
