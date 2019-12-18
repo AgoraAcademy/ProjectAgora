@@ -4,9 +4,9 @@ ADD sources.list /etc/apt
 RUN apt-get clean
 RUN apt-get update
 RUN apt-get install
-RUN apt-get install -y software-properties-common
+RUN apt-get install -y software-properties-common curl
 RUN apt-get update
-RUN curl -sL https://deb.nodesource.com/setup_12.x | -h -E bash
-RUN apt-get -f install -y nodejs nginx npm curl unzip
+RUN curl -sL https://deb.nodesource.com/setup_12.x | bash -
+RUN apt-get -f install -y nodejs nginx npm unzip
 ADD default /etc/nginx/sites-available
 EXPOSE 80
