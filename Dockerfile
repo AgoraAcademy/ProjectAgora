@@ -7,6 +7,6 @@ RUN apt-get install
 RUN apt-get install -y software-properties-common curl
 RUN apt-get update
 RUN curl -sL https://deb.nodesource.com/setup_12.x | bash -
-RUN apt-get -f install -y nodejs nginx npm unzip
+RUN apt-get -f install -y nodejs nginx unzip
 ADD default /etc/nginx/sites-available
 EXPOSE 80
